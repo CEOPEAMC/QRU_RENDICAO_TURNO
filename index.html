@@ -664,6 +664,10 @@ async function delAuth(id){
 }
 
 // ── RENDER RENDIÇÕES ──
+function ndRow(label,value){
+  if(!value||String(value).trim()==='')return'';
+  return`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value">${value}</div></div>`;
+}
 function renderRend(){
   const td=iso(G.rD);
   const cw=['admin','central'].includes(G.role);
