@@ -703,16 +703,17 @@ function renderRend(){
     const sl={pendente:'sp',concluida:'sr',cancelada:'sc'}[status]||'sp';
     const stxt={pendente:'PENDENTE',concluida:'CONCLUÍDA',cancelada:'CANCELADA'}[status]||status.toUpperCase();
 
-    // Linha de agendamento (supervisor informou quem vai render)
+    // Linha de agendamento com padrão visual igual aos outros campos
     let agendadaHtml='';
     if(r.substituto&&r.substituto.trim()){
-      const label=status==='concluida'?'REALIZADO POR':'AGENDADA PARA';
-      agendadaHtml=`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value" style="color:var(--green2);">${r.substituto}</div></div>`;
-    } else if(r.status==='pendente'&&cs){
-      agendadaHtml=`<button class="brend" onclick="openSup('${r.id}')">Agendar Substituto</button>`;
+      const label=status==='concluida'?'Realizado por':'Agendada para';
+      agendadaHtml=`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value" style="color:var(--green2);font-weight:600;">${r.substituto}</div></div>`;
     }
+    // Botão agendar (só se ainda não tiver substituto)
+    const btnAgendar=(status==='pendente'&&cs&&(!r.substituto||!r.substituto.trim()))
+      ?`<button class="brend" style="margin-top:8px;" onclick="openSup('${r.id}')">Agendar Substituto</button>`:'';
 
-    // Botão concluir (só central/admin, só se tiver substituto e pendente)
+    // Botões de ação — Editar, Concluir (se tiver substituto), Cancelar
     const podeConcluir=cw&&status==='pendente'&&r.substituto&&r.substituto.trim();
     const acoes=(cw&&status==='pendente')?`<div class="ndact">
       <button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button>
@@ -726,6 +727,7 @@ function renderRend(){
       ${ndRow('Local / Posto',r.local)}
       ${ndRow('Motivo',r.motivo)}
       ${agendadaHtml}
+      ${btnAgendar}
       ${acoes}
     </div>`;
   }).join('');
@@ -761,7 +763,8 @@ async function saveRend(){
     createdAt:new Date().toISOString()
   };
   if(!d.date||!d.turno||!d.agente){toast('Preencha data, turno e agente.','err');return;}
-  d.status=d.substituto?'realizada':'pendente';
+  // Status sempre pendente ao criar ou editar — só Central conclui manualmente
+  d.status=G.eR?(G.rends.find(x=>x.id===G.eR)?.status||'pendente'):'pendente';
   setSav('bSR',true);
   try{await api(G.eR?'updateRendition':'addRendition',d);await loadRenditions();cm('mRend');toast(G.eR?'Rendição atualizada!':'Rendição registrada!','ok');}
   catch(ex){toast('Erro: '+ex.message,'err');}
