@@ -43,7 +43,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .uname{font-size:13px;color:var(--text);font-weight:500;display:block;}
 .urole{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:block;}
 .ra{color:var(--gold);}.rc{color:var(--accent2);}.rs{color:var(--purple2);}.rag{color:var(--green2);}
-.btnout{background:transparent;border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text3);font-size:11px;cursor:pointer;}
+.btnout{background:transparent;border:1px solid rgba(245,158,11,0.4);border-radius:6px;padding:6px 8px;color:var(--gold);font-size:11px;cursor:pointer;font-weight:600;}
 .navtabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);}
 .ntab{flex:1;padding:12px 4px;text-align:center;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);border-bottom:2px solid transparent;transition:all .2s;}
 .ntab.active{color:var(--accent2);border-bottom-color:var(--accent2);}
@@ -193,7 +193,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
       <select id="loginRole"><option value="">Selecione seu perfil...</option><option value="admin">Administrador</option><option value="central">Central de Operações</option><option value="supervisor">Supervisor</option><option value="agente">Agente de Trânsito</option></select>
     </div>
     <div class="fg" id="lnameGroup" style="display:none;"><label>Identificação (nome ou matrícula)</label><input type="text" id="loginName" placeholder="Seu nome ou matrícula..."></div>
-    <div class="fg"><label>Senha de Acesso</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+    <div class="fg"><label>Senha de Acesso</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="btnlogin" id="btnLogin" onclick="doLogin()">Entrar no Sistema</button>
     <div class="lerr" id="loginErr">Senha incorreta.</div>
     <div class="lver">AMC/GEOFI/CEOPE · v4.0 · 2026</div>
@@ -203,7 +203,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 <!-- APP -->
 <div id="app">
   <div class="aph">
-    <div class="hbrand"><div class="hbadge">AMC</div><div class="htitle">CEOPE<br>Operações</div></div>
+    <div class="hbrand"><div class="hbadge">AMC</div><div class="htitle">CEOPE<br>Central Operações</div></div>
     <div class="hright">
       <div class="uchip"><span class="uname" id="hName">—</span><span class="urole" id="hRole">—</span></div>
       <button class="btnout" onclick="doLogout()">Sair</button>
@@ -264,8 +264,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
         <select id="fPR"><option value="admin">Administrador</option><option value="central">Central</option><option value="supervisor">Supervisor</option><option value="agente">Agente</option></select>
       </div>
       <div class="mfrow">
-        <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..." style="text-transform:none;"></div>
-        <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..." style="text-transform:none;"></div>
+        <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..." style="text-transform:none;" autocomplete="new-password"></div>
+        <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..." style="text-transform:none;" autocomplete="new-password"></div>
       </div>
       <button class="bsurl" onclick="savePass()">🔑 Alterar Senha</button>
     </div>
@@ -499,7 +499,7 @@ function cardRows(r){
     case'estacionamento':
       return cardRow('Local',r.local)+cardRow('Área',r.area)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo / Finalidade',r.objetivo)+cardRow('Período',r.periodo)+cardRow('Responsável',r.responsavel)+cardRow('Observação',r.obs);
     case'fato':
-      return cardRow('Descrição',r.descricao||r.evento)+cardRow('Local',r.local)+cardRow('Área / Via(s)',r.area)+cardRow('Data do Fato',r.date?fmtBR(r.date):'')+cardRow('Período / Horário',r.periodo||r.horario)+cardRow('Responsável / Envolvido',r.responsavel)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo',r.objetivo)+cardRow('Observação',r.obs);
+      return cardRow('Descrição',r.descricao||r.evento)+cardRow('Local',r.local)+cardRow('Área / Via(s)',r.area)+cardRow('Período / Horário',r.periodo||r.horario)+cardRow('Responsável / Envolvido',r.responsavel)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo',r.objetivo)+cardRow('Observação',r.obs);
     default:return'';
   }
 }
@@ -545,10 +545,7 @@ function buildDyn(t,d){
       <div class="mf"><label>Descrição do Fato</label><textarea id="fDe" placeholder="Descreva o fato...">${e(d.descricao||d.evento)}</textarea></div>
       <div class="mf"><label>Local / Endereço</label><input type="text" id="fLo" value="${e(d.local)}" placeholder="Endereço ou local"></div>
       <div class="mf"><label>Área / Via(s)</label><input type="text" id="fAr" value="${e(d.area)}" placeholder="Região, bairro, vias..."></div>
-      <div class="mfrow">
-        <div class="mf"><label>Data do Fato</label><input type="date" id="fDF" value="${d.date||iso(new Date())}"></div>
-        <div class="mf"><label>Período / Horário</label><input type="text" id="fPeriodo" value="${e(d.periodo||d.horario)}" placeholder="Ex: Das 08h às 18h"></div>
-      </div>
+      <div class="mf"><label>Período / Horário</label><input type="text" id="fPeriodo" value="${e(d.periodo||d.horario)}" placeholder="Ex: Das 08h às 18h"></div>
       <div class="mf"><label>Responsável / Envolvido</label><input type="text" id="fRe" value="${e(d.responsavel)}" placeholder="Nome do responsável ou envolvido"></div>
       <div class="mf"><label>Veículos</label><input type="text" id="fVe" value="${e(d.veiculos)}" placeholder="Tipos ou placas (se houver)"></div>
       <div class="mf"><label>Objetivo / Finalidade</label><input type="text" id="fOb" value="${e(d.objetivo)}" placeholder="Objetivo ou finalidade (se houver)"></div>
@@ -599,7 +596,7 @@ async function saveAuth(){
   const reg=up(v('fReg'));
   let ex={};
   if(t==='fato'){
-    ex={descricao:up(v('fDe')),local:up(v('fLo')),area:up(v('fAr')),date:v('fDF'),periodo:up(v('fPeriodo')),responsavel:up(v('fRe')),veiculos:up(v('fVe')),objetivo:up(v('fOb')),obs:up(v('fObs'))};
+    ex={descricao:up(v('fDe')),local:up(v('fLo')),area:up(v('fAr')),periodo:up(v('fPeriodo')),responsavel:up(v('fRe')),veiculos:up(v('fVe')),objetivo:up(v('fOb')),obs:up(v('fObs'))};
   } else {
     switch(t){
       case'qru':case'interdicao':ex={evento:up(v('fEv')),local:up(v('fLo')),periodo:up(v('fPeriodo')),responsavel:up(v('fRe')),obs:up(v('fObs'))};break;
@@ -630,10 +627,16 @@ function renderRend(){
   const cs=['admin','central','supervisor'].includes(G.role);
   const el=document.getElementById('rendList');
   let h='';
+  // DEBUG: mostra o que está em G.rends no console
+  console.log('RENDS TOTAL:', G.rends.length, 'DATA BUSCADA:', td);
+  G.rends.forEach(r=>console.log('  rend:', JSON.stringify({date:r.date,turno:r.turno,agente:r.agente})));
   TURNOS.forEach(t=>{
-    // Comparação robusta: normaliza a string do turno
     const items=G.rends.filter(r=>{
-      const rDate=String(r.date||'').trim().substring(0,10);
+      // Normaliza data: pega só YYYY-MM-DD independente do formato
+      let rDate=String(r.date||'').trim();
+      // Se vier como "22/03/2026" converte para "2026-03-22"
+      if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
+      rDate=rDate.substring(0,10);
       const rTurno=String(r.turno||'').trim().toLowerCase();
       return rDate===td && rTurno===t;
     });
