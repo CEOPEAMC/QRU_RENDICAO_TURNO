@@ -627,15 +627,18 @@ function renderRend(){
   const cs=['admin','central','supervisor'].includes(G.role);
   const el=document.getElementById('rendList');
   let h='';
-  // DEBUG: mostra o que está em G.rends no console
-  console.log('RENDS TOTAL:', G.rends.length, 'DATA BUSCADA:', td);
-  G.rends.forEach(r=>console.log('  rend:', JSON.stringify({date:r.date,turno:r.turno,agente:r.agente})));
+
   TURNOS.forEach(t=>{
     const items=G.rends.filter(r=>{
-      // Normaliza data: pega só YYYY-MM-DD independente do formato
+      // Normaliza data para YYYY-MM-DD independente do formato vindo da planilha
       let rDate=String(r.date||'').trim();
-      // Se vier como "22/03/2026" converte para "2026-03-22"
+      // Formato "22/03/2026" → "2026-03-22"
       if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
+      // Formato longo "Sun Mar 22 2026 00:00:00 GMT..." → usa Date() para converter
+      else if(rDate.length>10){
+        try{const dt=new Date(rDate);const y=dt.getFullYear(),m=String(dt.getMonth()+1).padStart(2,'0'),d=String(dt.getDate()).padStart(2,'0');rDate=y+'-'+m+'-'+d;}
+        catch(ex){}
+      }
       rDate=rDate.substring(0,10);
       const rTurno=String(r.turno||'').trim().toLowerCase();
       return rDate===td && rTurno===t;
