@@ -156,6 +156,20 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .aurl{width:100%;padding:10px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;margin-top:6px;}
 .aurl:focus{border-color:var(--accent2);}
 .bsurl{margin-top:8px;padding:10px 18px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+/* ABAS DE TURNO RENDIÇÕES */
+.rend-tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;}
+.rend-tab{flex-shrink:0;padding:7px 14px;border-radius:8px;border:1px solid var(--border2);background:var(--surface3);color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.rend-tab.active-ma{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:var(--gold2);}
+.rend-tab.active-mn{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:var(--gold2);}
+.rend-tab.active-ta{background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.4);color:var(--orange2);}
+.rend-tab.active-no{background:rgba(96,165,250,0.15);border-color:rgba(96,165,250,0.4);color:var(--accent2);}
+.rend-status-filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.rsf{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface3);color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+.rsf.act{background:rgba(37,99,235,0.2);border-color:var(--accent);color:var(--accent2);}
+.search-bar{display:flex;align-items:center;gap:8px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
+.search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
+.search-bar input::placeholder{color:var(--text3);text-transform:none;}
+.search-bar span{color:var(--text3);font-size:16px;}
 /* EMPTY/TOAST/CONFIRM */
 .empty{text-align:center;padding:40px 20px;color:var(--text3);}
 .eico{font-size:36px;margin-bottom:8px;display:block;}
@@ -246,6 +260,22 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
       <button class="bref" id="bRefR" onclick="loadRenditions(true)">↻</button>
       <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
     </div>
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="rendSearch" placeholder="Buscar por nome do agente..." oninput="renderRend()">
+    </div>
+    <div class="rend-tabs" id="rendTabs">
+      <div class="rend-tab active-ma" onclick="setRendTab('madrugada')" data-rt="madrugada">🌑 Madrugada</div>
+      <div class="rend-tab" onclick="setRendTab('manha')" data-rt="manha">☀️ Manhã</div>
+      <div class="rend-tab" onclick="setRendTab('tarde')" data-rt="tarde">🌤 Tarde</div>
+      <div class="rend-tab" onclick="setRendTab('noite')" data-rt="noite">🌙 Noite</div>
+    </div>
+    <div class="rend-status-filters">
+      <div class="rsf act" onclick="setRendSF('todos')" data-sf="todos">Todos</div>
+      <div class="rsf" onclick="setRendSF('pendente')" data-sf="pendente">Pendentes</div>
+      <div class="rsf" onclick="setRendSF('concluida')" data-sf="concluida">Concluídas</div>
+      <div class="rsf" onclick="setRendSF('cancelada')" data-sf="cancelada">Canceladas</div>
+    </div>
     <div id="rendList"></div>
   </div>
 
@@ -333,9 +363,9 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 <!-- MODAL SUPERVISOR -->
 <div class="mover" id="mSup">
   <div class="modal">
-    <div class="mhdr"><div class="mtitle">Informar Substituto</div><button class="mclose" onclick="cm('mSup')">✕</button></div>
+    <div class="mhdr"><div class="mtitle">Agendar Substituto</div><button class="mclose" onclick="cm('mSup')">✕</button></div>
     <div class="mbody">
-      <div class="mf"><label>Agente que foi Render</label><input type="text" id="fSS" placeholder="Nome e/ou matrícula"></div>
+      <div class="mf"><label>Agente designado para render</label><input type="text" id="fSS" placeholder="Nome e/ou matrícula"></div>
     </div>
     <div class="mfoot"><button class="bcancel2" onclick="cm('mSup')">Cancelar</button><button class="bsave" onclick="saveSubst()">Confirmar</button></div>
   </div>
@@ -359,7 +389,7 @@ const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null};
 
 // ── BOOT ──
 function boot(){
@@ -438,6 +468,19 @@ function onAuthDateChange(){const val=document.getElementById('authDateInput').v
 function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);renderRend();}}
 function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
+const REND_TAB_ACTIVE={'madrugada':'active-ma','manha':'active-mn','tarde':'active-ta','noite':'active-no'};
+function setRendTab(t){
+  G.rendTab=t;
+  document.querySelectorAll('.rend-tab').forEach(el=>{
+    el.className='rend-tab'+(el.dataset.rt===t?' '+REND_TAB_ACTIVE[t]:'');
+  });
+  renderRend();
+}
+function setRendSF(sf){
+  G.rendSF=sf;
+  document.querySelectorAll('.rsf').forEach(el=>el.classList.toggle('act',el.dataset.sf===sf));
+  renderRend();
+}
 
 // ── API ──
 async function api(action,payload){
@@ -620,59 +663,70 @@ async function delAuth(id){
   });
 }
 
-// ── RENDER RENDIÇÕES ── CORRIGIDO
+// ── RENDER RENDIÇÕES ──
 function renderRend(){
   const td=iso(G.rD);
   const cw=['admin','central'].includes(G.role);
   const cs=['admin','central','supervisor'].includes(G.role);
   const el=document.getElementById('rendList');
-  let h='';
+  const search=(document.getElementById('rendSearch')?.value||'').trim().toUpperCase();
+  const t=G.rendTab;
+  const sf=G.rendSF;
 
-  TURNOS.forEach(t=>{
-    const items=G.rends.filter(r=>{
-      // Normaliza data para YYYY-MM-DD independente do formato vindo da planilha
-      let rDate=String(r.date||'').trim();
-      // Formato "22/03/2026" → "2026-03-22"
-      if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
-      // Formato longo "Sun Mar 22 2026 00:00:00 GMT..." → usa Date() para converter
-      else if(rDate.length>10){
-        try{const dt=new Date(rDate);const y=dt.getFullYear(),m=String(dt.getMonth()+1).padStart(2,'0'),d=String(dt.getDate()).padStart(2,'0');rDate=y+'-'+m+'-'+d;}
-        catch(ex){}
-      }
-      rDate=rDate.substring(0,10);
-      const rTurno=String(r.turno||'').trim().toLowerCase();
-      return rDate===td && rTurno===t;
-    });
-    if(!items.length&&!cw)return;
-    h+=`<div class="stitle"><span class="tbadge2 ${TRC[t]}">${TRN[t]}</span></div>`;
-    if(!items.length){
-      h+=`<div style="text-align:center;padding:8px 0 4px;color:var(--text3);font-size:13px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;">Nenhuma rendição</div>`;
-    } else {
-      items.forEach(r=>{
-        const sub=r.substituto&&r.substituto.trim()
-          ?`<div class="ndsub">✅ RENDIDO POR: ${r.substituto}</div>`
-          :(r.status==='pendente'&&cs?`<button class="brend" onclick="openSup('${r.id}')">Informar Substituto</button>`:'');
-        const ac=(r.status==='pendente'&&cw)
-          ?`<div class="ndact"><button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button><button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar</button></div>`:'';
-        const sl={pendente:'sp',realizada:'sr',cancelada:'sc'}[r.status]||'sp';
-        const stxt={pendente:'PENDENTE',realizada:'REALIZADA',cancelada:'CANCELADA'}[r.status]||r.status.toUpperCase();
-        h+=`<div class="ndcard ${sl}">
-          <div class="ndhr"><div class="ndag">${r.agente||'—'}</div><span class="ndsb">${stxt}</span></div>
-          ${ndRow('Registro',r.reg)}
-          ${ndRow('Local / Posto',r.local)}
-          ${ndRow('Motivo',r.motivo)}
-          ${sub}${ac}
-        </div>`;
-      });
-    }
+  const items=G.rends.filter(r=>{
+    // Normaliza data
+    let rDate=String(r.date||'').trim();
+    if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
+    else if(rDate.length>10){try{const dt=new Date(rDate);rDate=iso(dt);}catch(ex){}}
+    rDate=rDate.substring(0,10);
+    const rTurno=String(r.turno||'').trim().toLowerCase();
+    const rStatus=String(r.status||'pendente').trim().toLowerCase();
+    const rAgente=String(r.agente||'').toUpperCase();
+    const matchDate=rDate===td;
+    const matchTurno=rTurno===t;
+    const matchSF=sf==='todos'||rStatus===sf;
+    const matchSearch=!search||rAgente.includes(search);
+    return matchDate&&matchTurno&&matchSF&&matchSearch;
   });
-  el.innerHTML=h||`<div class="empty"><span class="eico">🔄</span><div class="etxt2">Nenhuma rendição registrada</div></div>`;
+
+  if(!items.length){
+    el.innerHTML=`<div class="empty"><span class="eico">🔄</span><div class="etxt2">${search?'Nenhum agente encontrado':'Nenhuma rendição neste turno'}</div></div>`;
+    return;
+  }
+
+  el.innerHTML=items.map(r=>{
+    const status=String(r.status||'pendente').toLowerCase();
+    const sl={pendente:'sp',concluida:'sr',cancelada:'sc'}[status]||'sp';
+    const stxt={pendente:'PENDENTE',concluida:'CONCLUÍDA',cancelada:'CANCELADA'}[status]||status.toUpperCase();
+
+    // Linha de agendamento (supervisor informou quem vai render)
+    let agendadaHtml='';
+    if(r.substituto&&r.substituto.trim()){
+      const label=status==='concluida'?'REALIZADO POR':'AGENDADA PARA';
+      agendadaHtml=`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value" style="color:var(--green2);">${r.substituto}</div></div>`;
+    } else if(r.status==='pendente'&&cs){
+      agendadaHtml=`<button class="brend" onclick="openSup('${r.id}')">Agendar Substituto</button>`;
+    }
+
+    // Botão concluir (só central/admin, só se tiver substituto e pendente)
+    const podeConcluir=cw&&status==='pendente'&&r.substituto&&r.substituto.trim();
+    const acoes=(cw&&status==='pendente')?`<div class="ndact">
+      <button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button>
+      ${podeConcluir?`<button class="brend" onclick="concluirRend('${r.id}')">Concluir</button>`:''}
+      <button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar</button>
+    </div>`:'';
+
+    return`<div class="ndcard ${sl}">
+      <div class="ndhr"><div class="ndag">${r.agente||'—'}</div><span class="ndsb">${stxt}</span></div>
+      ${ndRow('Nº Registro',r.reg)}
+      ${ndRow('Local / Posto',r.local)}
+      ${ndRow('Motivo',r.motivo)}
+      ${agendadaHtml}
+      ${acoes}
+    </div>`;
+  }).join('');
 }
 
-function ndRow(label,value){
-  if(!value||String(value).trim()==='')return'';
-  return`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value">${value}</div></div>`;
-}
 
 // ── MODAL RENDIÇÃO ──
 function openRendModal(id){
@@ -716,11 +770,18 @@ async function cancelRend(id){
     catch(ex){toast('Erro: '+ex.message,'err');}
   },'red');
 }
+async function concluirRend(id){
+  conf('Concluir Rendição','Confirma que a rendição foi realizada com sucesso?',async()=>{
+    try{await api('updateRendition',{id,status:'concluida',concludedBy:G.name});await loadRenditions();toast('Rendição concluída! ✓','ok');}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
 function openSup(id){G.supId=id;document.getElementById('fSS').value='';om('mSup');}
 async function saveSubst(){
   const s=up(document.getElementById('fSS').value.trim());
   if(!s){toast('Informe o substituto.','err');return;}
-  try{await api('updateRendition',{id:G.supId,substituto:s,status:'realizada',rendidoBy:G.name});await loadRenditions();cm('mSup');toast('Rendição realizada! ✓','ok');}
+  // Salva substituto mas mantém status pendente — Central confirma depois com Concluir
+  try{await api('updateRendition',{id:G.supId,substituto:s,agendadoBy:G.name});await loadRenditions();cm('mSup');toast('Substituto agendado! ✓','ok');}
   catch(ex){toast('Erro: '+ex.message,'err');}
 }
 
