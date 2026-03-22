@@ -6,10 +6,11 @@
 <title>AMC · CEOPE · Sistema Operacional</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#07111f;--navy2:#0c1a2e;--accent:#2563eb;--accent2:#60a5fa;--gold:#f59e0b;--gold2:#fcd34d;--red2:#ef4444;--green2:#10b981;--orange2:#f97316;--purple2:#a78bfa;--text:#e2e8f0;--text2:#94a3b8;--text3:#475569;--surface:#0a1628;--surface2:#0e1f36;--surface3:#132840;--border:#1e3a5a;--border2:#243f5e;--card:#0c1e34;}
+:root{--navy:#07111f;--navy2:#0c1a2e;--accent:#2563eb;--accent2:#60a5fa;--gold:#f59e0b;--gold2:#fcd34d;--red2:#ef4444;--green2:#10b981;--orange2:#f97316;--purple2:#a78bfa;--text:#e2e8f0;--text2:#b8c8dc;--text3:#475569;--surface:#0a1628;--surface2:#0e1f36;--surface3:#132840;--border:#1e3a5a;--border2:#243f5e;--card:#0c1e34;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
-#loginScreen{position:fixed;inset:0;z-index:1000;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;z-index:1000;background:var(--navy);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .lbg{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .lbg::before{content:'';position:absolute;top:-30%;left:-10%;width:120%;height:120%;background:radial-gradient(ellipse at 30% 40%,rgba(37,99,235,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(245,158,11,0.07) 0%,transparent 50%);}
 .lgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.05) 1px,transparent 1px);background-size:44px 44px;}
@@ -31,8 +32,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .btnlogin:active{opacity:.9;}
 .lerr{color:var(--red2);font-size:12px;text-align:center;margin-top:10px;display:none;}
 .lver{font-size:10px;color:var(--text3);text-align:center;margin-top:16px;font-family:'IBM Plex Mono',monospace;}
-#configBanner{display:none;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 14px;margin:0 14px 14px;font-size:12px;color:var(--gold);line-height:1.6;}
-#configBanner strong{display:block;font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:1px;margin-bottom:4px;}
+/* APP */
 #app{display:none;flex-direction:column;min-height:100vh;}
 .aph{background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .hbrand{display:flex;align-items:center;gap:8px;}
@@ -52,8 +52,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .tp.active{display:block;}
 /* TOOLBAR */
 .toolbar{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.date-input-wrap{display:flex;align-items:center;gap:4px;}
-.date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 10px;outline:none;cursor:pointer;-webkit-appearance:none;}
+.date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:6px 10px;outline:none;cursor:pointer;-webkit-appearance:none;}
 .date-input-wrap input[type=date]:focus{border-color:var(--accent2);}
 .bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 11px;color:var(--text2);font-size:13px;cursor:pointer;}
 .btoday{font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:600;text-transform:uppercase;padding:6px 10px;}
@@ -70,18 +69,20 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .stitle{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
 .stitle::after{content:'';flex:1;height:1px;background:var(--border);}
 /* CARDS AUTORIZAÇÕES */
-.rcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px;position:relative;overflow:hidden;}
-.rcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.rcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;position:relative;overflow:hidden;}
+.rcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
 .rcard.t-qru::before{background:var(--accent2);}.rcard.t-interdicao::before{background:var(--red2);}.rcard.t-circulacao::before{background:var(--green2);}.rcard.t-estacionamento::before{background:var(--orange2);}.rcard.t-fato::before{background:var(--purple2);}
-.rchead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
-.tbadge{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.rchead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.tbadge{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;flex-shrink:0;}
 .bq{background:rgba(96,165,250,0.15);color:var(--accent2);}.bi{background:rgba(239,68,68,0.15);color:var(--red2);}.bc{background:rgba(16,185,129,0.15);color:var(--green2);}.be{background:rgba(249,115,22,0.15);color:var(--orange2);}.bf{background:rgba(167,139,250,0.15);color:var(--purple2);}
-.rreg{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text3);}
-.rtitle{font-weight:600;font-size:17px;color:var(--text);margin-bottom:6px;line-height:1.3;}
-.rinfo{font-size:14px;color:var(--text2);margin-bottom:4px;display:flex;align-items:flex-start;gap:6px;}
-.rinfo-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);min-width:60px;flex-shrink:0;margin-top:1px;}
-.rdates{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
-.dtag{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:2px 7px;border-radius:4px;background:rgba(245,158,11,0.1);color:var(--gold);border:1px solid rgba(245,158,11,0.2);}
+.rreg{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold2);font-weight:500;}
+/* Linha de info do card */
+.cinfo-row{margin-bottom:6px;}
+.cinfo-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:2px;}
+.cinfo-value{font-size:15px;color:#ffffff;font-weight:500;line-height:1.3;}
+.rdates{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.dates-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);width:100%;margin-bottom:4px;}
+.dtag{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:3px 8px;border-radius:4px;background:rgba(245,158,11,0.12);color:var(--gold2);border:1px solid rgba(245,158,11,0.25);}
 .ract{display:flex;gap:6px;margin-top:10px;justify-content:flex-end;}
 .bsm{padding:6px 12px;border-radius:6px;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:1px solid;}
 .bedit{background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.4);color:var(--accent2);}
@@ -92,15 +93,16 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .tt{background:rgba(249,115,22,0.15);color:var(--orange2);border:1px solid rgba(249,115,22,0.3);}
 .tn{background:rgba(96,165,250,0.15);color:var(--accent2);border:1px solid rgba(96,165,250,0.3);}
 .tma{background:rgba(167,139,250,0.15);color:var(--purple2);border:1px solid rgba(167,139,250,0.3);}
-.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px;}
-.ndcard.sp{border-left:3px solid var(--gold);}.ndcard.sr{border-left:3px solid var(--green2);opacity:.8;}.ndcard.sc{border-left:3px solid var(--text3);opacity:.5;}
-.ndsb{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:4px;}
+.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+.ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);opacity:.85;}.ndcard.sc{border-left:4px solid var(--text3);opacity:.55;}
+.ndsb{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:4px;}
 .sp .ndsb{background:rgba(245,158,11,0.15);color:var(--gold);}.sr .ndsb{background:rgba(16,185,129,0.15);color:var(--green2);}.sc .ndsb{background:rgba(100,116,139,0.15);color:var(--text3);}
-.ndhr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.ndag{font-weight:600;font-size:17px;color:var(--text);}
-.ndinfo{font-size:14px;color:var(--text2);margin-bottom:4px;display:flex;align-items:flex-start;gap:6px;}
-.ndinfo-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);min-width:60px;flex-shrink:0;margin-top:1px;}
-.ndsub{font-size:14px;color:var(--green2);font-weight:500;margin-top:6px;display:flex;align-items:center;gap:5px;}
+.ndhr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.ndag{font-weight:700;font-size:17px;color:#ffffff;}
+.ndinfo-row{margin-bottom:6px;}
+.ndinfo-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:2px;}
+.ndinfo-value{font-size:15px;color:#ffffff;font-weight:500;line-height:1.3;}
+.ndsub{font-size:14px;color:var(--green2);font-weight:600;margin-top:8px;display:flex;align-items:center;gap:5px;}
 .ndact{display:flex;gap:6px;margin-top:10px;justify-content:flex-end;}
 .bcanc{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--red2);padding:6px 12px;border-radius:6px;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
 .brend{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green2);padding:6px 12px;border-radius:6px;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
@@ -115,7 +117,9 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .mbody{padding:18px;}
 .mf{margin-bottom:14px;}
 .mf label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;margin-bottom:6px;}
-.mf select,.mf input,.mf textarea{width:100%;padding:10px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.mf select,.mf input,.mf textarea{width:100%;padding:10px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none;text-transform:uppercase;}
+.mf select{text-transform:none;}
+.mf select option{text-transform:none;}
 .mf select:focus,.mf input:focus,.mf textarea:focus{border-color:var(--accent2);}
 .mf select option{background:var(--navy2);}
 .mf textarea{resize:vertical;min-height:80px;line-height:1.5;}
@@ -134,7 +138,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 /* DATAS VIGÊNCIA */
 .dates-block{background:var(--navy2);border:1px solid var(--border2);border-radius:8px;padding:12px;margin-top:4px;}
 .dates-block .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
-.dates-block .sep{text-align:center;font-size:11px;color:var(--text3);padding:8px 0;font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;}
 .dates-block input[type=date]{width:100%;padding:8px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;-webkit-appearance:none;}
 .dates-block input[type=date]:focus{border-color:var(--accent2);}
 .badd-range{width:100%;padding:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:6px;color:var(--gold);cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
@@ -153,7 +156,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .aurl{width:100%;padding:10px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;margin-top:6px;}
 .aurl:focus{border-color:var(--accent2);}
 .bsurl{margin-top:8px;padding:10px 18px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
-/* EMPTY / TOAST / CONFIRM */
+/* EMPTY/TOAST/CONFIRM */
 .empty{text-align:center;padding:40px 20px;color:var(--text3);}
 .eico{font-size:36px;margin-bottom:8px;display:block;}
 .etxt2{font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;}
@@ -177,7 +180,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen" style="display:none;">
+<div id="loginScreen">
   <div class="lbg"><div class="lgrid"></div></div>
   <div class="lcard">
     <div class="lhead">
@@ -193,7 +196,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
     <div class="fg"><label>Senha de Acesso</label><input type="password" id="loginPass" placeholder="••••••••"></div>
     <button class="btnlogin" id="btnLogin" onclick="doLogin()">Entrar no Sistema</button>
     <div class="lerr" id="loginErr">Senha incorreta.</div>
-    <div class="lver">AMC/GEOFI/CEOPE · v3.0 · 2026</div>
+    <div class="lver">AMC/GEOFI/CEOPE · v4.0 · 2026</div>
   </div>
 </div>
 
@@ -206,7 +209,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
       <button class="btnout" onclick="doLogout()">Sair</button>
     </div>
   </div>
-
   <div class="navtabs">
     <div class="ntab active" onclick="switchTab('auth')" id="tab-auth"><span class="ti">📋</span>Autorizações</div>
     <div class="ntab" onclick="switchTab('rend')" id="tab-rend"><span class="ti">🔄</span>Rendições</div>
@@ -217,12 +219,10 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <div class="tp active" id="pane-auth">
     <div class="toolbar">
       <button class="bnav" onclick="navDate(-1)">‹</button>
-      <div class="date-input-wrap">
-        <input type="date" id="authDateInput" onchange="onAuthDateChange()">
-      </div>
+      <div class="date-input-wrap"><input type="date" id="authDateInput" onchange="onAuthDateChange()"></div>
       <button class="bnav" onclick="navDate(1)">›</button>
       <button class="bnav btoday" onclick="goToday('auth')">Hoje</button>
-      <button class="bref" id="bRefA" onclick="loadRecords(true)" title="Atualizar">↻</button>
+      <button class="bref" id="bRefA" onclick="loadRecords(true)">↻</button>
       <button class="bact" id="btnNA" onclick="openAuthModal()" style="display:none;">＋ Novo</button>
     </div>
     <div class="frow">
@@ -240,12 +240,10 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <div class="tp" id="pane-rend">
     <div class="toolbar">
       <button class="bnav" onclick="navRD(-1)">‹</button>
-      <div class="date-input-wrap">
-        <input type="date" id="rendDateInput" onchange="onRendDateChange()">
-      </div>
+      <div class="date-input-wrap"><input type="date" id="rendDateInput" onchange="onRendDateChange()"></div>
       <button class="bnav" onclick="navRD(1)">›</button>
       <button class="bnav btoday" onclick="goToday('rend')">Hoje</button>
-      <button class="bref" id="bRefR" onclick="loadRenditions(true)" title="Atualizar">↻</button>
+      <button class="bref" id="bRefR" onclick="loadRenditions(true)">↻</button>
       <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
     </div>
     <div id="rendList"></div>
@@ -255,19 +253,19 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <div class="tp" id="pane-adm">
     <div class="stitle">URL do Google Apps Script</div>
     <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px;">Cole a URL gerada ao publicar o Apps Script para conectar à planilha Google.</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px;">Cole a URL para conectar à planilha Google.</div>
       <input type="url" class="aurl" id="scriptUrl" placeholder="https://script.google.com/macros/s/...">
       <button class="bsurl" onclick="saveUrl()">💾 Salvar URL</button>
     </div>
     <div class="stitle" style="margin-top:20px;">Senhas de Acesso</div>
     <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6;">Senhas salvas na planilha — valem em todos os dispositivos.</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Senhas salvas na planilha — valem em todos os dispositivos.</div>
       <div class="mf"><label>Perfil</label>
         <select id="fPR"><option value="admin">Administrador</option><option value="central">Central</option><option value="supervisor">Supervisor</option><option value="agente">Agente</option></select>
       </div>
       <div class="mfrow">
-        <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..."></div>
-        <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..."></div>
+        <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..." style="text-transform:none;"></div>
+        <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..." style="text-transform:none;"></div>
       </div>
       <button class="bsurl" onclick="savePass()">🔑 Alterar Senha</button>
     </div>
@@ -301,11 +299,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
             <div><label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">Até</label><input type="date" id="rangeEnd"></div>
           </div>
           <button class="badd-range" onclick="addRange()">＋ Adicionar intervalo</button>
-          <div class="dates-or"><span>ou adicionar data específica</span></div>
-          <div class="add-single-row">
-            <input type="date" id="newDI">
-            <button class="badd-single" onclick="addSingle()">＋</button>
-          </div>
+          <div class="dates-or"><span>ou data específica</span></div>
+          <div class="add-single-row"><input type="date" id="newDI"><button class="badd-single" onclick="addSingle()">＋</button></div>
           <div class="dcont" id="dCont"></div>
         </div>
       </div>
@@ -326,7 +321,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
           <select id="fRT"><option value="">Selecione...</option><option value="madrugada">Madrugada (00:01h–05:50h)</option><option value="manha">Manhã (06:00h–12:32h)</option><option value="tarde">Tarde (12:00h–18:40h)</option><option value="noite">Noite (18:00h–23:58h)</option></select>
         </div>
       </div>
-      <div class="mf"><label>Local / Posto</label><input type="text" id="fRL" placeholder="Ex: Semáforo REG.13979-26 – Av. Eng. Santana Júnior"></div>
+      <div class="mf"><label>Local / Posto</label><input type="text" id="fRL" placeholder="Ex: Semáforo REG.13979-26"></div>
       <div class="mf"><label>Agente a ser Rendido</label><input type="text" id="fRA" placeholder="Nome e/ou matrícula"></div>
       <div class="mf"><label>Motivo da Rendição</label><textarea id="fRM" placeholder="Descreva o motivo..."></textarea></div>
       <div class="mf"><label>Substituto (se já definido)</label><input type="text" id="fRS" placeholder="Preencher quando realizada"></div>
@@ -347,8 +342,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 </div>
 
 <div class="cov" id="confDlg">
-  <div class="cbox">
-    <h3 id="confT">Confirmar</h3><p id="confM">Tem certeza?</p>
+  <div class="cbox"><h3 id="confT">Confirmar</h3><p id="confM">Tem certeza?</p>
     <div class="cbtns"><button class="cno" onclick="cc(false)">Não</button><button class="cyes" id="confY" onclick="cc(true)">Sim</button></div>
   </div>
 </div>
@@ -360,41 +354,27 @@ const LS={url:'amc_url',session:'amc_session'};
 const DPW={admin:'admin2026',central:'ceope2026',supervisor:'sup2026',agente:'amc2026'};
 const RL={admin:'Administrador',central:'Central CEOPE',supervisor:'Supervisor',agente:'Agente'};
 const RC={admin:'ra',central:'rc',supervisor:'rs',agente:'rag'};
-const TL={qru:'QRU / Conhecimento',interdicao:'Autorização Interdição',circulacao:'Liberação Circulação',estacionamento:'Liberação Estacionamento',fato:'Fato / Ocorrência'};
-const TRN={madrugada:'Madrugada (00:01h–05:50h)',manha:'Manhã (06:00h–12:32h)',tarde:'Tarde (12:00h–18:40h)',noite:'Noite (18:00h–23:58h)'};
+const TL={qru:'QRU / CONHECIMENTO',interdicao:'AUTORIZAÇÃO INTERDIÇÃO',circulacao:'LIBERAÇÃO CIRCULAÇÃO',estacionamento:'LIBERAÇÃO ESTACIONAMENTO',fato:'FATO / OCORRÊNCIA'};
+const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32H)',tarde:'TARDE (12:00H–18:40H)',noite:'NOITE (18:00H–23:58H)'};
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={
-  role:null,name:'',
-  aD:new Date(),rD:new Date(),
-  filter:'todos',
-  records:[],rends:[],
-  pw:{...DPW},url:'',
-  eA:null,eR:null,supId:null,
-  selT:null,dates:[],
-  confCb:null
-};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null};
 
 // ── BOOT ──
 function boot(){
-  G.url = SCRIPT_URL;
+  G.url=SCRIPT_URL;
   try{const u=localStorage.getItem(LS.url);if(u)G.url=u;}catch(ex){}
-  // Restaurar sessão salva
   try{
     const sess=localStorage.getItem(LS.session);
-    if(sess){
-      const s=JSON.parse(sess);
-      if(s.role&&s.name){G.role=s.role;G.name=s.name;return true;}
-    }
+    if(sess){const s=JSON.parse(sess);if(s.role&&s.name){G.role=s.role;G.name=s.name;return true;}}
   }catch(ex){}
   return false;
 }
 
 async function loadPasswords(){
-  if(!G.url)return;
   try{const r=await api('getPasswords',{});if(r.data)G.pw={...DPW,...r.data};}
-  catch(ex){console.log('Senhas padrão em uso.');}
+  catch(ex){}
 }
 
 // ── LOGIN ──
@@ -414,7 +394,7 @@ async function doLogin(){
   await loadPasswords();
   btn.textContent='Entrar no Sistema';btn.disabled=false;
   if(pass!==G.pw[role]){err.textContent='Senha incorreta.';err.style.display='block';return;}
-  err.style.display='none';G.role=role;G.name=name||RL[role];
+  err.style.display='none';G.role=role;G.name=name?name.toUpperCase():RL[role];
   try{localStorage.setItem(LS.session,JSON.stringify({role:G.role,name:G.name}));}catch(ex){}
   initApp();
 }
@@ -441,27 +421,22 @@ function initApp(){
   document.getElementById('btnNR').style.display=cw?'flex':'none';
   document.getElementById('tab-adm').style.display=G.role==='admin'?'flex':'none';
   G.aD=new Date();G.rD=new Date();
-  setDateInput('authDateInput',G.aD);
-  setDateInput('rendDateInput',G.rD);
+  setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
   if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
   loadRecords();loadRenditions();
 }
 
-// ── TABS / NAV ──
 function switchTab(t){
   document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tp').forEach(x=>x.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   document.getElementById('pane-'+t).classList.add('active');
 }
-function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDateInput('authDateInput',G.aD);renderAuth();}
-function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDateInput('rendDateInput',G.rD);renderRend();}
-function onAuthDateChange(){const v=document.getElementById('authDateInput').value;if(v){G.aD=localDate(v);renderAuth();}}
-function onRendDateChange(){const v=document.getElementById('rendDateInput').value;if(v){G.rD=localDate(v);renderRend();}}
-function goToday(w){
-  if(w==='auth'){G.aD=new Date();setDateInput('authDateInput',G.aD);loadRecords();}
-  else{G.rD=new Date();setDateInput('rendDateInput',G.rD);loadRenditions();}
-}
+function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);renderAuth();}
+function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);renderRend();}
+function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);renderAuth();}}
+function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);renderRend();}}
+function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
 
 // ── API ──
@@ -469,28 +444,26 @@ async function api(action,payload){
   const r=await fetch(G.url+'?action='+action,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}});
   const d=await r.json();if(d.error)throw new Error(d.error);return d;
 }
-
 async function loadRecords(manual){
   spin('bRefA',true);
   try{const r=await api('getRecords',{});G.records=r.data||[];renderAuth();if(manual)toast('Autorizações atualizadas ✓','ok');}
-  catch(ex){toast('Erro ao carregar: '+ex.message,'err');}
+  catch(ex){toast('Erro: '+ex.message,'err');}
   spin('bRefA',false);
 }
-
 async function loadRenditions(manual){
   spin('bRefR',true);
   try{const r=await api('getRenditions',{});G.rends=r.data||[];renderRend();if(manual)toast('Rendições atualizadas ✓','ok');}
-  catch(ex){toast('Erro ao carregar: '+ex.message,'err');}
+  catch(ex){toast('Erro: '+ex.message,'err');}
   spin('bRefR',false);
 }
-
 function spin(id,on){document.getElementById(id).classList.toggle('spin',on);}
 
 // ── RENDER AUTH ──
 function renderAuth(){
   const td=iso(G.aD);
   const fl=G.records.filter(r=>{
-    const inDate=(r.dates||[]).includes(td);
+    const dates=r.dates||[];
+    const inDate=dates.includes(td);
     return inDate&&(G.filter==='todos'||r.type===G.filter);
   });
   const el=document.getElementById('authList');
@@ -498,38 +471,35 @@ function renderAuth(){
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
   el.innerHTML=fl.map(r=>{
-    const dt=(r.dates||[]).map(d=>`<span class="dtag">${fmtDateBR(d)}</span>`).join('');
+    const dt=(r.dates||[]).map(d=>`<span class="dtag">${fmtBR(d)}</span>`).join('');
     const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="delAuth('${r.id}')">Excluir</button></div>`:'';
     return`<div class="rcard t-${r.type}">
-      <div class="rchead"><span class="tbadge ${bm[r.type]}">${TL[r.type]}</span><span class="rreg">${r.reg||''}</span></div>
-      ${dhtml(r)}
-      ${dt?`<div class="rdates">${dt}</div>`:''}
+      <div class="rchead">
+        <span class="tbadge ${bm[r.type]}">${TL[r.type]}</span>
+        ${r.reg?`<span class="rreg">Nº ${r.reg}</span>`:''}
+      </div>
+      ${cardRows(r)}
+      ${dt?`<div class="rdates"><div class="dates-label">Data(s) de Vigência</div>${dt}</div>`:''}
       ${ac}
     </div>`;
   }).join('');
 }
 
-function dhtml(r){
+// Gera linhas label+valor para o card — só mostra o que tem conteúdo
+function cardRow(label,value){
+  if(!value||value.trim()==='')return'';
+  return`<div class="cinfo-row"><div class="cinfo-label">${label}</div><div class="cinfo-value">${value}</div></div>`;
+}
+function cardRows(r){
   switch(r.type){
-    case'qru':case'interdicao':return`
-      <div class="rtitle">${r.evento||'Sem descrição'}</div>
-      <div class="rinfo"><span class="rinfo-label">Local</span>${r.local||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Período</span>${r.periodo||r.horario||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Responsável</span>${r.responsavel||'—'}</div>`;
-    case'circulacao':return`
-      <div class="rtitle">${r.area||'Sem área definida'}</div>
-      <div class="rinfo"><span class="rinfo-label">Veículos</span>${r.veiculos||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Período</span>${r.periodo||'—'}</div>`;
-    case'estacionamento':return`
-      <div class="rtitle">${r.local||'Sem local'}</div>
-      <div class="rinfo"><span class="rinfo-label">Veículos</span>${r.veiculos||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Objetivo</span>${r.objetivo||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Período</span>${r.periodo||'—'}</div>`;
-    case'fato':return`
-      <div class="rtitle">${r.descricao||'Sem descrição'}</div>
-      <div class="rinfo"><span class="rinfo-label">Local</span>${r.local||'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Data</span>${r.date?fmtDateBR(r.date):'—'}</div>
-      <div class="rinfo"><span class="rinfo-label">Período</span>${r.periodo||r.horario||'—'}</div>`;
+    case'qru':case'interdicao':
+      return cardRow('Evento / Descrição',r.evento)+cardRow('Local',r.local)+cardRow('Área / Via(s)',r.area)+cardRow('Período / Horário',r.periodo||r.horario)+cardRow('Responsável',r.responsavel)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo',r.objetivo)+cardRow('Observação',r.obs);
+    case'circulacao':
+      return cardRow('Área / Via(s)',r.area)+cardRow('Local',r.local)+cardRow('Veículos',r.veiculos)+cardRow('Período',r.periodo)+cardRow('Responsável',r.responsavel)+cardRow('Observação',r.obs);
+    case'estacionamento':
+      return cardRow('Local',r.local)+cardRow('Área',r.area)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo / Finalidade',r.objetivo)+cardRow('Período',r.periodo)+cardRow('Responsável',r.responsavel)+cardRow('Observação',r.obs);
+    case'fato':
+      return cardRow('Descrição',r.descricao||r.evento)+cardRow('Local',r.local)+cardRow('Área / Via(s)',r.area)+cardRow('Data do Fato',r.date?fmtBR(r.date):'')+cardRow('Período / Horário',r.periodo||r.horario)+cardRow('Responsável / Envolvido',r.responsavel)+cardRow('Veículos',r.veiculos)+cardRow('Objetivo',r.objetivo)+cardRow('Observação',r.obs);
     default:return'';
   }
 }
@@ -559,83 +529,86 @@ function openAuthModal(id){
 function editAuth(id){openAuthModal(id);}
 
 function selType(t,el){
-  G.selT=t;document.querySelectorAll('.topt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');
+  G.selT=t;
+  document.querySelectorAll('.topt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
   buildDyn(t,null);
-  document.getElementById('datesS').style.display=t==='fato'?'none':'block';
+  document.getElementById('datesS').style.display='block';
 }
 
+// Campos do fato são TODOS os campos possíveis — mostra só o preenchido no card
 function buildDyn(t,d){
-  d=d||{};let h='';
-  // periodo substitui horario em todos os tipos
+  d=d||{};
+  // Fato tem todos os campos
+  if(t==='fato'){
+    document.getElementById('dynF').innerHTML=`
+      <div class="mf"><label>Descrição do Fato</label><textarea id="fDe" placeholder="Descreva o fato...">${e(d.descricao||d.evento)}</textarea></div>
+      <div class="mf"><label>Local / Endereço</label><input type="text" id="fLo" value="${e(d.local)}" placeholder="Endereço ou local"></div>
+      <div class="mf"><label>Área / Via(s)</label><input type="text" id="fAr" value="${e(d.area)}" placeholder="Região, bairro, vias..."></div>
+      <div class="mfrow">
+        <div class="mf"><label>Data do Fato</label><input type="date" id="fDF" value="${d.date||iso(new Date())}"></div>
+        <div class="mf"><label>Período / Horário</label><input type="text" id="fPeriodo" value="${e(d.periodo||d.horario)}" placeholder="Ex: Das 08h às 18h"></div>
+      </div>
+      <div class="mf"><label>Responsável / Envolvido</label><input type="text" id="fRe" value="${e(d.responsavel)}" placeholder="Nome do responsável ou envolvido"></div>
+      <div class="mf"><label>Veículos</label><input type="text" id="fVe" value="${e(d.veiculos)}" placeholder="Tipos ou placas (se houver)"></div>
+      <div class="mf"><label>Objetivo / Finalidade</label><input type="text" id="fOb" value="${e(d.objetivo)}" placeholder="Objetivo ou finalidade (se houver)"></div>
+      <div class="mf"><label>Observação</label><textarea id="fObs" placeholder="Observações adicionais...">${e(d.obs)}</textarea></div>`;
+    document.getElementById('datesS').style.display='block';
+    renderDates();
+    return;
+  }
+  let h='';
   switch(t){
     case'qru':case'interdicao':
       h=`<div class="mf"><label>Evento / Descrição</label><input type="text" id="fEv" value="${e(d.evento)}" placeholder="Nome do evento"></div>
       <div class="mf"><label>Local</label><input type="text" id="fLo" value="${e(d.local)}" placeholder="Endereço ou local"></div>
       <div class="mf"><label>Período / Horário</label><input type="text" id="fPeriodo" value="${e(d.periodo||d.horario)}" placeholder="Ex: Das 08h às 18h / Dia todo"></div>
-      <div class="mf"><label>Responsável</label><input type="text" id="fRe" value="${e(d.responsavel)}" placeholder="Nome do responsável"></div>`;break;
+      <div class="mf"><label>Responsável</label><input type="text" id="fRe" value="${e(d.responsavel)}" placeholder="Nome do responsável"></div>
+      <div class="mf"><label>Observação</label><textarea id="fObs" placeholder="Observações adicionais...">${e(d.obs)}</textarea></div>`;break;
     case'circulacao':
       h=`<div class="mf"><label>Área / Via(s)</label><textarea id="fAr" placeholder="Região, bairro, vias...">${e(d.area)}</textarea></div>
       <div class="mf"><label>Veículos</label><input type="text" id="fVe" value="${e(d.veiculos)}" placeholder="Tipos ou placas"></div>
-      <div class="mf"><label>Período</label><input type="text" id="fPeriodo" value="${e(d.periodo)}" placeholder="Ex: Dia todo / 06h às 18h"></div>`;break;
+      <div class="mf"><label>Período</label><input type="text" id="fPeriodo" value="${e(d.periodo)}" placeholder="Ex: Dia todo / 06h às 18h"></div>
+      <div class="mf"><label>Observação</label><textarea id="fObs" placeholder="Observações adicionais...">${e(d.obs)}</textarea></div>`;break;
     case'estacionamento':
       h=`<div class="mf"><label>Local</label><input type="text" id="fLE" value="${e(d.local)}" placeholder="Local de estacionamento"></div>
       <div class="mf"><label>Veículos</label><input type="text" id="fVe" value="${e(d.veiculos)}" placeholder="Tipos ou placas"></div>
       <div class="mf"><label>Objetivo / Finalidade</label><input type="text" id="fOb" value="${e(d.objetivo)}" placeholder="Ex: Carga e descarga"></div>
-      <div class="mf"><label>Período</label><input type="text" id="fPeriodo" value="${e(d.periodo)}" placeholder="Ex: 07h às 10h"></div>`;break;
-    case'fato':
-      h=`<div class="mf"><label>Descrição do Fato</label><textarea id="fDe" placeholder="Descreva o fato...">${e(d.descricao)}</textarea></div>
-      <div class="mf"><label>Local / Endereço</label><input type="text" id="fLF" value="${e(d.local)}" placeholder="Local do fato"></div>
-      <div class="mfrow">
-        <div class="mf"><label>Data do Fato</label><input type="date" id="fDF" value="${d.date||iso(new Date())}"></div>
-        <div class="mf"><label>Período / Horário</label><input type="text" id="fPeriodo" value="${e(d.periodo||d.horario)}" placeholder="Ex: Das 12h às 18h"></div>
-      </div>`;break;
+      <div class="mf"><label>Período</label><input type="text" id="fPeriodo" value="${e(d.periodo)}" placeholder="Ex: 07h às 10h"></div>
+      <div class="mf"><label>Observação</label><textarea id="fObs" placeholder="Observações adicionais...">${e(d.obs)}</textarea></div>`;break;
   }
   document.getElementById('dynF').innerHTML=h;
-  document.getElementById('datesS').style.display=t==='fato'?'none':'block';
   renderDates();
 }
 
-// Adicionar intervalo de datas
 function addRange(){
   const s=document.getElementById('rangeStart').value;
   const en=document.getElementById('rangeEnd').value;
-  if(!s||!en){toast('Selecione as datas de início e fim.','err');return;}
+  if(!s||!en){toast('Selecione início e fim.','err');return;}
   if(s>en){toast('Data inicial maior que a final.','err');return;}
-  let cur=new Date(s+'T12:00:00');
-  const end=new Date(en+'T12:00:00');
-  let added=0;
-  while(cur<=end){
-    const ds=iso(cur);
-    if(!G.dates.includes(ds)){G.dates.push(ds);added++;}
-    cur.setDate(cur.getDate()+1);
-  }
-  G.dates.sort();
-  renderDates();
-  toast(added+' datas adicionadas!','ok');
+  let cur=new Date(s+'T12:00:00'),end=new Date(en+'T12:00:00'),added=0;
+  while(cur<=end){const ds=iso(cur);if(!G.dates.includes(ds)){G.dates.push(ds);added++;}cur.setDate(cur.getDate()+1);}
+  G.dates.sort();renderDates();toast(added+' datas adicionadas!','ok');
 }
-function addSingle(){
-  const v=document.getElementById('newDI').value;
-  if(!v)return;
-  if(!G.dates.includes(v)){G.dates.push(v);G.dates.sort();renderDates();}
-}
+function addSingle(){const val=document.getElementById('newDI').value;if(!val)return;if(!G.dates.includes(val)){G.dates.push(val);G.dates.sort();renderDates();}}
 function removeDate(d){G.dates=G.dates.filter(x=>x!==d);renderDates();}
-function renderDates(){
-  document.getElementById('dCont').innerHTML=G.dates.map(d=>
-    `<div class="dentry"><span>${fmtDateBR(d)}</span><button onclick="removeDate('${d}')">✕</button></div>`
-  ).join('');
-}
+function renderDates(){document.getElementById('dCont').innerHTML=G.dates.map(d=>`<div class="dentry"><span>${fmtBR(d)}</span><button onclick="removeDate('${d}')">✕</button></div>`).join('');}
 
 async function saveAuth(){
   const t=G.selT;if(!t){toast('Selecione o tipo.','err');return;}
-  const reg=v('fReg');let ex={};
-  switch(t){
-    case'qru':case'interdicao':ex={evento:v('fEv'),local:v('fLo'),periodo:v('fPeriodo'),responsavel:v('fRe')};break;
-    case'circulacao':ex={area:v('fAr'),veiculos:v('fVe'),periodo:v('fPeriodo')};break;
-    case'estacionamento':ex={local:v('fLE'),veiculos:v('fVe'),objetivo:v('fOb'),periodo:v('fPeriodo')};break;
-    case'fato':ex={descricao:v('fDe'),local:v('fLF'),date:v('fDF'),periodo:v('fPeriodo')};break;
+  const reg=up(v('fReg'));
+  let ex={};
+  if(t==='fato'){
+    ex={descricao:up(v('fDe')),local:up(v('fLo')),area:up(v('fAr')),date:v('fDF'),periodo:up(v('fPeriodo')),responsavel:up(v('fRe')),veiculos:up(v('fVe')),objetivo:up(v('fOb')),obs:up(v('fObs'))};
+  } else {
+    switch(t){
+      case'qru':case'interdicao':ex={evento:up(v('fEv')),local:up(v('fLo')),periodo:up(v('fPeriodo')),responsavel:up(v('fRe')),obs:up(v('fObs'))};break;
+      case'circulacao':ex={area:up(v('fAr')),veiculos:up(v('fVe')),periodo:up(v('fPeriodo')),obs:up(v('fObs'))};break;
+      case'estacionamento':ex={local:up(v('fLE')),veiculos:up(v('fVe')),objetivo:up(v('fOb')),periodo:up(v('fPeriodo')),obs:up(v('fObs'))};break;
+    }
   }
-  const dates=t==='fato'?[ex.date]:G.dates;
-  if(!dates.length||!dates[0]){toast('Adicione ao menos uma data.','err');return;}
+  const dates=G.dates;
+  if(!dates.length){toast('Adicione ao menos uma data.','err');return;}
   const rec={id:G.eA||gid(),type:t,reg,dates,createdBy:G.name,createdAt:new Date().toISOString(),...ex};
   setSav('bSA',true);
   try{await api(G.eA?'updateRecord':'addRecord',rec);await loadRecords();cm('mAuth');toast(G.eA?'Registro atualizado!':'Registro salvo!','ok');}
@@ -650,7 +623,7 @@ async function delAuth(id){
   });
 }
 
-// ── RENDER RENDIÇÕES ──
+// ── RENDER RENDIÇÕES ── CORRIGIDO
 function renderRend(){
   const td=iso(G.rD);
   const cw=['admin','central'].includes(G.role);
@@ -658,25 +631,30 @@ function renderRend(){
   const el=document.getElementById('rendList');
   let h='';
   TURNOS.forEach(t=>{
-    const items=G.rends.filter(r=>String(r.date)===td&&String(r.turno)===t);
+    // Comparação robusta: normaliza a string do turno
+    const items=G.rends.filter(r=>{
+      const rDate=String(r.date||'').trim().substring(0,10);
+      const rTurno=String(r.turno||'').trim().toLowerCase();
+      return rDate===td && rTurno===t;
+    });
     if(!items.length&&!cw)return;
     h+=`<div class="stitle"><span class="tbadge2 ${TRC[t]}">${TRN[t]}</span></div>`;
     if(!items.length){
-      h+=`<div style="text-align:center;padding:8px 0;color:var(--text3);font-size:12px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;">Nenhuma rendição</div>`;
+      h+=`<div style="text-align:center;padding:8px 0 4px;color:var(--text3);font-size:13px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;">Nenhuma rendição</div>`;
     } else {
       items.forEach(r=>{
-        const sub=r.substituto
-          ?`<div class="ndsub">✅ Rendido por: ${r.substituto}</div>`
+        const sub=r.substituto&&r.substituto.trim()
+          ?`<div class="ndsub">✅ RENDIDO POR: ${r.substituto}</div>`
           :(r.status==='pendente'&&cs?`<button class="brend" onclick="openSup('${r.id}')">Informar Substituto</button>`:'');
         const ac=(r.status==='pendente'&&cw)
-          ?`<div class="ndact"><button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button><button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar Rendição</button></div>`:'';
+          ?`<div class="ndact"><button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button><button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar</button></div>`:'';
         const sl={pendente:'sp',realizada:'sr',cancelada:'sc'}[r.status]||'sp';
-        const stxt={pendente:'Pendente',realizada:'Realizada',cancelada:'Cancelada'}[r.status]||r.status;
+        const stxt={pendente:'PENDENTE',realizada:'REALIZADA',cancelada:'CANCELADA'}[r.status]||r.status.toUpperCase();
         h+=`<div class="ndcard ${sl}">
           <div class="ndhr"><div class="ndag">${r.agente||'—'}</div><span class="ndsb">${stxt}</span></div>
-          ${r.reg?`<div class="ndinfo"><span class="ndinfo-label">Registro</span>${r.reg}</div>`:''}
-          <div class="ndinfo"><span class="ndinfo-label">Local</span>${r.local||'—'}</div>
-          <div class="ndinfo"><span class="ndinfo-label">Motivo</span>${r.motivo||'—'}</div>
+          ${ndRow('Registro',r.reg)}
+          ${ndRow('Local / Posto',r.local)}
+          ${ndRow('Motivo',r.motivo)}
           ${sub}${ac}
         </div>`;
       });
@@ -685,12 +663,17 @@ function renderRend(){
   el.innerHTML=h||`<div class="empty"><span class="eico">🔄</span><div class="etxt2">Nenhuma rendição registrada</div></div>`;
 }
 
+function ndRow(label,value){
+  if(!value||String(value).trim()==='')return'';
+  return`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value">${value}</div></div>`;
+}
+
 // ── MODAL RENDIÇÃO ──
 function openRendModal(id){
   G.eR=id||null;const r=id?G.rends.find(x=>x.id===id):null;
   document.getElementById('mRendTit').textContent=id?'Editar Rendição':'Nova Rendição';
   document.getElementById('fRReg').value=r?(r.reg||''):'';
-  document.getElementById('fRD').value=r?r.date:iso(G.rD);
+  document.getElementById('fRD').value=r?String(r.date||'').substring(0,10):iso(G.rD);
   document.getElementById('fRT').value=r?r.turno:'';
   document.getElementById('fRL').value=r?(r.local||''):'';
   document.getElementById('fRA').value=r?(r.agente||''):'';
@@ -703,11 +686,15 @@ function editRend(id){openRendModal(id);}
 async function saveRend(){
   const d={
     id:G.eR||gid(),
-    reg:v('fRReg'),
-    date:v('fRD'),turno:v('fRT'),
-    local:v('fRL'),agente:v('fRA'),
-    motivo:v('fRM'),substituto:v('fRS'),
-    createdBy:G.name,createdAt:new Date().toISOString()
+    reg:up(v('fRReg')),
+    date:v('fRD'),
+    turno:v('fRT'),
+    local:up(v('fRL')),
+    agente:up(v('fRA')),
+    motivo:up(v('fRM')),
+    substituto:up(v('fRS')),
+    createdBy:G.name,
+    createdAt:new Date().toISOString()
   };
   if(!d.date||!d.turno||!d.agente){toast('Preencha data, turno e agente.','err');return;}
   d.status=d.substituto?'realizada':'pendente';
@@ -723,10 +710,9 @@ async function cancelRend(id){
     catch(ex){toast('Erro: '+ex.message,'err');}
   },'red');
 }
-
 function openSup(id){G.supId=id;document.getElementById('fSS').value='';om('mSup');}
 async function saveSubst(){
-  const s=document.getElementById('fSS').value.trim();
+  const s=up(document.getElementById('fSS').value.trim());
   if(!s){toast('Informe o substituto.','err');return;}
   try{await api('updateRendition',{id:G.supId,substituto:s,status:'realizada',rendidoBy:G.name});await loadRenditions();cm('mSup');toast('Rendição realizada! ✓','ok');}
   catch(ex){toast('Erro: '+ex.message,'err');}
@@ -735,15 +721,14 @@ async function saveSubst(){
 // ── ADMIN ──
 function saveUrl(){
   const u=document.getElementById('scriptUrl').value.trim();
-  if(!u){toast('Cole a URL do script.','err');return;}
+  if(!u){toast('Cole a URL.','err');return;}
   G.url=u;localStorage.setItem(LS.url,u);
-  toast('URL salva! Carregando dados...','ok');
-  loadRecords();loadRenditions();
+  toast('URL salva!','ok');loadRecords();loadRenditions();
 }
 function renderPassList(){
   document.getElementById('passList').innerHTML=['admin','central','supervisor','agente'].map(r=>`
     <div class="adcard" style="display:flex;align-items:center;justify-content:space-between;">
-      <div><div style="font-weight:600;font-size:13px;">${RL[r]}</div>
+      <div><div style="font-weight:600;font-size:14px;">${RL[r]}</div>
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);">${'•'.repeat((G.pw[r]||'').length)} (${(G.pw[r]||'').length} chars)</div></div>
       <div class="urole ${RC[r]}">${r.toUpperCase()}</div>
     </div>`).join('');
@@ -756,15 +741,14 @@ async function savePass(){
   G.pw[r]=np;renderPassList();
   document.getElementById('fPN').value='';document.getElementById('fPC').value='';
   try{await api('savePasswords',G.pw);toast('Senha de '+RL[r]+' alterada e sincronizada!','ok');}
-  catch(ex){toast('Senha salva só neste dispositivo (verifique a URL do script).','err');}
+  catch(ex){toast('Senha salva localmente (verifique URL do script).','err');}
 }
 
 // ── UTILS ──
 function om(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function cm(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
 function conf(title,msg,cb,bt){
-  document.getElementById('confT').textContent=title;
-  document.getElementById('confM').textContent=msg;
+  document.getElementById('confT').textContent=title;document.getElementById('confM').textContent=msg;
   document.getElementById('confY').className='cyes'+(bt==='red'?'':' bl');
   G.confCb=cb;document.getElementById('confDlg').classList.add('open');
 }
@@ -772,36 +756,18 @@ function cc(yes){document.getElementById('confDlg').classList.remove('open');if(
 function toast(msg,tp){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(tp||'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
 function setSav(id,on){const b=document.getElementById(id);if(b){b.disabled=on;b.textContent=on?'Salvando...':'Salvar';}}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function iso(d){
-  // Garante data local, não UTC
-  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
-  return y+'-'+m+'-'+dd;
-}
-function localDate(s){
-  // Cria data no fuso local, evitando o problema de UTC
-  const [y,m,d]=s.split('-').map(Number);
-  return new Date(y,m-1,d);
-}
-function setDateInput(id,d){document.getElementById(id).value=iso(d);}
-function fmtDateBR(s){
-  // Formata "2026-03-22" → "22/03/2026"
-  if(!s||s.length<10)return s;
-  return s.substring(8,10)+'/'+s.substring(5,7)+'/'+s.substring(0,4);
-}
+function iso(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+dd;}
+function localDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function setDI(id,d){document.getElementById(id).value=iso(d);}
+function fmtBR(s){if(!s||s.length<10)return s||'';return s.substring(8,10)+'/'+s.substring(5,7)+'/'+s.substring(0,4);}
 function v(id){const el=document.getElementById(id);return el?(el.value||'').trim():'';}
+function up(s){return s?s.toUpperCase():'';}
 function e(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-document.querySelectorAll('.mover').forEach(o=>{
-  o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});
-});
+document.querySelectorAll('.mover').forEach(o=>{o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});});
 
-if(boot()){
-  // Sessão restaurada, entrar direto
-  initApp();
-} else {
-  // Sem sessão, mostrar login
-  document.getElementById('loginScreen').style.display='flex';
-}
+// Iniciar
+if(boot()){initApp();}else{document.getElementById('loginScreen').style.display='flex';}
 </script>
 </body>
 </html>
