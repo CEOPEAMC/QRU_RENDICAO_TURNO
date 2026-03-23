@@ -96,7 +96,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
 .ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);opacity:.85;}.ndcard.sc{border-left:4px solid var(--text3);opacity:.55;}
 .ndsb{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:4px;}
-.sp .ndsb{background:rgba(245,158,11,0.15);color:var(--gold);}.sr .ndsb{background:rgba(16,185,129,0.15);color:var(--green2);}.sc .ndsb{background:rgba(100,116,139,0.15);color:var(--text3);}
+.sp .ndsb{background:rgba(245,158,11,0.15);color:var(--gold);}.sr .ndsb{background:rgba(16,185,129,0.15);color:var(--green2);}.sc .ndsb{background:rgba(239,68,68,0.2);color:var(--red2);border:1px solid rgba(239,68,68,0.3);}
 .ndhr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .ndag{font-weight:700;font-size:17px;color:#ffffff;}
 .ndinfo-row{margin-bottom:6px;}
@@ -156,6 +156,17 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .aurl{width:100%;padding:10px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;margin-top:6px;}
 .aurl:focus{border-color:var(--accent2);}
 .bsurl{margin-top:8px;padding:10px 18px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+/* BUSCA AUTORIZAÇÕES */
+.auth-search-block{background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:12px;margin-bottom:12px;}
+.auth-search-block .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.auth-search-block input[type=date]{width:100%;padding:8px 10px;background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:13px;outline:none;-webkit-appearance:none;}
+.auth-search-block input[type=date]:focus{border-color:var(--accent2);}
+.auth-search-block .search-input-row{display:flex;gap:8px;align-items:center;}
+.auth-search-block .search-input-row input[type=text]{flex:1;padding:9px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
+.auth-search-block .search-input-row input::placeholder{color:var(--text3);text-transform:none;}
+.btn-buscar{padding:9px 16px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+.btn-limpar{padding:9px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;cursor:pointer;}
+.search-result-info{font-size:12px;color:var(--accent2);font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
 /* ABAS DE TURNO RENDIÇÕES */
 .rend-tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;}
 .rend-tab{flex-shrink:0;padding:7px 14px;border-radius:8px;border:1px solid var(--border2);background:var(--surface3);color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
@@ -237,8 +248,22 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
       <button class="bnav" onclick="navDate(1)">›</button>
       <button class="bnav btoday" onclick="goToday('auth')">Hoje</button>
       <button class="bref" id="bRefA" onclick="loadRecords(true)">↻</button>
+      <button class="bnav btoday" onclick="toggleBusca()" id="btnBusca">🔍</button>
       <button class="bact" id="btnNA" onclick="openAuthModal()" style="display:none;">＋ Novo</button>
     </div>
+    <div class="auth-search-block" id="authSearchBlock" style="display:none;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;">Buscar por Local / Via</div>
+      <div class="row2">
+        <div><label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">De</label><input type="date" id="authSrchDe"></div>
+        <div><label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">Até</label><input type="date" id="authSrchAte"></div>
+      </div>
+      <div class="search-input-row">
+        <input type="text" id="authSrchLocal" placeholder="Digite o local ou via...">
+        <button class="btn-buscar" onclick="executarBusca()">Buscar</button>
+        <button class="btn-limpar" onclick="limparBusca()">✕</button>
+      </div>
+    </div>
+    <div id="searchResultInfo" class="search-result-info" style="display:none;"></div>
     <div class="frow">
       <div class="fchip active" onclick="setFilter('todos')" data-f="todos">Todos</div>
       <div class="fchip" onclick="setFilter('qru')" data-f="qru">QRU</div>
@@ -373,6 +398,10 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 
 <div class="cov" id="confDlg">
   <div class="cbox"><h3 id="confT">Confirmar</h3><p id="confM">Tem certeza?</p>
+    <div id="confExtra" style="display:none;margin-bottom:16px;text-align:left;">
+      <label style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;display:block;margin-bottom:6px;">Motivo do Cancelamento</label>
+      <textarea id="confMotivo" style="width:100%;padding:10px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;resize:none;height:80px;text-transform:uppercase;" placeholder="Descreva o motivo..."></textarea>
+    </div>
     <div class="cbtns"><button class="cno" onclick="cc(false)">Não</button><button class="cyes" id="confY" onclick="cc(true)">Sim</button></div>
   </div>
 </div>
@@ -389,7 +418,7 @@ const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null};
 
 // ── BOOT ──
 function boot(){
@@ -454,6 +483,11 @@ function initApp(){
   setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
   if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
   loadRecords();loadRenditions();
+  // Auto-refresh a cada 60 segundos
+  if(G.autoRefreshTimer)clearInterval(G.autoRefreshTimer);
+  G.autoRefreshTimer=setInterval(()=>{
+    loadRecords(false,true);loadRenditions(false,true);
+  },60000);
 }
 
 function switchTab(t){
@@ -468,6 +502,60 @@ function onAuthDateChange(){const val=document.getElementById('authDateInput').v
 function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);renderRend();}}
 function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
+
+function toggleBusca(){
+  G.searchMode=!G.searchMode;
+  document.getElementById('authSearchBlock').style.display=G.searchMode?'block':'none';
+  document.getElementById('btnBusca').style.background=G.searchMode?'rgba(37,99,235,0.3)':'';
+  if(!G.searchMode){limparBusca();}
+}
+function executarBusca(){
+  const local=(document.getElementById('authSrchLocal').value||'').trim().toUpperCase();
+  const de=document.getElementById('authSrchDe').value;
+  const ate=document.getElementById('authSrchAte').value;
+  if(!local){toast('Digite um local ou via para buscar.','err');return;}
+  // Filtrar registros que contêm o local em qualquer data do intervalo
+  G.searchResults=G.records.filter(r=>{
+    const campos=[r.local||'',r.area||'',r.descricao||'',r.evento||''].join(' ').toUpperCase();
+    if(!campos.includes(local))return false;
+    // Se não informou datas, busca em todos
+    if(!de&&!ate)return true;
+    // Verifica se alguma data do registro cai no intervalo
+    return (r.dates||[]).some(d=>{
+      if(de&&d<de)return false;
+      if(ate&&d>ate)return false;
+      return true;
+    });
+  });
+  const info=document.getElementById('searchResultInfo');
+  info.style.display='block';
+  info.textContent=`${G.searchResults.length} registro(s) encontrado(s) para "${local}"${de?' de '+fmtBR(de):''}${ate?' até '+fmtBR(ate):''}`;
+  renderAuthSearch();
+}
+function limparBusca(){
+  G.searchResults=null;
+  document.getElementById('authSrchLocal').value='';
+  document.getElementById('authSrchDe').value='';
+  document.getElementById('authSrchAte').value='';
+  document.getElementById('searchResultInfo').style.display='none';
+  renderAuth();
+}
+function renderAuthSearch(){
+  const el=document.getElementById('authList');
+  const fl=G.searchResults||[];
+  if(!fl.length){el.innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Nenhum registro encontrado</div></div>`;return;}
+  const cw=['admin','central'].includes(G.role);
+  const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
+  el.innerHTML=fl.map(r=>{
+    const vigencia=fmtVigencia(r.dates||[]);
+    const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="delAuth('${r.id}')">Excluir</button></div>`:'';
+    return`<div class="rcard t-${r.type}">
+      <div class="rchead"><span class="tbadge ${bm[r.type]}">${TL[r.type]}</span>${r.reg?`<span class="rreg">Nº ${r.reg}</span>`:''}
+      </div>${cardRows(r)}
+      ${vigencia?`<div class="rdates"><div class="dates-label">Vigência</div><span class="dtag">${vigencia}</span></div>`:''}
+      ${ac}</div>`;
+  }).join('');
+}
 const REND_TAB_ACTIVE={'madrugada':'active-ma','manha':'active-mn','tarde':'active-ta','noite':'active-no'};
 function setRendTab(t){
   G.rendTab=t;
@@ -487,17 +575,19 @@ async function api(action,payload){
   const r=await fetch(G.url+'?action='+action,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}});
   const d=await r.json();if(d.error)throw new Error(d.error);return d;
 }
-async function loadRecords(manual){
-  spin('bRefA',true);
-  try{const r=await api('getRecords',{});G.records=r.data||[];renderAuth();if(manual)toast('Autorizações atualizadas ✓','ok');}
-  catch(ex){toast('Erro: '+ex.message,'err');}
-  spin('bRefA',false);
+async function loadRecords(manual,silent){
+  if(!silent)spin('bRefA',true);
+  try{const r=await api('getRecords',{});G.records=r.data||[];
+    if(G.searchMode&&G.searchResults!==null){}else{renderAuth();}
+    if(manual)toast('Autorizações atualizadas ✓','ok');}
+  catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
+  if(!silent)spin('bRefA',false);
 }
-async function loadRenditions(manual){
-  spin('bRefR',true);
+async function loadRenditions(manual,silent){
+  if(!silent)spin('bRefR',true);
   try{const r=await api('getRenditions',{});G.rends=r.data||[];renderRend();if(manual)toast('Rendições atualizadas ✓','ok');}
-  catch(ex){toast('Erro: '+ex.message,'err');}
-  spin('bRefR',false);
+  catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
+  if(!silent)spin('bRefR',false);
 }
 function spin(id,on){document.getElementById(id).classList.toggle('spin',on);}
 
@@ -514,7 +604,7 @@ function renderAuth(){
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
   el.innerHTML=fl.map(r=>{
-    const dt=(r.dates||[]).map(d=>`<span class="dtag">${fmtBR(d)}</span>`).join('');
+    const vigencia=fmtVigencia(r.dates||[]);
     const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="delAuth('${r.id}')">Excluir</button></div>`:'';
     return`<div class="rcard t-${r.type}">
       <div class="rchead">
@@ -522,7 +612,7 @@ function renderAuth(){
         ${r.reg?`<span class="rreg">Nº ${r.reg}</span>`:''}
       </div>
       ${cardRows(r)}
-      ${dt?`<div class="rdates"><div class="dates-label">Data(s) de Vigência</div>${dt}</div>`:''}
+      ${vigencia?`<div class="rdates"><div class="dates-label">Vigência</div><span class="dtag">${vigencia}</span></div>`:''}
       ${ac}
     </div>`;
   }).join('');
@@ -715,6 +805,9 @@ function renderRend(){
 
     // Botões de ação — Editar, Concluir (se tiver substituto), Cancelar
     const podeConcluir=cw&&status==='pendente'&&r.substituto&&r.substituto.trim();
+    const motivoCanc=r.motivoCancelamento&&r.motivoCancelamento.trim()?
+      `<div class="ndinfo-row"><div class="ndinfo-label" style="color:var(--red2);">Motivo do Cancelamento</div><div class="ndinfo-value" style="color:var(--red2);">${r.motivoCancelamento}</div></div>`:'';
+    const btnReativar=(cw&&status==='cancelada')?`<div class="ndact"><button class="brend" onclick="reativarRend('${r.id}')">Reativar</button></div>`:'';
     const acoes=(cw&&status==='pendente')?`<div class="ndact">
       <button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button>
       ${podeConcluir?`<button class="brend" onclick="concluirRend('${r.id}')">Concluir</button>`:''}
@@ -729,6 +822,8 @@ function renderRend(){
       ${ndRow('Motivo',r.motivo)}
       ${agendadaHtml}
       ${btnAgendar}
+      ${motivoCanc}
+      ${btnReativar}
       ${acoes}
     </div>`;
   }).join('');
@@ -773,10 +868,19 @@ async function saveRend(){
 }
 
 async function cancelRend(id){
-  conf('Cancelar Rendição','Confirma cancelamento? O problema no local foi resolvido.',async()=>{
-    try{await api('updateRendition',{id,status:'cancelada',canceledBy:G.name});await loadRenditions();toast('Rendição cancelada.','ok');}
+  conf('Cancelar Rendição','Confirma cancelamento? Informe o motivo abaixo:',async()=>{
+    const motivo=up((document.getElementById('confMotivo')?.value||'').trim());
+    try{await api('updateRendition',{id,status:'cancelada',canceledBy:G.name,motivoCancelamento:motivo});
+      await loadRenditions();toast('Rendição cancelada.','ok');}
     catch(ex){toast('Erro: '+ex.message,'err');}
-  },'red');
+  },'red',true);
+}
+async function reativarRend(id){
+  conf('Reativar Rendição','Deseja reativar esta rendição? Ela voltará para Pendente.',async()=>{
+    try{await api('updateRendition',{id,status:'pendente',canceledBy:'',motivoCancelamento:'',reativadoBy:G.name});
+      await loadRenditions();toast('Rendição reativada!','ok');}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
 }
 async function concluirRend(id){
   conf('Concluir Rendição','Confirma que a rendição foi realizada com sucesso?',async()=>{
@@ -835,6 +939,15 @@ function iso(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0')
 function localDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function setDI(id,d){document.getElementById(id).value=iso(d);}
 function fmtBR(s){if(!s||s.length<10)return s||'';return s.substring(8,10)+'/'+s.substring(5,7)+'/'+s.substring(0,4);}
+function fmtBRshort(s){if(!s||s.length<10)return s||'';return s.substring(8,10)+'/'+s.substring(5,7);}
+function fmtVigencia(dates){
+  if(!dates||!dates.length)return'';
+  const sorted=[...dates].sort();
+  if(sorted.length===1)return fmtBR(sorted[0]);
+  const first=sorted[0],last=sorted[sorted.length-1];
+  const dias=sorted.length;
+  return fmtBRshort(first)+' à '+fmtBR(last)+' · '+dias+' dia'+(dias>1?'s':'');
+}
 function v(id){const el=document.getElementById(id);return el?(el.value||'').trim():'';}
 function up(s){return s?s.toUpperCase():'';}
 function e(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
