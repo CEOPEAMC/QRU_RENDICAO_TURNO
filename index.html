@@ -722,7 +722,8 @@ function renderRend(){
     </div>`:'';
 
     return`<div class="ndcard ${sl}">
-      <div class="ndhr"><div class="ndag">${r.agente||'—'}</div><span class="ndsb">${stxt}</span></div>
+      <div class="ndhr"><span class="ndsb">${stxt}</span></div>
+      ${ndRow('Agente(s)',r.agente)}
       ${ndRow('Nº Registro',r.reg)}
       ${ndRow('Local / Posto',r.local)}
       ${ndRow('Motivo',r.motivo)}
