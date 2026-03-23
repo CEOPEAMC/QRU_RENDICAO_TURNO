@@ -655,7 +655,10 @@ function openAuthModal(id){
     G.dates=[...(r.dates||[])];G.selT=r.type;
     const tm={qru:0,interdicao:1,circulacao:2,estacionamento:3,fato:4};
     document.querySelectorAll('.topt')[tm[r.type]]?.classList.add('sel');
-    buildDyn(r.type,r);renderDates();
+    buildDyn(r.type,r);
+    // Sempre mostrar vigência ao editar
+    document.getElementById('datesS').style.display='block';
+    renderDates();
   }
   om('mAuth');
 }
