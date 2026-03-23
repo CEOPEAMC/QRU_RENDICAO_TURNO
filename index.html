@@ -870,6 +870,7 @@ async function saveRend(){
 async function cancelRend(id){
   conf('Cancelar Rendição','Confirma cancelamento? Informe o motivo abaixo:',async()=>{
     const motivo=up((document.getElementById('confMotivo')?.value||'').trim());
+    if(!motivo){toast('Informe o motivo do cancelamento.','err');return;}
     try{await api('updateRendition',{id,status:'cancelada',canceledBy:G.name,motivoCancelamento:motivo});
       await loadRenditions();toast('Rendição cancelada.','ok');}
     catch(ex){toast('Erro: '+ex.message,'err');}
@@ -926,12 +927,32 @@ async function savePass(){
 // ── UTILS ──
 function om(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function cm(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-function conf(title,msg,cb,bt){
-  document.getElementById('confT').textContent=title;document.getElementById('confM').textContent=msg;
+function conf(title,msg,cb,bt,showExtra){
+  document.getElementById('confT').textContent=title;
+  document.getElementById('confM').textContent=msg;
   document.getElementById('confY').className='cyes'+(bt==='red'?'':' bl');
-  G.confCb=cb;document.getElementById('confDlg').classList.add('open');
+  const extra=document.getElementById('confExtra');
+  const motivo=document.getElementById('confMotivo');
+  if(extra)extra.style.display=showExtra?'block':'none';
+  if(motivo)motivo.value='';
+  G.confCb=cb;
+  document.getElementById('confDlg').classList.add('open');
 }
-function cc(yes){document.getElementById('confDlg').classList.remove('open');if(yes&&G.confCb)G.confCb();G.confCb=null;}
+function cc(yes){
+  if(yes&&G.confCb){
+    const extra=document.getElementById('confExtra');
+    const motivo=document.getElementById('confMotivo');
+    // Se campo motivo visível e vazio, não fecha
+    if(extra&&extra.style.display!=='none'&&motivo&&!motivo.value.trim()){
+      toast('Informe o motivo do cancelamento.','err');return;
+    }
+    document.getElementById('confDlg').classList.remove('open');
+    G.confCb();G.confCb=null;
+  } else {
+    document.getElementById('confDlg').classList.remove('open');
+    G.confCb=null;
+  }
+}
 function toast(msg,tp){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(tp||'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
 function setSav(id,on){const b=document.getElementById(id);if(b){b.disabled=on;b.textContent=on?'Salvando...':'Salvar';}}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
