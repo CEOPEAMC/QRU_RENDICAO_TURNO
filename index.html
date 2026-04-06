@@ -68,6 +68,21 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 /* SECTION */
 .stitle{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
 .stitle::after{content:'';flex:1;height:1px;background:var(--border);}
+/* LISTA COMPACTA AUTORIZAÇÕES */
+.auth-list-header{display:grid;grid-template-columns:110px 1fr 1fr 130px;gap:8px;padding:6px 12px;margin-bottom:4px;border-bottom:1px solid var(--border);}
+.auth-list-header span{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+.arow{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.arow:active{border-color:var(--accent2);}
+.arow-head{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:8px;padding:10px 12px;align-items:center;}
+.arow-tipo{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+.arow-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;}
+.arow-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.arow-vig{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);text-align:right;white-space:nowrap;}
+.arow-chevron{color:var(--text3);font-size:12px;transition:transform .2s;flex-shrink:0;}
+.arow.expanded .arow-chevron{transform:rotate(180deg);}
+.arow-detail{display:none;padding:0 12px 12px;border-top:1px solid var(--border);}
+.arow.expanded .arow-detail{display:block;}
+.arow-detail-inner{padding-top:12px;}
 /* CARDS AUTORIZAÇÕES */
 .rcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;position:relative;overflow:hidden;}
 .rcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
@@ -546,15 +561,7 @@ function renderAuthSearch(){
   if(!fl.length){el.innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Nenhum registro encontrado</div></div>`;return;}
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
-  el.innerHTML=fl.map(r=>{
-    const vigencia=fmtVigencia(r.dates||[]);
-    const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="delAuth('${r.id}')">Excluir</button></div>`:'';
-    return`<div class="rcard t-${r.type}">
-      <div class="rchead"><span class="tbadge ${bm[r.type]}">${TL[r.type]}</span>${r.reg?`<span class="rreg">Nº ${r.reg}</span>`:''}
-      </div>${cardRows(r)}
-      ${vigencia?`<div class="rdates"><div class="dates-label">Vigência</div><span class="dtag">${vigencia}</span></div>`:''}
-      ${ac}</div>`;
-  }).join('');
+  el.innerHTML=buildAuthList(fl);
 }
 const REND_TAB_ACTIVE={'madrugada':'active-ma','manha':'active-mn','tarde':'active-ta','noite':'active-no'};
 function setRendTab(t){
@@ -601,21 +608,43 @@ function renderAuth(){
   });
   const el=document.getElementById('authList');
   if(!fl.length){el.innerHTML=`<div class="empty"><span class="eico">📭</span><div class="etxt2">Nenhum registro para esta data</div></div>`;return;}
+  el.innerHTML=buildAuthList(fl);
+}
+
+function buildAuthList(fl){
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
-  el.innerHTML=fl.map(r=>{
+  const header=`<div class="auth-list-header">
+    <span>Tipo</span><span>Nº / Local</span><span>Vigência</span><span></span>
+  </div>`;
+  const rows=fl.map(r=>{
     const vigencia=fmtVigencia(r.dates||[]);
-    const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="delAuth('${r.id}')">Excluir</button></div>`:'';
-    return`<div class="rcard t-${r.type}">
-      <div class="rchead">
-        <span class="tbadge ${bm[r.type]}">${TL[r.type]}</span>
-        ${r.reg?`<span class="rreg">Nº ${r.reg}</span>`:''}
+    const local=r.local||r.area||r.descricao||'—';
+    const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="event.stopPropagation();editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="event.stopPropagation();delAuth('${r.id}')">Excluir</button></div>`:'';
+    return`<div class="arow" onclick="toggleAuthRow(this)">
+      <div class="arow-head">
+        <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
+        <div style="overflow:hidden;">
+          ${r.reg?`<div class="arow-reg">Nº ${r.reg}</div>`:''}
+          <div class="arow-local">${local}</div>
+        </div>
+        <div class="arow-vig">${vigencia}</div>
+        <span class="arow-chevron">▼</span>
       </div>
-      ${cardRows(r)}
-      ${vigencia?`<div class="rdates"><div class="dates-label">Vigência</div><span class="dtag">${vigencia}</span></div>`:''}
-      ${ac}
+      <div class="arow-detail">
+        <div class="arow-detail-inner">
+          ${cardRows(r)}
+          ${vigencia?`<div class="rdates"><div class="dates-label">Vigência</div><span class="dtag">${vigencia}</span></div>`:''}
+          ${ac}
+        </div>
+      </div>
     </div>`;
   }).join('');
+  return header+rows;
+}
+
+function toggleAuthRow(el){
+  el.classList.toggle('expanded');
 }
 
 // Gera linhas label+valor para o card — só mostra o que tem conteúdo
