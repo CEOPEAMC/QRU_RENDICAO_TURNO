@@ -69,17 +69,22 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .stitle{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
 .stitle::after{content:'';flex:1;height:1px;background:var(--border);}
 /* LISTA COMPACTA AUTORIZAÇÕES */
-.auth-list-header{display:grid;grid-template-columns:110px 1fr 1fr 130px;gap:8px;padding:6px 12px;margin-bottom:4px;border-bottom:1px solid var(--border);}
-.auth-list-header span{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
-.arow{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
-.arow:active{border-color:var(--accent2);}
-.arow-head{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:8px;padding:10px 12px;align-items:center;}
-.arow-tipo{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
-.arow-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;}
-.arow-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.arow-vig{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);text-align:right;white-space:nowrap;}
-.arow-chevron{color:var(--text3);font-size:12px;transition:transform .2s;flex-shrink:0;}
+.arow{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:8px;margin-bottom:5px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.arow:active{opacity:.85;}
+.arow.t-qru{border-left-color:var(--accent2);}
+.arow.t-interdicao{border-left-color:var(--red2);}
+.arow.t-circulacao{border-left-color:var(--green2);}
+.arow.t-estacionamento{border-left-color:var(--orange2);}
+.arow.t-fato{border-left-color:var(--purple2);}
+.arow-head{padding:10px 12px;}
+.arow-line1{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;}
+.arow-tipo{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.arow-vig{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);white-space:nowrap;display:flex;align-items:center;gap:4px;}
+.arow-chevron{color:var(--text3);font-size:11px;transition:transform .2s;flex-shrink:0;}
 .arow.expanded .arow-chevron{transform:rotate(180deg);}
+.arow-line2{display:flex;align-items:baseline;gap:6px;}
+.arow-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
+.arow-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .arow-detail{display:none;padding:0 12px 12px;border-top:1px solid var(--border);}
 .arow.expanded .arow-detail{display:block;}
 .arow-detail-inner{padding-top:12px;}
@@ -614,22 +619,24 @@ function renderAuth(){
 function buildAuthList(fl){
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
-  const header=`<div class="auth-list-header">
-    <span>Tipo</span><span>Nº / Local</span><span>Vigência</span><span></span>
-  </div>`;
+  const header='';
   const rows=fl.map(r=>{
     const vigencia=fmtVigencia(r.dates||[]);
     const local=r.local||r.area||r.descricao||'—';
     const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="event.stopPropagation();editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="event.stopPropagation();delAuth('${r.id}')">Excluir</button></div>`:'';
-    return`<div class="arow" onclick="toggleAuthRow(this)">
+    return`<div class="arow t-${r.type}" onclick="toggleAuthRow(this)">
       <div class="arow-head">
-        <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
-        <div style="overflow:hidden;">
-          ${r.reg?`<div class="arow-reg">Nº ${r.reg}</div>`:''}
-          <div class="arow-local">${local}</div>
+        <div class="arow-line1">
+          <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span class="arow-vig">${vigencia}</span>
+            <span class="arow-chevron">▼</span>
+          </div>
         </div>
-        <div class="arow-vig">${vigencia}</div>
-        <span class="arow-chevron">▼</span>
+        <div class="arow-line2">
+          ${r.reg?`<span class="arow-reg">Nº ${r.reg} ·</span>`:''}
+          <span class="arow-local">${local}</span>
+        </div>
       </div>
       <div class="arow-detail">
         <div class="arow-detail-inner">
