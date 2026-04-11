@@ -1060,7 +1060,8 @@ function copiarJustificativa(id){
   else if(rDate.length>10){try{rDate=iso(new Date(rDate));}catch(ex){}}
   rDate=rDate.substring(0,10);
   const dataFmt=fmtBR(rDate);
-  const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema de atendimento da CENTRAL - SAC sob o Nº ${r.reg||'—'}.`;
+  const tipoAtend=String(r.status||'').toLowerCase()==='cancelada'?'atendimento':'atendimento (rendição)';
+  const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do ${tipoAtend} realizado no local: ${r.local||'—'}, conforme registro no sistema de atendimento da CENTRAL - SAC sob o Nº ${r.reg||'—'}.`;
   navigator.clipboard.writeText(txt).then(()=>{
     toast('Justificativa copiada! ✓','ok');
   }).catch(()=>{
