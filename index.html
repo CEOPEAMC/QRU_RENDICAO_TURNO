@@ -100,7 +100,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .arow.expanded .arow-chevron{transform:rotate(180deg);}
 .arow-line2{display:flex;align-items:baseline;gap:6px;}
 .arow-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
-.arow-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.arow-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
 .arow-detail{display:none;padding:0 12px 12px;border-top:1px solid var(--border);}
 .arow.expanded .arow-detail{display:block;}
 .arow-detail-inner{padding-top:12px;}
@@ -699,7 +699,6 @@ function buildAuthList(fl){
         <div class="arow-line2">
           ${r.reg?`<span class="arow-reg">Nº ${r.reg} ·</span>`:''}
           <span class="arow-local">${local}</span>
-          ${vigencia?`<span class="arow-vig" style="flex-shrink:0;margin-left:auto;padding-left:8px;">${vigencia}</span>`:''}
         </div>
       </div>
       <div class="arow-detail">
