@@ -1052,12 +1052,15 @@ async function savePass(){
 
 // ── UTILS ──
 function copiarJustificativa(id){
-  const card=document.querySelector(`.ndcard[data-just]`);
-  // Buscar pelo id no array
   const r=G.rends.find(x=>x.id===id);
   if(!r)return;
-  const dataFmt=r.date?fmtBR(String(r.date).substring(0,10)):'';
-  const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema sob o Nº ${r.reg||'—'}.`;
+  // Normalizar data igual ao renderRend
+  let rDate=String(r.date||'').trim();
+  if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
+  else if(rDate.length>10){try{rDate=iso(new Date(rDate));}catch(ex){}}
+  rDate=rDate.substring(0,10);
+  const dataFmt=fmtBR(rDate);
+  const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema de atendimento da CENTRAL - SAC sob o Nº ${r.reg||'—'}.`;
   navigator.clipboard.writeText(txt).then(()=>{
     toast('Justificativa copiada! ✓','ok');
   }).catch(()=>{
