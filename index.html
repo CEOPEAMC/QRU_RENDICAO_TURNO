@@ -61,15 +61,15 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 }
 .date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;padding:8px 12px;outline:none;cursor:pointer;-webkit-appearance:none;min-width:130px;}
 .date-input-wrap input[type=date]:focus{border-color:var(--accent2);}
-.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;color:var(--text2);font-size:16px;cursor:pointer;font-weight:600;}
-.btoday{font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;padding:8px 12px;}
+.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:10px 16px;color:var(--text2);font-size:16px;cursor:pointer;font-weight:600;}
+.btoday{font-size:11px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;padding:10px 14px;}
 .bact{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;padding:9px 16px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 12px rgba(37,99,235,0.3);white-space:nowrap;}
 .bact.gr{background:linear-gradient(135deg,var(--green2),#059669);box-shadow:0 3px 12px rgba(16,185,129,0.3);}
-.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;color:var(--text2);font-size:15px;cursor:pointer;}
+.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text2);font-size:16px;cursor:pointer;}
 .bref.spin{animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 /* REFRESH INFO */
-.refresh-info{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;text-align:right;margin-bottom:6px;letter-spacing:0.5px;}
+.refresh-info{font-size:11px;color:var(--text2);font-family:'IBM Plex Mono',monospace;text-align:right;margin-bottom:6px;letter-spacing:0.5px;font-weight:500;}
 /* CONTADOR */
 .list-counter{font-size:11px;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
 .list-counter span{color:var(--accent2);font-size:14px;}
@@ -129,8 +129,18 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .tt{background:rgba(249,115,22,0.15);color:var(--orange2);border:1px solid rgba(249,115,22,0.3);}
 .tn{background:rgba(96,165,250,0.15);color:var(--accent2);border:1px solid rgba(96,165,250,0.3);}
 .tma{background:rgba(167,139,250,0.15);color:var(--purple2);border:1px solid rgba(167,139,250,0.3);}
-.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
-.ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);opacity:.85;}.ndcard.sc{border-left:4px solid var(--text3);opacity:.55;}
+.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:6px;cursor:pointer;}
+.ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);}.ndcard.sc{border-left:4px solid var(--text3);opacity:.6;}
+.ndcard-head{padding:11px 13px;}
+.ndcard-line1{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;}
+.ndcard-line2{display:flex;align-items:baseline;gap:6px;overflow:hidden;}
+.ndcard-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
+.ndcard-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ndcard-chevron{color:var(--text3);font-size:11px;transition:transform .2s;flex-shrink:0;}
+.ndcard.expanded .ndcard-chevron{transform:rotate(180deg);}
+.ndcard-detail{display:none;padding:0 13px 13px;border-top:1px solid var(--border);}
+.ndcard.expanded .ndcard-detail{display:block;}
+.ndcard-detail-inner{padding-top:12px;}
 .ndsb{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:4px;}
 .sp .ndsb{background:rgba(245,158,11,0.15);color:var(--gold);}.sr .ndsb{background:rgba(16,185,129,0.15);color:var(--green2);}.sc .ndsb{background:rgba(239,68,68,0.2);color:var(--red2);border:1px solid rgba(239,68,68,0.3);}
 .ndhr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
@@ -681,13 +691,13 @@ function buildAuthList(fl){
           <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
           <div style="display:flex;align-items:center;gap:6px;">
             ${venceTag}
-            <span class="arow-vig">${vigencia}</span>
             <span class="arow-chevron">▼</span>
           </div>
         </div>
         <div class="arow-line2">
           ${r.reg?`<span class="arow-reg">Nº ${r.reg} ·</span>`:''}
           <span class="arow-local">${local}</span>
+          ${vigencia?`<span class="arow-vig" style="flex-shrink:0;margin-left:auto;padding-left:8px;">${vigencia}</span>`:''}
         </div>
       </div>
       <div class="arow-detail">
@@ -703,6 +713,9 @@ function buildAuthList(fl){
 }
 
 function toggleAuthRow(el){
+  el.classList.toggle('expanded');
+}
+function toggleRendRow(el){
   el.classList.toggle('expanded');
 }
 
@@ -879,7 +892,9 @@ function renderRend(){
     return;
   }
 
-  el.innerHTML=items.map(r=>{
+  const count=items.length;
+  const counter=`<div class="list-counter"><span>${count}</span> rendi${count!==1?'ções':'ção'}</div>`;
+  el.innerHTML=counter+items.map(r=>{
     const status=String(r.status||'pendente').toLowerCase();
     const sl={pendente:'sp',concluida:'sr',cancelada:'sc'}[status]||'sp';
     const stxt={pendente:'PENDENTE',concluida:'CONCLUÍDA',cancelada:'CANCELADA'}[status]||status.toUpperCase();
@@ -899,24 +914,11 @@ function renderRend(){
     const motivoCanc=r.motivoCancelamento&&r.motivoCancelamento.trim()?
       `<div class="ndinfo-row"><div class="ndinfo-label" style="color:var(--red2);">Motivo do Cancelamento</div><div class="ndinfo-value" style="color:var(--red2);">${r.motivoCancelamento}</div></div>`:'';
     const btnReativar=(cw&&status==='cancelada')?`<div class="ndact"><button class="brend" onclick="reativarRend('${r.id}')">Reativar</button></div>`:'';
-    const acoes=(cw&&status==='pendente')?`<div class="ndact">
-      <button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button>
-      ${podeConcluir?`<button class="brend" onclick="concluirRend('${r.id}')">Concluir</button>`:''}
-      <button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar</button>
-    </div>`:'';
-
-    return`<div class="ndcard ${sl}">
-      <div class="ndhr"><span class="ndsb">${stxt}</span></div>
-      ${ndRow('Agente(s)',r.agente)}
-      ${ndRow('Nº Registro',r.reg)}
-      ${ndRow('Local / Posto',r.local)}
-      ${ndRow('Motivo',r.motivo)}
-      ${agendadaHtml}
-      ${btnAgendar}
-      ${motivoCanc}
-      ${btnReativar}
-      ${acoes}
-    </div>`;
+    const acoes=cw?`<div class="ndact">
+      <button class="bsm bedit" onclick="event.stopPropagation();editRend('${r.id}')">Editar</button>
+      ${status==='pendente'&&podeConcluir?`<button class="brend" onclick="event.stopPropagation();concluirRend('${r.id}')">Concluir</button>`:''}
+      ${status==='pendente'?`<button class="bcanc" onclick="event.stopPropagation();cancelRend('${r.id}')">Cancelar</button>`:''}
+    </div>`:''
   }).join('');
 }
 
@@ -1064,7 +1066,8 @@ function v(id){const el=document.getElementById(id);return el?(el.value||'').tri
 function up(s){return s?s.toUpperCase():'';}
 function e(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-document.querySelectorAll('.mover').forEach(o=>{o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});});
+// Modal só fecha pelo botão ✕ ou Cancelar — não fecha ao clicar fora
+// document.querySelectorAll('.mover').forEach(o=>{o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});});
 
 // Iniciar
 if(boot()){initApp();}else{document.getElementById('loginScreen').style.display='flex';}
