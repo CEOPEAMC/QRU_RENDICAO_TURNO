@@ -51,16 +51,32 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .tp{display:none;padding:14px;padding-bottom:24px;}
 .tp.active{display:block;}
 /* TOOLBAR */
-.toolbar{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:6px 10px;outline:none;cursor:pointer;-webkit-appearance:none;}
+.toolbar{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.toolbar-row1{display:flex;align-items:center;justify-content:center;gap:6px;}
+.toolbar-row2{display:flex;align-items:center;gap:6px;}
+.toolbar-row2 .bact{margin-left:auto;}
+@media(min-width:600px){
+  .toolbar{flex-direction:row;align-items:center;flex-wrap:nowrap;}
+  .toolbar-row1,.toolbar-row2{display:contents;}
+}
+.date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;padding:8px 12px;outline:none;cursor:pointer;-webkit-appearance:none;min-width:130px;}
 .date-input-wrap input[type=date]:focus{border-color:var(--accent2);}
-.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 11px;color:var(--text2);font-size:13px;cursor:pointer;}
-.btoday{font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:600;text-transform:uppercase;padding:6px 10px;}
-.bact{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;padding:9px 14px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-left:auto;box-shadow:0 3px 12px rgba(37,99,235,0.3);}
+.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;color:var(--text2);font-size:16px;cursor:pointer;font-weight:600;}
+.btoday{font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;padding:8px 12px;}
+.bact{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;padding:9px 16px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 12px rgba(37,99,235,0.3);white-space:nowrap;}
 .bact.gr{background:linear-gradient(135deg,var(--green2),#059669);box-shadow:0 3px 12px rgba(16,185,129,0.3);}
-.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:7px 10px;color:var(--text2);font-size:14px;cursor:pointer;}
+.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;color:var(--text2);font-size:15px;cursor:pointer;}
 .bref.spin{animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
+/* REFRESH INFO */
+.refresh-info{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;text-align:right;margin-bottom:6px;letter-spacing:0.5px;}
+/* CONTADOR */
+.list-counter{font-size:11px;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.list-counter span{color:var(--accent2);font-size:14px;}
+/* VENCE HOJE */
+.arow.vence-hoje{border-color:rgba(245,158,11,0.5);}
+.vence-hoje-tag{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:4px;padding:2px 6px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
 /* FILTERS */
 .frow{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;}
 .fchip{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface3);color:var(--text2);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Rajdhani',sans-serif;}
@@ -194,8 +210,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .rend-tab.active-mn{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:var(--gold2);}
 .rend-tab.active-ta{background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.4);color:var(--orange2);}
 .rend-tab.active-no{background:rgba(96,165,250,0.15);border-color:rgba(96,165,250,0.4);color:var(--accent2);}
-.rend-status-filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-.rsf{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface3);color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+.rend-status-filters{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;flex-wrap:nowrap;}
+.rsf{flex-shrink:0;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface3);color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .rsf.act{background:rgba(37,99,235,0.2);border-color:var(--accent);color:var(--accent2);}
 .search-bar{display:flex;align-items:center;gap:8px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
 .search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
@@ -263,14 +279,19 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <!-- AUTORIZAÇÕES -->
   <div class="tp active" id="pane-auth">
     <div class="toolbar">
-      <button class="bnav" onclick="navDate(-1)">‹</button>
-      <div class="date-input-wrap"><input type="date" id="authDateInput" onchange="onAuthDateChange()"></div>
-      <button class="bnav" onclick="navDate(1)">›</button>
-      <button class="bnav btoday" onclick="goToday('auth')">Hoje</button>
-      <button class="bref" id="bRefA" onclick="loadRecords(true)">↻</button>
-      <button class="bnav btoday" onclick="toggleBusca()" id="btnBusca">🔍</button>
-      <button class="bact" id="btnNA" onclick="openAuthModal()" style="display:none;">＋ Novo</button>
+      <div class="toolbar-row1">
+        <button class="bnav" onclick="navDate(-1)">‹</button>
+        <div class="date-input-wrap"><input type="date" id="authDateInput" onchange="onAuthDateChange()"></div>
+        <button class="bnav" onclick="navDate(1)">›</button>
+      </div>
+      <div class="toolbar-row2">
+        <button class="bnav btoday" onclick="goToday('auth')">Hoje</button>
+        <button class="bref" id="bRefA" onclick="loadRecords(true)">↻</button>
+        <button class="bnav btoday" onclick="toggleBusca()" id="btnBusca">🔍</button>
+        <button class="bact" id="btnNA" onclick="openAuthModal()" style="display:none;">＋ Novo</button>
+      </div>
     </div>
+    <div class="refresh-info" id="authRefreshInfo"></div>
     <div class="auth-search-block" id="authSearchBlock" style="display:none;">
       <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;">Buscar por Local / Via</div>
       <div class="row2">
@@ -298,13 +319,18 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <!-- RENDIÇÕES -->
   <div class="tp" id="pane-rend">
     <div class="toolbar">
-      <button class="bnav" onclick="navRD(-1)">‹</button>
-      <div class="date-input-wrap"><input type="date" id="rendDateInput" onchange="onRendDateChange()"></div>
-      <button class="bnav" onclick="navRD(1)">›</button>
-      <button class="bnav btoday" onclick="goToday('rend')">Hoje</button>
-      <button class="bref" id="bRefR" onclick="loadRenditions(true)">↻</button>
-      <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
+      <div class="toolbar-row1">
+        <button class="bnav" onclick="navRD(-1)">‹</button>
+        <div class="date-input-wrap"><input type="date" id="rendDateInput" onchange="onRendDateChange()"></div>
+        <button class="bnav" onclick="navRD(1)">›</button>
+      </div>
+      <div class="toolbar-row2">
+        <button class="bnav btoday" onclick="goToday('rend')">Hoje</button>
+        <button class="bref" id="bRefR" onclick="loadRenditions(true)">↻</button>
+        <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
+      </div>
     </div>
+    <div class="refresh-info" id="rendRefreshInfo"></div>
     <div class="search-bar">
       <span>🔍</span>
       <input type="text" id="rendSearch" placeholder="Buscar por nome do agente..." oninput="renderRend()">
@@ -576,6 +602,20 @@ function setRendTab(t){
   });
   renderRend();
 }
+function updateTurnoBadges(){
+  const td=iso(G.rD);
+  TURNOS.forEach(t=>{
+    const count=G.rends.filter(r=>{
+      let rDate=String(r.date||'').trim();
+      if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
+      else if(rDate.length>10){try{rDate=iso(new Date(rDate));}catch(ex){}}
+      return rDate.substring(0,10)===td&&String(r.turno||'').trim().toLowerCase()===t;
+    }).length;
+    const labels={madrugada:'🌑 Madrugada',manha:'☀️ Manhã',tarde:'🌤 Tarde',noite:'🌙 Noite'};
+    const el=document.querySelector(`.rend-tab[data-rt="${t}"]`);
+    if(el)el.textContent=labels[t]+(count>0?` (${count})`:'');
+  });
+}
 function setRendSF(sf){
   G.rendSF=sf;
   document.querySelectorAll('.rsf').forEach(el=>el.classList.toggle('act',el.dataset.sf===sf));
@@ -591,13 +631,18 @@ async function loadRecords(manual,silent){
   if(!silent)spin('bRefA',true);
   try{const r=await api('getRecords',{});G.records=r.data||[];
     if(G.searchMode&&G.searchResults!==null){}else{renderAuth();}
-    if(manual)toast('Autorizações atualizadas ✓','ok');}
+    if(manual)toast('Autorizações atualizadas ✓','ok');
+    const el=document.getElementById('authRefreshInfo');
+    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
   catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
   if(!silent)spin('bRefA',false);
 }
 async function loadRenditions(manual,silent){
   if(!silent)spin('bRefR',true);
-  try{const r=await api('getRenditions',{});G.rends=r.data||[];renderRend();if(manual)toast('Rendições atualizadas ✓','ok');}
+  try{const r=await api('getRenditions',{});G.rends=r.data||[];renderRend();
+    if(manual)toast('Rendições atualizadas ✓','ok');
+    const el=document.getElementById('rendRefreshInfo');
+    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
   catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
   if(!silent)spin('bRefR',false);
 }
@@ -619,16 +664,23 @@ function renderAuth(){
 function buildAuthList(fl){
   const cw=['admin','central'].includes(G.role);
   const bm={qru:'bq',interdicao:'bi',circulacao:'bc',estacionamento:'be',fato:'bf'};
-  const header='';
+  const td=iso(new Date());
+  const counter=`<div class="list-counter"><span>${fl.length}</span> registro${fl.length!==1?'s':''} encontrado${fl.length!==1?'s':''}</div>`;
   const rows=fl.map(r=>{
     const vigencia=fmtVigencia(r.dates||[]);
     const local=r.local||r.area||r.descricao||'—';
     const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="event.stopPropagation();editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="event.stopPropagation();delAuth('${r.id}')">Excluir</button></div>`:'';
-    return`<div class="arow t-${r.type}" onclick="toggleAuthRow(this)">
+    // Vence hoje: última data do registro é hoje
+    const dates=(r.dates||[]).sort();
+    const lastDate=dates[dates.length-1];
+    const venceHoje=lastDate===td;
+    const venceTag=venceHoje?`<span class="vence-hoje-tag">VENCE HOJE</span>`:'';
+    return`<div class="arow t-${r.type}${venceHoje?' vence-hoje':''}" onclick="toggleAuthRow(this)">
       <div class="arow-head">
         <div class="arow-line1">
           <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
           <div style="display:flex;align-items:center;gap:6px;">
+            ${venceTag}
             <span class="arow-vig">${vigencia}</span>
             <span class="arow-chevron">▼</span>
           </div>
@@ -647,7 +699,7 @@ function buildAuthList(fl){
       </div>
     </div>`;
   }).join('');
-  return header+rows;
+  return counter+rows;
 }
 
 function toggleAuthRow(el){
