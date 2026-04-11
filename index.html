@@ -61,15 +61,15 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 }
 .date-input-wrap input[type=date]{background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;padding:8px 12px;outline:none;cursor:pointer;-webkit-appearance:none;min-width:130px;}
 .date-input-wrap input[type=date]:focus{border-color:var(--accent2);}
-.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;color:var(--text2);font-size:16px;cursor:pointer;font-weight:600;}
-.btoday{font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;padding:8px 12px;}
+.bnav{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:10px 16px;color:var(--text2);font-size:16px;cursor:pointer;font-weight:600;}
+.btoday{font-size:11px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;padding:10px 14px;}
 .bact{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:8px;padding:9px 16px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 12px rgba(37,99,235,0.3);white-space:nowrap;}
 .bact.gr{background:linear-gradient(135deg,var(--green2),#059669);box-shadow:0 3px 12px rgba(16,185,129,0.3);}
-.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;color:var(--text2);font-size:15px;cursor:pointer;}
+.bref{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text2);font-size:16px;cursor:pointer;}
 .bref.spin{animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 /* REFRESH INFO */
-.refresh-info{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;text-align:right;margin-bottom:6px;letter-spacing:0.5px;}
+.refresh-info{font-size:11px;color:var(--text2);font-family:'IBM Plex Mono',monospace;text-align:right;margin-bottom:6px;letter-spacing:0.5px;font-weight:500;}
 /* CONTADOR */
 .list-counter{font-size:11px;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
 .list-counter span{color:var(--accent2);font-size:14px;}
@@ -129,8 +129,18 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .tt{background:rgba(249,115,22,0.15);color:var(--orange2);border:1px solid rgba(249,115,22,0.3);}
 .tn{background:rgba(96,165,250,0.15);color:var(--accent2);border:1px solid rgba(96,165,250,0.3);}
 .tma{background:rgba(167,139,250,0.15);color:var(--purple2);border:1px solid rgba(167,139,250,0.3);}
-.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
-.ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);opacity:.85;}.ndcard.sc{border-left:4px solid var(--text3);opacity:.55;}
+.ndcard{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:6px;cursor:pointer;}
+.ndcard.sp{border-left:4px solid var(--gold);}.ndcard.sr{border-left:4px solid var(--green2);}.ndcard.sc{border-left:4px solid var(--text3);opacity:.6;}
+.ndcard-head{padding:11px 13px;}
+.ndcard-line1{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;}
+.ndcard-line2{display:flex;align-items:baseline;gap:6px;overflow:hidden;}
+.ndcard-reg{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
+.ndcard-local{font-size:13px;color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ndcard-chevron{color:var(--text3);font-size:11px;transition:transform .2s;flex-shrink:0;}
+.ndcard.expanded .ndcard-chevron{transform:rotate(180deg);}
+.ndcard-detail{display:none;padding:0 13px 13px;border-top:1px solid var(--border);}
+.ndcard.expanded .ndcard-detail{display:block;}
+.ndcard-detail-inner{padding-top:12px;}
 .ndsb{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:4px;}
 .sp .ndsb{background:rgba(245,158,11,0.15);color:var(--gold);}.sr .ndsb{background:rgba(16,185,129,0.15);color:var(--green2);}.sc .ndsb{background:rgba(239,68,68,0.2);color:var(--red2);border:1px solid rgba(239,68,68,0.3);}
 .ndhr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
@@ -217,6 +227,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
 .search-bar input::placeholder{color:var(--text3);text-transform:none;}
 .search-bar span{color:var(--text3);font-size:16px;}
+.btn-copiar{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);border-radius:8px;color:var(--accent2);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-copiar:active{background:rgba(96,165,250,0.2);}
 /* EMPTY/TOAST/CONFIRM */
 .empty{text-align:center;padding:40px 20px;color:var(--text3);}
 .eico{font-size:36px;margin-bottom:8px;display:block;}
@@ -681,13 +693,13 @@ function buildAuthList(fl){
           <span class="arow-tipo tbadge ${bm[r.type]}">${TL[r.type]}</span>
           <div style="display:flex;align-items:center;gap:6px;">
             ${venceTag}
-            <span class="arow-vig">${vigencia}</span>
             <span class="arow-chevron">▼</span>
           </div>
         </div>
         <div class="arow-line2">
           ${r.reg?`<span class="arow-reg">Nº ${r.reg} ·</span>`:''}
           <span class="arow-local">${local}</span>
+          ${vigencia?`<span class="arow-vig" style="flex-shrink:0;margin-left:auto;padding-left:8px;">${vigencia}</span>`:''}
         </div>
       </div>
       <div class="arow-detail">
@@ -703,6 +715,9 @@ function buildAuthList(fl){
 }
 
 function toggleAuthRow(el){
+  el.classList.toggle('expanded');
+}
+function toggleRendRow(el){
   el.classList.toggle('expanded');
 }
 
@@ -849,6 +864,7 @@ function ndRow(label,value){
   if(!value||String(value).trim()==='')return'';
   return`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value">${value}</div></div>`;
 }
+
 function renderRend(){
   const td=iso(G.rD);
   const cw=['admin','central'].includes(G.role);
@@ -859,7 +875,6 @@ function renderRend(){
   const sf=G.rendSF;
 
   const items=G.rends.filter(r=>{
-    // Normaliza data
     let rDate=String(r.date||'').trim();
     if(rDate.includes('/')){const p=rDate.split('/');rDate=p[2]+'-'+p[1]+'-'+p[0];}
     else if(rDate.length>10){try{const dt=new Date(rDate);rDate=iso(dt);}catch(ex){}}
@@ -867,57 +882,77 @@ function renderRend(){
     const rTurno=String(r.turno||'').trim().toLowerCase();
     const rStatus=String(r.status||'pendente').trim().toLowerCase();
     const rAgente=String(r.agente||'').toUpperCase();
-    const matchDate=rDate===td;
-    const matchTurno=rTurno===t;
-    const matchSF=sf==='todos'||rStatus===sf;
-    const matchSearch=!search||rAgente.includes(search);
-    return matchDate&&matchTurno&&matchSF&&matchSearch;
+    return rDate===td&&rTurno===t&&(sf==='todos'||rStatus===sf)&&(!search||rAgente.includes(search));
   });
 
   if(!items.length){
     el.innerHTML=`<div class="empty"><span class="eico">🔄</span><div class="etxt2">${search?'Nenhum agente encontrado':'Nenhuma rendição neste turno'}</div></div>`;
+    updateTurnoBadges();
     return;
   }
 
-  el.innerHTML=items.map(r=>{
+  const count=items.length;
+  const counter=`<div class="list-counter"><span>${count}</span> rendi${count!==1?'ções':'ção'}</div>`;
+
+  el.innerHTML=counter+items.map(r=>{
     const status=String(r.status||'pendente').toLowerCase();
     const sl={pendente:'sp',concluida:'sr',cancelada:'sc'}[status]||'sp';
     const stxt={pendente:'PENDENTE',concluida:'CONCLUÍDA',cancelada:'CANCELADA'}[status]||status.toUpperCase();
 
-    // Linha de agendamento com padrão visual igual aos outros campos
     let agendadaHtml='';
     if(r.substituto&&r.substituto.trim()){
       const label=status==='concluida'?'Realizado por':'Agendada para';
       agendadaHtml=`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value" style="color:var(--green2);font-weight:600;">${r.substituto}</div></div>`;
     }
-    // Botão agendar (só se ainda não tiver substituto)
     const btnAgendar=(status==='pendente'&&cs&&(!r.substituto||!r.substituto.trim()))
-      ?`<button class="brend" style="margin-top:8px;" onclick="openSup('${r.id}')">Agendar Substituto</button>`:'';
+      ?`<button class="brend" style="margin-top:8px;" onclick="event.stopPropagation();openSup('${r.id}')">Agendar Substituto</button>`:'';
 
-    // Botões de ação — Editar, Concluir (se tiver substituto), Cancelar
-    const podeConcluir=cw&&status==='pendente'&&r.substituto&&r.substituto.trim();
-    const motivoCanc=r.motivoCancelamento&&r.motivoCancelamento.trim()?
-      `<div class="ndinfo-row"><div class="ndinfo-label" style="color:var(--red2);">Motivo do Cancelamento</div><div class="ndinfo-value" style="color:var(--red2);">${r.motivoCancelamento}</div></div>`:'';
-    const btnReativar=(cw&&status==='cancelada')?`<div class="ndact"><button class="brend" onclick="reativarRend('${r.id}')">Reativar</button></div>`:'';
-    const acoes=(cw&&status==='pendente')?`<div class="ndact">
-      <button class="bsm bedit" onclick="editRend('${r.id}')">Editar</button>
-      ${podeConcluir?`<button class="brend" onclick="concluirRend('${r.id}')">Concluir</button>`:''}
-      <button class="bcanc" onclick="cancelRend('${r.id}')">Cancelar</button>
+    const podeConcluir=status==='pendente'&&r.substituto&&r.substituto.trim();
+    const acoes=cw?`<div class="ndact">
+      <button class="bsm bedit" onclick="event.stopPropagation();editRend('${r.id}')">Editar</button>
+      ${status==='pendente'&&podeConcluir?`<button class="brend" onclick="event.stopPropagation();concluirRend('${r.id}')">Concluir</button>`:''}
+      ${status==='pendente'?`<button class="bcanc" onclick="event.stopPropagation();cancelRend('${r.id}')">Cancelar</button>`:''}
     </div>`:'';
 
-    return`<div class="ndcard ${sl}">
-      <div class="ndhr"><span class="ndsb">${stxt}</span></div>
-      ${ndRow('Agente(s)',r.agente)}
-      ${ndRow('Nº Registro',r.reg)}
-      ${ndRow('Local / Posto',r.local)}
-      ${ndRow('Motivo',r.motivo)}
-      ${agendadaHtml}
-      ${btnAgendar}
-      ${motivoCanc}
-      ${btnReativar}
-      ${acoes}
+    const motivoCanc=r.motivoCancelamento&&r.motivoCancelamento.trim()
+      ?`<div class="ndinfo-row"><div class="ndinfo-label" style="color:var(--red2);">Motivo do Cancelamento</div><div class="ndinfo-value" style="color:var(--red2);">${r.motivoCancelamento}</div></div>`:'';
+    const btnReativar=(cw&&status==='cancelada')
+      ?`<div class="ndact"><button class="brend" onclick="event.stopPropagation();reativarRend('${r.id}')">Reativar</button></div>`:'';
+
+    // Botão copiar justificativa
+    const dataFmt=r.date?fmtBR(String(r.date).substring(0,10)):'';
+    const justificativa=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema sob o Nº ${r.reg||'—'}.`;
+    const btnCopiar=`<button class="btn-copiar" onclick="event.stopPropagation();copiarJustificativa('${r.id}')" title="Copiar justificativa">📋 Justificativa</button>`;
+
+    return`<div class="ndcard ${sl}" onclick="toggleRendRow(this)" data-just="${encodeURIComponent(justificativa)}">
+      <div class="ndcard-head">
+        <div class="ndcard-line1">
+          <span class="ndsb">${stxt}</span>
+          <span class="ndcard-chevron">▼</span>
+        </div>
+        <div class="ndcard-line2">
+          ${r.reg?`<span class="ndcard-reg">Nº ${r.reg} ·</span>`:''}
+          <span class="ndcard-local">${r.agente||'—'}</span>
+        </div>
+        ${r.local?`<div style="font-size:12px;color:var(--text2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.local}</div>`:''}
+      </div>
+      <div class="ndcard-detail">
+        <div class="ndcard-detail-inner">
+          ${ndRow('Agente(s)',r.agente)}
+          ${ndRow('Nº Registro',r.reg)}
+          ${ndRow('Local / Posto',r.local)}
+          ${ndRow('Motivo',r.motivo)}
+          ${agendadaHtml}
+          ${btnAgendar}
+          ${motivoCanc}
+          ${btnReativar}
+          ${acoes}
+          <div style="margin-top:10px;">${btnCopiar}</div>
+        </div>
+      </div>
     </div>`;
   }).join('');
+  updateTurnoBadges();
 }
 
 
@@ -1016,6 +1051,24 @@ async function savePass(){
 }
 
 // ── UTILS ──
+function copiarJustificativa(id){
+  const card=document.querySelector(`.ndcard[data-just]`);
+  // Buscar pelo id no array
+  const r=G.rends.find(x=>x.id===id);
+  if(!r)return;
+  const dataFmt=r.date?fmtBR(String(r.date).substring(0,10)):'';
+  const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema sob o Nº ${r.reg||'—'}.`;
+  navigator.clipboard.writeText(txt).then(()=>{
+    toast('Justificativa copiada! ✓','ok');
+  }).catch(()=>{
+    // Fallback para dispositivos sem clipboard API
+    const el=document.createElement('textarea');
+    el.value=txt;el.style.position='fixed';el.style.opacity='0';
+    document.body.appendChild(el);el.select();
+    document.execCommand('copy');document.body.removeChild(el);
+    toast('Justificativa copiada! ✓','ok');
+  });
+}
 function om(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function cm(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
 function conf(title,msg,cb,bt,showExtra){
@@ -1064,7 +1117,8 @@ function v(id){const el=document.getElementById(id);return el?(el.value||'').tri
 function up(s){return s?s.toUpperCase():'';}
 function e(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-document.querySelectorAll('.mover').forEach(o=>{o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});});
+// Modal só fecha pelo botão ✕ ou Cancelar — não fecha ao clicar fora
+// document.querySelectorAll('.mover').forEach(o=>{o.addEventListener('click',function(ev){if(ev.target===this)cm(this.id);});});
 
 // Iniciar
 if(boot()){initApp();}else{document.getElementById('loginScreen').style.display='flex';}
