@@ -540,12 +540,13 @@ function initApp(){
   G.aD=new Date();G.rD=new Date();
   setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
   if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
-  loadRecords();loadRenditions();
-  // Auto-refresh a cada 60 segundos
+  loadRecords();setTimeout(()=>{loadRenditions();},1500);
+  // Auto-refresh a cada 90 segundos (chamadas defasadas para reduzir concorrência no Apps Script)
   if(G.autoRefreshTimer)clearInterval(G.autoRefreshTimer);
   G.autoRefreshTimer=setInterval(()=>{
-    loadRecords(false,true);loadRenditions(false,true);
-  },60000);
+    loadRecords(false,true);
+    setTimeout(()=>{loadRenditions(false,true);},3000);
+  },90000);
 }
 
 function switchTab(t){
@@ -635,9 +636,19 @@ function setRendSF(sf){
 }
 
 // ── API ──
-async function api(action,payload){
-  const r=await fetch(G.url+'?action='+action,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}});
-  const d=await r.json();if(d.error)throw new Error(d.error);return d;
+async function api(action,payload,_tentativa){
+  const tentativa=_tentativa||0;
+  try{
+    const r=await fetch(G.url+'?action='+action,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}});
+    const d=await r.json();if(d.error)throw new Error(d.error);return d;
+  }catch(ex){
+    // Retry automático (até 2x) para falhas intermitentes do Apps Script
+    if(tentativa<2){
+      await new Promise(res=>setTimeout(res,800*(tentativa+1)));
+      return api(action,payload,tentativa+1);
+    }
+    throw ex;
+  }
 }
 async function loadRecords(manual,silent){
   if(!silent)spin('bRefA',true);
