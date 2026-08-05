@@ -638,34 +638,54 @@ function setRendSF(sf){
 // ── API ──
 async function api(action,payload,_tentativa){
   const tentativa=_tentativa||0;
+  const ehLeitura=/^(get|search)/i.test(action); // nunca re-tenta sozinho ações de gravação (evita duplicar registros)
   try{
     const r=await fetch(G.url+'?action='+action,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain'}});
     const d=await r.json();if(d.error)throw new Error(d.error);return d;
   }catch(ex){
-    // Retry automático (até 2x) para falhas intermitentes do Apps Script
-    if(tentativa<2){
+    // Retry automático (até 2x) só para leituras
+    if(ehLeitura && tentativa<2){
       await new Promise(res=>setTimeout(res,800*(tentativa+1)));
       return api(action,payload,tentativa+1);
     }
     throw ex;
   }
 }
-async function loadRecords(manual,silent){
+async function loadRecords(manual,silent,_semDesconfiar){
   if(!silent)spin('bRefA',true);
-  try{const r=await api('getRecords',{});G.records=r.data||[];
+  try{
+    const r=await api('getRecords',{});
+    const novosDados=r.data||[];
+    // Proteção: se voltou vazio mas antes tínhamos registros, é mais provável ser uma leitura
+    // incompleta do Apps Script (planilha sendo escrita ao mesmo tempo) do que os dados terem sumido.
+    // Confirma com mais uma tentativa antes de aceitar a lista vazia.
+    if(novosDados.length===0 && G.records.length>0 && !_semDesconfiar){
+      await new Promise(res=>setTimeout(res,1500));
+      return loadRecords(manual,silent,true);
+    }
+    G.records=novosDados;
     if(G.searchMode&&G.searchResults!==null){}else{renderAuth();}
     if(manual)toast('Autorizações atualizadas ✓','ok');
     const el=document.getElementById('authRefreshInfo');
-    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
   catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
   if(!silent)spin('bRefA',false);
 }
-async function loadRenditions(manual,silent){
+async function loadRenditions(manual,silent,_semDesconfiar){
   if(!silent)spin('bRefR',true);
-  try{const r=await api('getRenditions',{});G.rends=r.data||[];renderRend();
+  try{
+    const r=await api('getRenditions',{});
+    const novosDados=r.data||[];
+    if(novosDados.length===0 && G.rends.length>0 && !_semDesconfiar){
+      await new Promise(res=>setTimeout(res,1500));
+      return loadRenditions(manual,silent,true);
+    }
+    G.rends=novosDados;renderRend();
     if(manual)toast('Rendições atualizadas ✓','ok');
     const el=document.getElementById('rendRefreshInfo');
-    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+    if(el)el.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
   catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
   if(!silent)spin('bRefR',false);
 }
