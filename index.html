@@ -230,9 +230,9 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .btn-copiar{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);border-radius:8px;color:var(--accent2);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .btn-copiar:active{background:rgba(96,165,250,0.2);}
 /* EMPTY/TOAST/CONFIRM */
-.empty{text-align:center;padding:40px 20px;color:var(--text3);}
-.eico{font-size:36px;margin-bottom:8px;display:block;}
-.etxt2{font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;}
+.empty{text-align:center;padding:40px 20px;color:var(--text2);}
+.eico{font-size:36px;margin-bottom:10px;display:block;color:var(--accent2);}
+.etxt2{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:12px 20px;font-size:13px;font-weight:500;z-index:900;transition:transform .3s,opacity .3s;opacity:0;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.4);max-width:90vw;text-align:center;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 .toast.ok{border-color:rgba(16,185,129,0.5);color:var(--green2);}
@@ -564,28 +564,41 @@ function toggleBusca(){
   document.getElementById('btnBusca').style.background=G.searchMode?'rgba(37,99,235,0.3)':'';
   if(!G.searchMode){limparBusca();}
 }
-function executarBusca(){
+async function executarBusca(){
+  const btn=document.querySelector('.btn-buscar');
   const local=(document.getElementById('authSrchLocal').value||'').trim().toUpperCase();
   const de=document.getElementById('authSrchDe').value;
   const ate=document.getElementById('authSrchAte').value;
-  if(!local){toast('Digite um local ou via para buscar.','err');return;}
-  // Filtrar registros que contêm o local em qualquer data do intervalo
-  G.searchResults=G.records.filter(r=>{
-    const campos=[r.local||'',r.area||'',r.descricao||'',r.evento||''].join(' ').toUpperCase();
-    if(!campos.includes(local))return false;
-    // Se não informou datas, busca em todos
-    if(!de&&!ate)return true;
-    // Verifica se alguma data do registro cai no intervalo
-    return (r.dates||[]).some(d=>{
-      if(de&&d<de)return false;
-      if(ate&&d>ate)return false;
-      return true;
+  if(btn){btn.disabled=true;btn.textContent='Buscando...';}
+  try{
+    // Se ainda não consultou nenhum registro, busca primeiro antes de filtrar
+    if(G.nuncaCarregouAuth){ await loadRecords(false,true); }
+    // Filtrar registros — local é opcional agora; se vazio, considera qualquer local
+    G.searchResults=G.records.filter(r=>{
+      if(local){
+        const campos=[r.local||'',r.area||'',r.descricao||'',r.evento||''].join(' ').toUpperCase();
+        if(!campos.includes(local))return false;
+      }
+      // Se não informou datas, busca em todos
+      if(!de&&!ate)return true;
+      // Verifica se alguma data do registro cai no intervalo
+      return (r.dates||[]).some(d=>{
+        if(de&&d<de)return false;
+        if(ate&&d>ate)return false;
+        return true;
+      });
     });
-  });
-  const info=document.getElementById('searchResultInfo');
-  info.style.display='block';
-  info.textContent=`${G.searchResults.length} registro(s) encontrado(s) para "${local}"${de?' de '+fmtBR(de):''}${ate?' até '+fmtBR(ate):''}`;
-  renderAuthSearch();
+    const info=document.getElementById('searchResultInfo');
+    info.style.display='block';
+    const partes=[];
+    if(local)partes.push(`"${local}"`);
+    if(de)partes.push('de '+fmtBR(de));
+    if(ate)partes.push('até '+fmtBR(ate));
+    info.textContent=`${G.searchResults.length} registro(s) encontrado(s)${partes.length?' — '+partes.join(' '):''}`;
+    renderAuthSearch();
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Buscar';}
+  }
 }
 function limparBusca(){
   G.searchResults=null;
@@ -692,7 +705,7 @@ function spin(id,on){document.getElementById(id).classList.toggle('spin',on);}
 // ── RENDER AUTH ──
 function renderAuth(){
   if(G.nuncaCarregouAuth&&!G.searchMode){
-    document.getElementById('authList').innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Clique em ↻ para consultar os registros</div></div>`;
+    document.getElementById('authList').innerHTML=`<div class="empty"><span class="eico">↻</span><div class="etxt2">Clique no botão ↻ acima para consultar os registros</div></div>`;
     return;
   }
   const td=iso(G.aD);
@@ -900,7 +913,7 @@ function ndRow(label,value){
 function renderRend(){
   const el=document.getElementById('rendList');
   if(G.nuncaCarregouRend&&!G.searchMode){
-    el.innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Clique em ↻ para consultar os registros</div></div>`;
+    el.innerHTML=`<div class="empty"><span class="eico">↻</span><div class="etxt2">Clique no botão ↻ acima para consultar os registros</div></div>`;
     return;
   }
   const td=iso(G.rD);
