@@ -263,7 +263,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
     </div>
     <div class="lsub">Acesso ao Sistema</div>
     <div class="fg"><label>Perfil de Acesso</label>
-      <select id="loginRole"><option value="">Selecione seu perfil...</option><option value="admin">Administrador</option><option value="central">Central de Operações</option><option value="supervisor">Supervisor</option><option value="agente">Agente de Trânsito</option></select>
+      <select id="loginRole"><option value="">Selecione seu perfil...</option><option value="admin">Administrador</option><option value="agente">Agente de Trânsito</option></select>
     </div>
     <div class="fg" id="lnameGroup" style="display:none;"><label>Identificação (nome ou matrícula)</label><input type="text" id="loginName" placeholder="Seu nome ou matrícula..."></div>
     <div class="fg"><label>Senha de Acesso</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
@@ -476,7 +476,7 @@ const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null,nuncaCarregouAuth:true,nuncaCarregouRend:true};
 
 // ── BOOT ──
 function boot(){
@@ -540,13 +540,9 @@ function initApp(){
   G.aD=new Date();G.rD=new Date();
   setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
   if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
-  loadRecords();setTimeout(()=>{loadRenditions();},1500);
-  // Auto-refresh a cada 90 segundos (chamadas defasadas para reduzir concorrência no Apps Script)
-  if(G.autoRefreshTimer)clearInterval(G.autoRefreshTimer);
-  G.autoRefreshTimer=setInterval(()=>{
-    loadRecords(false,true);
-    setTimeout(()=>{loadRenditions(false,true);},3000);
-  },90000);
+  // Sistema agora é 100% sob demanda — não carrega sozinho nem fica atualizando em segundo plano
+  if(G.autoRefreshTimer){clearInterval(G.autoRefreshTimer);G.autoRefreshTimer=null;}
+  renderAuth();renderRend();
 }
 
 function switchTab(t){
@@ -555,10 +551,10 @@ function switchTab(t){
   document.getElementById('tab-'+t).classList.add('active');
   document.getElementById('pane-'+t).classList.add('active');
 }
-function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);renderAuth();}
-function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);renderRend();}
-function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);renderAuth();}}
-function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);renderRend();}}
+function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}
+function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}
+function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}}
+function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}}
 function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
 
@@ -653,6 +649,7 @@ async function api(action,payload,_tentativa){
 }
 async function loadRecords(manual,silent,_semDesconfiar){
   if(!silent)spin('bRefA',true);
+  G.nuncaCarregouAuth=false;
   try{
     const r=await api('getRecords',{});
     const novosDados=r.data||[];
@@ -674,6 +671,7 @@ async function loadRecords(manual,silent,_semDesconfiar){
 }
 async function loadRenditions(manual,silent,_semDesconfiar){
   if(!silent)spin('bRefR',true);
+  G.nuncaCarregouRend=false;
   try{
     const r=await api('getRenditions',{});
     const novosDados=r.data||[];
@@ -693,6 +691,10 @@ function spin(id,on){document.getElementById(id).classList.toggle('spin',on);}
 
 // ── RENDER AUTH ──
 function renderAuth(){
+  if(G.nuncaCarregouAuth&&!G.searchMode){
+    document.getElementById('authList').innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Clique em ↻ para consultar os registros</div></div>`;
+    return;
+  }
   const td=iso(G.aD);
   const fl=G.records.filter(r=>{
     const dates=r.dates||[];
@@ -896,10 +898,14 @@ function ndRow(label,value){
 }
 
 function renderRend(){
+  const el=document.getElementById('rendList');
+  if(G.nuncaCarregouRend&&!G.searchMode){
+    el.innerHTML=`<div class="empty"><span class="eico">🔍</span><div class="etxt2">Clique em ↻ para consultar os registros</div></div>`;
+    return;
+  }
   const td=iso(G.rD);
   const cw=['admin','central'].includes(G.role);
   const cs=['admin','central','supervisor'].includes(G.role);
-  const el=document.getElementById('rendList');
   const search=(document.getElementById('rendSearch')?.value||'').trim().toUpperCase();
   const t=G.rendTab;
   const sf=G.rendSF;
