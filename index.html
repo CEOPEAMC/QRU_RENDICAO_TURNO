@@ -252,11 +252,18 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .cyes{background:var(--red2);color:#fff;}
 .cyes.bl{background:var(--accent);}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+#updateBar{display:none;position:fixed;top:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#1e40af,#2563eb);color:#fff;text-align:center;font-size:12px;font-family:'IBM Plex Mono',monospace;padding:7px 16px;letter-spacing:1px;align-items:center;justify-content:center;gap:12px;}
+#updateBar button{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;padding:4px 12px;cursor:pointer;text-transform:uppercase;}
+#updateBar button:hover{background:rgba(255,255,255,0.35);}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
+<div id="updateBar">
+  <span>🔄 Nova versão disponível</span>
+  <button onclick="location.reload(true)">Atualizar Agora</button>
+</div>
 <div id="loginScreen">
   <div class="lbg"><div class="lgrid"></div></div>
   <div class="lcard">
@@ -543,6 +550,7 @@ function doLogout(){
 
 // ── APP INIT ──
 function initApp(){
+  checkForUpdate(); // verificar nova versão ao logar
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').style.display='flex';
   document.getElementById('hName').textContent=G.name;
@@ -660,6 +668,21 @@ function setRendSF(sf){
 }
 
 // ── API ──
+async function checkForUpdate(){
+  try{
+    const resp=await fetch(location.href+'?_v='+Date.now(),{cache:'no-store'});
+    const txt=await resp.text();
+    const m=txt.match(/const APP_VERSION='([^']+)'/);
+    if(m&&m[1]&&m[1]!==APP_VERSION){
+      const bar=document.getElementById('updateBar');
+      if(bar) bar.style.display='flex';
+    }
+  }catch(e){}
+}
+// Verificar ao voltar para a aba (após ficar em segundo plano) — importante no mobile
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&G.role) checkForUpdate();
+});
 async function api(action,payload,_tentativa){
   const tentativa=_tentativa||0;
   const ehLeitura=/^(get|search)/i.test(action); // nunca re-tenta sozinho ações de gravação (evita duplicar registros)
