@@ -276,8 +276,13 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
     <div class="fg"><label>Perfil de Acesso</label>
       <select id="loginRole"><option value="">Selecione seu perfil...</option><option value="admin">Administrador</option><option value="agente">Agente de Trânsito</option></select>
     </div>
-    <div class="fg" id="lnameGroup" style="display:none;"><label>Identificação (nome ou matrícula)</label><input type="text" id="loginName" placeholder="Seu nome ou matrícula..."></div>
-    <div class="fg"><label>Senha de Acesso</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
+    <div class="fg"><label>Senha de Acesso</label>
+      <div style="position:relative;">
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" style="width:100%;box-sizing:border-box;padding-right:40px;">
+        <button type="button" onclick="togglePass('loginPass',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--text2);padding:4px;" title="Mostrar/ocultar senha">👁</button>
+      </div>
+    </div>
+    <div class="fg" id="lnameGroup" style="display:none;"><label>Identificação — Nome de Guerra</label><input type="text" id="loginName" placeholder="Digite seu nome..." autocomplete="off"></div>
     <button class="btnlogin" id="btnLogin" onclick="doLogin()">Entrar no Sistema</button>
     <div class="lerr" id="loginErr">Senha incorreta.</div>
     <div class="lver">AMC/GEOFI/CEOPE · v4.0 · 2026</div>
@@ -395,6 +400,15 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
     </div>
     <div class="stitle" style="margin-top:20px;">Senhas Cadastradas</div>
     <div id="passList"></div>
+    <div class="stitle" style="margin-top:20px;">Agentes Cadastrados (login)</div>
+    <div class="adcard">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Nomes de guerra aceitos no login do perfil Agente. Só quem estiver nessa lista consegue entrar.</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <input type="text" id="fNovoAgente" class="aurl" placeholder="Nome do novo agente..." style="text-transform:uppercase;flex:1;" autocomplete="off">
+        <button class="bsurl" id="bAddAgente" onclick="addAgenteAdmin()" style="white-space:nowrap;">➕ Adicionar</button>
+      </div>
+      <div id="agentesList" style="max-height:280px;overflow-y:auto;"></div>
+    </div>
   </div>
 </div>
 
@@ -498,7 +512,7 @@ const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null,nuncaCarregouAuth:true,nuncaCarregouRend:true};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null,nuncaCarregouAuth:true,nuncaCarregouRend:true,senhaValidada:false,agentesConhecidos:[]};
 
 // ── BOOT ──
 function boot(){
@@ -518,36 +532,109 @@ async function loadPasswords(){
 
 // ── LOGIN ──
 document.getElementById('loginRole').addEventListener('change',function(){
-  document.getElementById('lnameGroup').style.display=this.value?'block':'none';
+  // Nome só aparece depois que a senha for validada — reinicia o fluxo se trocar de perfil
+  document.getElementById('lnameGroup').style.display='none';
+  G.senhaValidada=false;
+  const btn=document.getElementById('btnLogin');if(btn)btn.textContent='Entrar no Sistema';
 });
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
+function togglePass(id,btn){
+  const inp=document.getElementById(id);
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
+  else{inp.type='password';btn.textContent='👁';}
+}
+
 async function doLogin(){
   const role=document.getElementById('loginRole').value;
-  const name=document.getElementById('loginName').value.trim();
   const pass=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
   const btn=document.getElementById('btnLogin');
   if(!role){err.textContent='Selecione um perfil.';err.style.display='block';return;}
-  btn.textContent='Verificando...';btn.disabled=true;
-  await loadPasswords();
-  btn.textContent='Entrar no Sistema';btn.disabled=false;
-  if(pass!==G.pw[role]){err.textContent='Senha incorreta.';err.style.display='block';return;}
-  err.style.display='none';G.role=role;G.name=name?name.toUpperCase():RL[role];
+
+  // ── FASE 1: validar senha primeiro (nome ainda não é exibido nem carregado) ──
+  if(!G.senhaValidada){
+    btn.textContent='Verificando...';btn.disabled=true;
+    await loadPasswords();
+    btn.disabled=false;
+    if(pass!==G.pw[role]){err.textContent='Senha incorreta.';err.style.display='block';btn.textContent='Entrar no Sistema';return;}
+    err.style.display='none';
+    G.senhaValidada=true;
+    document.getElementById('lnameGroup').style.display='block';
+    if(role==='agente'){
+      btn.textContent='Carregando agentes...';btn.disabled=true;
+      try{
+        const r=await api('getAgentes',{});
+        G.agentesConhecidos=(r.data||[]).map(n=>n.toUpperCase());
+        ativarAutocompleteNome();
+      }catch(ex){}
+      btn.disabled=false;
+    }
+    btn.textContent='Confirmar';
+    document.getElementById('loginName').focus();
+    return;
+  }
+
+  // ── FASE 2: validar/confirmar o nome e efetivar o login ──
+  const name=document.getElementById('loginName').value.trim().toUpperCase();
+  if(role==='agente'){
+    if(!name){err.textContent='Informe seu nome de guerra.';err.style.display='block';return;}
+    if(!G.agentesConhecidos.includes(name)){
+      err.textContent='Nome não reconhecido na lista de agentes. Verifique com o administrador.';err.style.display='block';return;
+    }
+  }
+  err.style.display='none';G.role=role;G.name=name?name:RL[role];
   try{localStorage.setItem(LS.session,JSON.stringify({role:G.role,name:G.name}));}catch(ex){}
   // Registrar acesso (não bloqueia o login se falhar)
   api('logAcesso',{dataHora:new Date().toISOString(),nome:G.name,perfil:G.role}).catch(()=>{});
+  G.senhaValidada=false;
   initApp();
 }
 
+function ativarAutocompleteNome(){
+  const input=document.getElementById('loginName');
+  if(input.dataset.autocompleteAttached)return;
+  input.dataset.autocompleteAttached='1';
+  input.addEventListener('input',function(){
+    this.value=this.value.toUpperCase();
+    mostrarSugestoesNome(this);
+  });
+  input.addEventListener('blur',function(){setTimeout(()=>{if(this._sugEl){this._sugEl.remove();this._sugEl=null;}},200);});
+}
+
+function mostrarSugestoesNome(input){
+  if(input._sugEl){input._sugEl.remove();input._sugEl=null;}
+  const cur=input.value.trim();
+  if(!cur)return;
+  const filtrados=G.agentesConhecidos.filter(a=>a.startsWith(cur)).slice(0,8);
+  if(!filtrados.length)return;
+  const sug=document.createElement('div');
+  sug.className='suggestions';
+  sug.innerHTML='<ul>'+filtrados.map(a=>`<li>${a}</li>`).join('')+'</ul>';
+  const wrap=input.parentElement;
+  wrap.style.position='relative';
+  wrap.appendChild(sug);
+  input._sugEl=sug;
+  sug.querySelectorAll('li').forEach(li=>{
+    li.addEventListener('mousedown',function(e){
+      e.preventDefault();
+      input.value=this.textContent.trim();
+      sug.remove();input._sugEl=null;
+    });
+  });
+}
+
 function doLogout(){
-  G.role=null;G.name='';
+  G.role=null;G.name='';G.senhaValidada=false;G.agentesConhecidos=[];
   try{localStorage.removeItem(LS.session);}catch(ex){}
   document.getElementById('app').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('loginPass').value='';
+  document.getElementById('loginPass').type='password';
+  document.getElementById('loginName').value='';
   document.getElementById('loginRole').value='';
   document.getElementById('lnameGroup').style.display='none';
+  document.getElementById('btnLogin').textContent='Entrar no Sistema';
 }
 
 // ── APP INIT ──
@@ -570,11 +657,58 @@ function initApp(){
   renderAuth();renderRend();
 }
 
+async function loadAgentesAdmin(){
+  const el=document.getElementById('agentesList');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+  try{
+    const r=await api('getAgentes',{});
+    G.agentesConhecidos=(r.data||[]).map(n=>n.toUpperCase());
+    renderAgentesListAdmin();
+  }catch(ex){
+    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+ex.message+'</div>';
+  }
+}
+
+function renderAgentesListAdmin(){
+  const el=document.getElementById('agentesList');
+  if(!el)return;
+  if(!G.agentesConhecidos.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum agente cadastrado.</div>';return;}
+  el.innerHTML=G.agentesConhecidos.map(n=>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--border2);">`
+    +`<span style="font-size:13px;color:var(--text);">${n}</span>`
+    +`<button onclick="removeAgenteAdmin('${n.replace(/'/g,"\\'")}')" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:4px;" title="Remover">✕</button>`
+    +`</div>`
+  ).join('');
+}
+
+async function addAgenteAdmin(){
+  const inp=document.getElementById('fNovoAgente');
+  const nome=inp.value.trim().toUpperCase();
+  if(!nome){toast('Digite o nome do agente.','err');return;}
+  const btn=document.getElementById('bAddAgente');
+  btn.disabled=true;btn.textContent='Adicionando...';
+  try{
+    await api('addAgente',{nome});
+    inp.value='';
+    toast('Agente adicionado! ✓','ok');
+    await loadAgentesAdmin();
+  }catch(ex){toast('Erro: '+ex.message,'err');}
+  btn.disabled=false;btn.textContent='➕ Adicionar';
+}
+
+function removeAgenteAdmin(nome){
+  conf('Remover Agente','Confirma remover "'+nome+'" da lista? Ele não conseguirá mais logar até ser adicionado de novo.',async()=>{
+    try{await api('removeAgente',{nome});toast('Agente removido.','ok');await loadAgentesAdmin();}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
 function switchTab(t){
   document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tp').forEach(x=>x.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   document.getElementById('pane-'+t).classList.add('active');
+  if(t==='adm') loadAgentesAdmin();
 }
 function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}
 function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}
