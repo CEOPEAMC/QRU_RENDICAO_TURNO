@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>AMC · CEOPE · Sistema Operacional</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 :root{--navy:#07111f;--navy2:#0c1a2e;--accent:#2563eb;--accent2:#60a5fa;--gold:#f59e0b;--gold2:#fcd34d;--red2:#ef4444;--green2:#10b981;--orange2:#f97316;--purple2:#a78bfa;--text:#e2e8f0;--text2:#b8c8dc;--text3:#475569;--surface:#0a1628;--surface2:#0e1f36;--surface3:#132840;--border:#1e3a5a;--border2:#243f5e;--card:#0c1e34;}
 /* ── TEMA CLARO ── */
@@ -227,7 +229,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .auth-search-block input[type=date]:focus{border-color:var(--accent2);}
 .auth-search-block .search-input-row{display:flex;gap:8px;align-items:center;}
 .auth-search-block .search-input-row input[type=text]{flex:1;padding:9px 12px;background:var(--navy2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
-.auth-search-block .search-input-row input::placeholder{color:var(--text3);text-transform:none;}
+.auth-search-block .search-input-row input::placeholder{color:var(--text2);text-transform:none;}
 .btn-buscar{padding:9px 16px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .btn-limpar{padding:9px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;cursor:pointer;}
 .search-result-info{font-size:12px;color:var(--accent2);font-family:'Rajdhani',sans-serif;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
@@ -243,7 +245,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 .rsf.act{background:rgba(37,99,235,0.2);border-color:var(--accent);color:var(--accent2);}
 .search-bar{display:flex;align-items:center;gap:8px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
 .search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;text-transform:uppercase;}
-.search-bar input::placeholder{color:var(--text3);text-transform:none;}
+.search-bar input::placeholder{color:var(--text2);text-transform:none;}
+input::placeholder,textarea::placeholder{color:var(--text2);opacity:1;}
 .search-bar span{color:var(--text3);font-size:16px;}
 .btn-copiar{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);border-radius:8px;color:var(--accent2);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .btn-copiar:active{background:rgba(96,165,250,0.2);}
@@ -316,6 +319,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
   <div class="navtabs">
     <div class="ntab active" onclick="switchTab('auth')" id="tab-auth"><span class="ti">📋</span>Autorizações</div>
     <div class="ntab" onclick="switchTab('rend')" id="tab-rend"><span class="ti">🔄</span>Rendições</div>
+    <div class="ntab" onclick="switchTab('postos')" id="tab-postos"><span class="ti">⛽</span>Postos</div>
     <div class="ntab" onclick="switchTab('adm')" id="tab-adm" style="display:none;"><span class="ti">⚙️</span>Admin</div>
   </div>
 
@@ -393,6 +397,16 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
     <div id="rendList"></div>
   </div>
 
+  <!-- POSTOS -->
+  <div class="tp" id="pane-postos">
+    <div id="postosMapa" style="height:280px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--surface3);position:sticky;top:58px;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>
+    <div class="toolbar" style="display:flex;flex-direction:row;flex-wrap:nowrap;gap:8px;align-items:center;position:sticky;top:338px;z-index:40;background:var(--navy);padding:8px 4px;">
+      <input type="text" id="postoBusca" placeholder="Buscar por nome, bairro ou rua..." style="flex:1;box-sizing:border-box;padding:12px;background:var(--surface3);border:1.5px solid var(--accent2);border-radius:8px;color:var(--text);font-size:14px;" oninput="renderPostos()">
+      <button onclick="verTodosPostos()" style="padding:12px 16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;white-space:nowrap;cursor:pointer;" title="Ver todos os postos no mapa">🔍 Todos</button>
+    </div>
+    <div id="postosList" style="padding:0 4px;"></div>
+  </div>
+
   <!-- ADMIN -->
   <div class="tp" id="pane-adm">
     <div class="stitle">URL do Google Apps Script</div>
@@ -423,6 +437,25 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
         <button class="bsurl" id="bAddAgente" onclick="addAgenteAdmin()" style="white-space:nowrap;">➕ Adicionar</button>
       </div>
       <div id="agentesList" style="max-height:280px;overflow-y:auto;"></div>
+    </div>
+
+    <div class="stitle" style="margin-top:20px;">Postos de Combustível Credenciados</div>
+    <div class="adcard">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Lista usada na aba "Postos" pelos agentes. Desmarcar "Ativo" tira o posto da busca deles.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        <input type="text" id="fNovoPostoNome" class="aurl" placeholder="Nome do posto..." style="flex:2;min-width:140px;">
+        <input type="text" id="fNovoPostoEnd" class="aurl" placeholder="Endereço..." style="flex:2;min-width:140px;">
+        <input type="text" id="fNovoPostoBairro" class="aurl" placeholder="Bairro..." style="flex:1;min-width:100px;">
+        <input type="text" id="fNovoPostoLat" class="aurl" placeholder="Latitude" style="flex:1;min-width:90px;">
+        <input type="text" id="fNovoPostoLng" class="aurl" placeholder="Longitude" style="flex:1;min-width:90px;">
+        <button class="bsurl" id="bAddPosto" onclick="addPostoAdmin()" style="white-space:nowrap;">➕ Adicionar Posto</button>
+      </div>
+      <div id="postosAdminList" style="max-height:400px;overflow-y:auto;"></div>
+    </div>
+
+    <div class="stitle" style="margin-top:20px;">Reportes de Problemas (Postos)</div>
+    <div class="adcard">
+      <div id="reportesList" style="max-height:280px;overflow-y:auto;"></div>
     </div>
   </div>
 </div>
@@ -506,7 +539,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--navy);color:var(--t
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-08-13-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-09-16-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyxZ5A7uvubdUBsmfLfEsqQScsz6T-Rlr2juTaxNaDsuMfUbeGEkkTeWJrjfaRak3hQSg/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -527,7 +560,7 @@ const TRN={madrugada:'MADRUGADA (00:01H–05:50H)',manha:'MANHÃ (06:00H–12:32
 const TRC={madrugada:'tma',manha:'tm',tarde:'tt',noite:'tn'};
 const TURNOS=['madrugada','manha','tarde','noite'];
 
-let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null,nuncaCarregouAuth:true,nuncaCarregouRend:true,senhaValidada:false,agentesConhecidos:[]};
+let G={role:null,name:'',aD:new Date(),rD:new Date(),filter:'todos',rendTab:'madrugada',rendSF:'todos',records:[],rends:[],pw:{...DPW},url:'',eA:null,eR:null,supId:null,selT:null,dates:[],confCb:null,searchMode:false,searchResults:null,autoRefreshTimer:null,nuncaCarregouAuth:true,nuncaCarregouRend:true,senhaValidada:false,agentesConhecidos:[],postos:[],postosCarregados:false};
 
 // ── BOOT ──
 function boot(){
@@ -674,6 +707,112 @@ function initApp(){
   renderAuth();renderRend();
 }
 
+let postosAdminCache=[];
+async function loadPostosAdmin(){
+  const el=document.getElementById('postosAdminList');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+  try{
+    const r=await api('getPostos',{});
+    postosAdminCache=r.data||[];
+    renderPostosAdminList();
+    loadReportesAdmin();
+  }catch(ex){
+    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+ex.message+'</div>';
+  }
+}
+
+function renderPostosAdminList(){
+  const el=document.getElementById('postosAdminList');
+  if(!el)return;
+  if(!postosAdminCache.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum posto cadastrado.</div>';return;}
+  el.innerHTML=postosAdminCache.map(p=>{
+    const nomeEsc=(p.nome||'').replace(/'/g,"\\'");
+    return `<div class="posto-admin-row" data-id="${p.id}" style="border-bottom:1px solid var(--border2);padding:10px 0;">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+        <input class="finput pa-nome" value="${(p.nome||'').replace(/"/g,'&quot;')}" style="flex:2;min-width:120px;font-size:12px;padding:6px;">
+        <input class="finput pa-end" value="${(p.endereco||'').replace(/"/g,'&quot;')}" style="flex:2;min-width:120px;font-size:12px;padding:6px;">
+        <input class="finput pa-bairro" value="${(p.bairro||'').replace(/"/g,'&quot;')}" style="flex:1;min-width:90px;font-size:12px;padding:6px;">
+        <input class="finput pa-lat" value="${p.latitude||''}" style="width:90px;font-size:12px;padding:6px;" placeholder="Lat">
+        <input class="finput pa-lng" value="${p.longitude||''}" style="width:90px;font-size:12px;padding:6px;" placeholder="Lng">
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);">
+          <input type="checkbox" class="pa-ativo" ${p.ativo?'checked':''}> Ativo
+        </label>
+        <button onclick="salvarPostoAdmin('${p.id}')" style="padding:5px 10px;background:var(--accent);border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Salvar</button>
+        <button onclick="excluirPostoAdmin('${p.id}','${nomeEsc}')" style="padding:5px 10px;background:#ef4444;border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Excluir</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function addPostoAdmin(){
+  const nome=document.getElementById('fNovoPostoNome').value.trim();
+  const endereco=document.getElementById('fNovoPostoEnd').value.trim();
+  const bairro=document.getElementById('fNovoPostoBairro').value.trim();
+  const lat=document.getElementById('fNovoPostoLat').value.trim();
+  const lng=document.getElementById('fNovoPostoLng').value.trim();
+  if(!nome||!lat||!lng){toast('Preencha ao menos nome, latitude e longitude.','err');return;}
+  const btn=document.getElementById('bAddPosto');
+  btn.disabled=true;btn.textContent='Adicionando...';
+  try{
+    await api('addPosto',{nome,endereco,bairro,latitude:parseFloat(lat),longitude:parseFloat(lng)});
+    ['fNovoPostoNome','fNovoPostoEnd','fNovoPostoBairro','fNovoPostoLat','fNovoPostoLng'].forEach(id=>document.getElementById(id).value='');
+    toast('Posto adicionado! ✓','ok');
+    await loadPostosAdmin();
+  }catch(ex){toast('Erro: '+ex.message,'err');}
+  btn.disabled=false;btn.textContent='➕ Adicionar Posto';
+}
+
+async function salvarPostoAdmin(id){
+  const row=document.querySelector('.posto-admin-row[data-id="'+id+'"]');
+  if(!row)return;
+  const nome=row.querySelector('.pa-nome').value.trim();
+  const endereco=row.querySelector('.pa-end').value.trim();
+  const bairro=row.querySelector('.pa-bairro').value.trim();
+  const lat=parseFloat(row.querySelector('.pa-lat').value);
+  const lng=parseFloat(row.querySelector('.pa-lng').value);
+  const ativo=row.querySelector('.pa-ativo').checked;
+  try{
+    await api('updatePosto',{id,nome,endereco,bairro,latitude:lat,longitude:lng,ativo});
+    toast('Posto atualizado! ✓','ok');
+  }catch(ex){toast('Erro: '+ex.message,'err');}
+}
+
+function excluirPostoAdmin(id,nome){
+  conf('Excluir Posto','⚠ Confirma excluir "'+nome+'" definitivamente da lista?',async()=>{
+    try{await api('deletePosto',{id});toast('Posto excluído.','ok');await loadPostosAdmin();}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
+
+async function loadReportesAdmin(){
+  const el=document.getElementById('reportesList');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+  try{
+    const r=await api('getReportesPostos',{});
+    const reportes=r.data||[];
+    if(!reportes.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum reporte pendente.</div>';return;}
+    el.innerHTML=reportes.map(rp=>`
+      <div style="border-bottom:1px solid var(--border2);padding:10px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--text);">${rp.postoNome}</div>
+          <div style="font-size:12px;color:#f59e0b;margin:2px 0;">${rp.motivo}</div>
+          <div style="font-size:11px;color:var(--text3);">${rp.reportadoPor} · ${rp.dataHora}</div>
+        </div>
+        <button onclick="resolverReporteAdmin('${rp.id}')" style="padding:6px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);font-size:11px;cursor:pointer;white-space:nowrap;">✓ Resolvido</button>
+      </div>
+    `).join('');
+  }catch(ex){el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro: '+ex.message+'</div>';}
+}
+
+async function resolverReporteAdmin(id){
+  try{await api('resolverReporte',{id});toast('Reporte marcado como resolvido.','ok');await loadReportesAdmin();}
+  catch(ex){toast('Erro: '+ex.message,'err');}
+}
+
 async function loadAgentesAdmin(){
   const el=document.getElementById('agentesList');
   if(!el)return;
@@ -720,12 +859,150 @@ function removeAgenteAdmin(nome){
     catch(ex){toast('Erro: '+ex.message,'err');}
   });
 }
+let postosMap=null,postosMarkers=[],userLocMarker=null;
+
+function initPostosMapa(){
+  if(postosMap)return;
+  postosMap=L.map('postosMapa').setView([-3.7327,-38.5267],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap',maxZoom:19
+  }).addTo(postosMap);
+  const LocateControl=L.Control.extend({
+    options:{position:'topright'},
+    onAdd:function(){
+      const btn=L.DomUtil.create('button');
+      btn.innerHTML='🎯';
+      btn.title='Minha localização';
+      btn.style.cssText='width:34px;height:34px;background:#fff;border:2px solid rgba(0,0,0,0.2);border-radius:6px;font-size:16px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.4);';
+      L.DomEvent.disableClickPropagation(btn);
+      btn.onclick=function(){tentarLocalizarUsuario(true);};
+      return btn;
+    }
+  });
+  postosMap.addControl(new LocateControl());
+  tentarLocalizarUsuario(false);
+}
+
+function tentarLocalizarUsuario(centralizarEAvisar){
+  if(!navigator.geolocation){
+    if(centralizarEAvisar)toast('Seu navegador não suporta localização.','err');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(function(pos){
+    const ll=[pos.coords.latitude,pos.coords.longitude];
+    if(userLocMarker) postosMap.removeLayer(userLocMarker);
+    userLocMarker=L.circleMarker(ll,{radius:8,color:'#2563eb',fillColor:'#60a5fa',fillOpacity:0.9,weight:2}).addTo(postosMap);
+    userLocMarker.bindPopup('Você está aqui');
+    if(centralizarEAvisar){postosMap.setView(ll,15);userLocMarker.openPopup();}
+  },function(err){
+    if(centralizarEAvisar){
+      if(err.code===1){
+        toast('Localização negada. Habilite nas configurações do site.','err');
+      }else{
+        toast('Não foi possível obter sua localização agora.','err');
+      }
+    }
+  },{timeout:8000});
+}
+
+function plotarPostosNoMapa(lista){
+  if(!postosMap)return;
+  postosMarkers.forEach(m=>postosMap.removeLayer(m));
+  postosMarkers=[];
+  const bounds=[];
+  lista.forEach(p=>{
+    if(!p.latitude||!p.longitude)return;
+    const marker=L.marker([p.latitude,p.longitude]).addTo(postosMap);
+    const nomeEsc=(p.nome||'').replace(/'/g,"\\'");
+    marker.bindPopup(
+      '<div style="font-family:sans-serif;min-width:160px;">'
+      +'<strong>'+(p.nome||'').toUpperCase()+'</strong><br>'
+      +'<span style="font-size:12px;color:#555;">'+(p.endereco||'')+(p.bairro?' — '+p.bairro:'')+'</span><br>'
+      +'<button onclick="abrirMapaPosto('+p.latitude+','+p.longitude+')" style="margin-top:6px;padding:6px 10px;background:#2563eb;border:none;border-radius:6px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;">📍 Como Chegar</button>'
+      +'</div>'
+    );
+    postosMarkers.push(marker);
+    bounds.push([p.latitude,p.longitude]);
+  });
+  if(bounds.length) postosMap.fitBounds(bounds,{padding:[30,30],maxZoom:15});
+}
+
+function focarPostoNoMapa(lat,lng){
+  if(!postosMap)return;
+  postosMap.setView([lat,lng],16);
+  const m=postosMarkers.find(mk=>mk.getLatLng().lat===lat&&mk.getLatLng().lng===lng);
+  if(m) m.openPopup();
+}
+
+function verTodosPostos(){
+  document.getElementById('postoBusca').value='';
+  renderPostos();
+}
+
+async function carregarPostos(){
+  const el=document.getElementById('postosList');
+  initPostosMapa();
+  if(!G.postosCarregados){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);">Carregando postos...</div>';
+    try{
+      const r=await api('getPostos',{});
+      G.postos=(r.data||[]).filter(p=>p.ativo);
+      G.postosCarregados=true;
+    }catch(ex){
+      el.innerHTML='<div style="text-align:center;padding:20px;color:#ef4444;">Erro ao carregar postos. Puxe pra atualizar e tente de novo.</div>';
+      return;
+    }
+  }
+  renderPostos();
+}
+
+function renderPostos(){
+  const el=document.getElementById('postosList');
+  const termo=(document.getElementById('postoBusca').value||'').trim().toUpperCase();
+  const filtrados=termo?G.postos.filter(p=>
+    (p.nome||'').toUpperCase().includes(termo)||
+    (p.bairro||'').toUpperCase().includes(termo)||
+    (p.endereco||'').toUpperCase().includes(termo)
+  ):G.postos;
+  plotarPostosNoMapa(filtrados);
+  if(!filtrados.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);">Nenhum posto encontrado.</div>';
+    return;
+  }
+  el.innerHTML=filtrados.map(p=>`
+    <div style="background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;margin-bottom:8px;">
+      <div style="font-weight:700;font-size:14px;color:var(--text);margin-bottom:2px;">${(p.nome||'').toUpperCase()}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">${(p.endereco||'')}${p.bairro?' — '+p.bairro:''}</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="abrirMapaPosto(${p.latitude},${p.longitude})" style="flex:1;padding:9px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">📍 Como Chegar</button>
+        <button onclick="focarPostoNoMapa(${p.latitude},${p.longitude})" style="padding:9px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:13px;cursor:pointer;" title="Ver no mapa">🗺️</button>
+        <button onclick="reportarPostoPrompt('${p.id}','${(p.nome||'').replace(/'/g,"\\'")}')" style="padding:9px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer;" title="Reportar problema">⚠️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function abrirMapaPosto(lat,lng){
+  window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng,'_blank');
+}
+
+function reportarPostoPrompt(id,nome){
+  conf('Reportar Problema','Qual o problema com "'+nome+'"? (ex: fechado, endereço errado, não existe mais...)',async()=>{
+    const motivo=(document.getElementById('confMotivo').value||'').trim();
+    try{
+      await api('reportarPosto',{postoId:id,postoNome:nome,motivo:motivo.toUpperCase(),reportadoPor:G.name,dataHora:new Date().toLocaleString('pt-BR',{timeZone:'America/Fortaleza'})});
+      toast('Problema reportado! Obrigado.','ok');
+    }catch(ex){toast('Erro ao enviar reporte.','err');}
+  },null,true);
+}
+
 function switchTab(t){
   document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tp').forEach(x=>x.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
   document.getElementById('pane-'+t).classList.add('active');
-  if(t==='adm') loadAgentesAdmin();
+  if(t==='adm'){loadAgentesAdmin();loadPostosAdmin();}
+  if(t==='postos') carregarPostos();
 }
 function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}
 function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}
