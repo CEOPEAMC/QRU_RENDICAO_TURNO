@@ -539,7 +539,7 @@ input::placeholder,textarea::placeholder{color:var(--text2);opacity:1;}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-09-30-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-09-30-v2'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -1129,14 +1129,14 @@ async function loadRecords(manual,silent){
     // que uma resposta atrasada de troca de data anterior sobrescreva a data atual.
     if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
     let novosDados=r.data||[];
-    // Confirma antes de aceitar "sem registros" — a entrega da resposta às vezes falha de forma
-    // silenciosa. Uma segunda consulta rápida evita mostrar vazio quando só a entrega falhou.
-    if(novosDados.length===0){
+    // Confirma antes de aceitar "sem registros" — em momentos ruins a entrega pode falhar mais
+    // de uma vez seguida. Até 2 confirmações antes de aceitar vazio como definitivo.
+    for(let tentConf1=0; novosDados.length===0 && tentConf1<2; tentConf1++){
       await new Promise(res=>setTimeout(res,800));
       if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
-      const r2=await api('getRecords',{data: minhaDataAlvo});
+      const rConf1=await api('getRecords',{data: minhaDataAlvo});
       if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
-      novosDados=r2.data||[];
+      novosDados=rConf1.data||[];
     }
     G.records=novosDados;
     G.nuncaCarregouAuth=false; // só marca como "consultado" depois que a resposta chegou de fato
@@ -1160,12 +1160,12 @@ async function loadRenditions(manual,silent){
     const r=await api('getRenditions',{data: minhaDataAlvo});
     if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
     let novosDados=r.data||[];
-    if(novosDados.length===0){
+    for(let tentConf2=0; novosDados.length===0 && tentConf2<2; tentConf2++){
       await new Promise(res=>setTimeout(res,800));
       if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
-      const r2=await api('getRenditions',{data: minhaDataAlvo});
+      const rConf2=await api('getRenditions',{data: minhaDataAlvo});
       if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
-      novosDados=r2.data||[];
+      novosDados=rConf2.data||[];
     }
     G.rends=novosDados;
     G.nuncaCarregouRend=false; // só marca como "consultado" depois que a resposta chegou de fato
