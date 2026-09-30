@@ -539,8 +539,8 @@ input::placeholder,textarea::placeholder{color:var(--text2);opacity:1;}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-09-16-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyxZ5A7uvubdUBsmfLfEsqQScsz6T-Rlr2juTaxNaDsuMfUbeGEkkTeWJrjfaRak3hQSg/exec';
+const APP_VERSION='2026-09-30-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
 (function(){
@@ -1004,10 +1004,12 @@ function switchTab(t){
   if(t==='adm'){loadAgentesAdmin();loadPostosAdmin();}
   if(t==='postos') carregarPostos();
 }
-function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}
-function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}
-function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);if(G.nuncaCarregouAuth){loadRecords();}else{renderAuth();}}}
-function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);if(G.nuncaCarregouRend){loadRenditions();}else{renderRend();}}}
+// O servidor agora filtra por data — trocar de data sempre recarrega (não dá mais pra só
+// re-filtrar em memória, que agora só tem 1 dia por vez).
+function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);loadRecords();}
+function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);loadRenditions();}
+function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);loadRecords();}}
+function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);loadRenditions();}}
 function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
 
@@ -1022,25 +1024,12 @@ async function executarBusca(){
   const local=(document.getElementById('authSrchLocal').value||'').trim().toUpperCase();
   const de=document.getElementById('authSrchDe').value;
   const ate=document.getElementById('authSrchAte').value;
+  if(!local&&!de&&!ate){toast('Informe um local ou um período para buscar.','err');return;}
   if(btn){btn.disabled=true;btn.textContent='Buscando...';}
   try{
-    // Se ainda não consultou nenhum registro, busca primeiro antes de filtrar
-    if(G.nuncaCarregouAuth){ await loadRecords(false,true); }
-    // Filtrar registros — local é opcional agora; se vazio, considera qualquer local
-    G.searchResults=G.records.filter(r=>{
-      if(local){
-        const campos=[r.local||'',r.area||'',r.descricao||'',r.evento||''].join(' ').toUpperCase();
-        if(!campos.includes(local))return false;
-      }
-      // Se não informou datas, busca em todos
-      if(!de&&!ate)return true;
-      // Verifica se alguma data do registro cai no intervalo
-      return (r.dates||[]).some(d=>{
-        if(de&&d<de)return false;
-        if(ate&&d>ate)return false;
-        return true;
-      });
-    });
+    // Busca roda no servidor agora — não depende mais do que já estiver carregado na tela
+    const r=await api('searchRecords',{termo:local,de,ate});
+    G.searchResults=r.data||[];
     const info=document.getElementById('searchResultInfo');
     info.style.display='block';
     const partes=[];
@@ -1049,7 +1038,8 @@ async function executarBusca(){
     if(ate)partes.push('até '+fmtBR(ate));
     info.textContent=`${G.searchResults.length} registro(s) encontrado(s)${partes.length?' — '+partes.join(' '):''}`;
     renderAuthSearch();
-  }finally{
+  }catch(ex){toast('Erro na busca: '+ex.message,'err');}
+  finally{
     if(btn){btn.disabled=false;btn.textContent='Buscar';}
   }
 }
@@ -1128,45 +1118,67 @@ async function api(action,payload,_tentativa){
     throw ex;
   }
 }
-async function loadRecords(manual,silent,_semDesconfiar){
+let reqAuthSeq=0;
+async function loadRecords(manual,silent){
   if(!silent)spin('bRefA',true);
-  G.nuncaCarregouAuth=false;
+  const minhaDataAlvo=iso(G.aD);
+  const meuNumero=++reqAuthSeq;
   try{
-    const r=await api('getRecords',{});
-    const novosDados=r.data||[];
-    // Proteção: se voltou vazio mas antes tínhamos registros, é mais provável ser uma leitura
-    // incompleta do Apps Script (planilha sendo escrita ao mesmo tempo) do que os dados terem sumido.
-    // Confirma com mais uma tentativa antes de aceitar a lista vazia.
-    if(novosDados.length===0 && G.records.length>0 && !_semDesconfiar){
-      await new Promise(res=>setTimeout(res,1500));
-      return loadRecords(manual,silent,true);
+    const r=await api('getRecords',{data: minhaDataAlvo});
+    // Descarta se chegou uma busca mais nova depois, ou se a data na tela já mudou — evita
+    // que uma resposta atrasada de troca de data anterior sobrescreva a data atual.
+    if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
+    let novosDados=r.data||[];
+    // Confirma antes de aceitar "sem registros" — a entrega da resposta às vezes falha de forma
+    // silenciosa. Uma segunda consulta rápida evita mostrar vazio quando só a entrega falhou.
+    if(novosDados.length===0){
+      await new Promise(res=>setTimeout(res,800));
+      if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
+      const r2=await api('getRecords',{data: minhaDataAlvo});
+      if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
+      novosDados=r2.data||[];
     }
     G.records=novosDados;
+    G.nuncaCarregouAuth=false; // só marca como "consultado" depois que a resposta chegou de fato
     if(G.searchMode&&G.searchResults!==null){}else{renderAuth();}
     if(manual)toast('Autorizações atualizadas ✓','ok');
     const el=document.getElementById('authRefreshInfo');
     if(el)el.innerHTML='<span class="ri-pill" onclick="loadRecords(true)"><span class="ri-time">Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</span><span class="ri-action">↻ Atualizar</span></span>';
   }
-  catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
-  if(!silent)spin('bRefA',false);
+  catch(ex){
+    if(meuNumero!==reqAuthSeq || iso(G.aD)!==minhaDataAlvo) return;
+    if(!silent)toast('Erro: '+ex.message,'err');
+  }
+  if(meuNumero===reqAuthSeq && !silent)spin('bRefA',false);
 }
-async function loadRenditions(manual,silent,_semDesconfiar){
+let reqRendSeq=0;
+async function loadRenditions(manual,silent){
   if(!silent)spin('bRefR',true);
-  G.nuncaCarregouRend=false;
+  const minhaDataAlvo=iso(G.rD);
+  const meuNumero=++reqRendSeq;
   try{
-    const r=await api('getRenditions',{});
-    const novosDados=r.data||[];
-    if(novosDados.length===0 && G.rends.length>0 && !_semDesconfiar){
-      await new Promise(res=>setTimeout(res,1500));
-      return loadRenditions(manual,silent,true);
+    const r=await api('getRenditions',{data: minhaDataAlvo});
+    if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
+    let novosDados=r.data||[];
+    if(novosDados.length===0){
+      await new Promise(res=>setTimeout(res,800));
+      if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
+      const r2=await api('getRenditions',{data: minhaDataAlvo});
+      if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
+      novosDados=r2.data||[];
     }
-    G.rends=novosDados;renderRend();
+    G.rends=novosDados;
+    G.nuncaCarregouRend=false; // só marca como "consultado" depois que a resposta chegou de fato
+    renderRend();
     if(manual)toast('Rendições atualizadas ✓','ok');
     const el=document.getElementById('rendRefreshInfo');
     if(el)el.innerHTML='<span class="ri-pill" onclick="loadRenditions(true)"><span class="ri-time">Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</span><span class="ri-action">↻ Atualizar</span></span>';
   }
-  catch(ex){if(!silent)toast('Erro: '+ex.message,'err');}
-  if(!silent)spin('bRefR',false);
+  catch(ex){
+    if(meuNumero!==reqRendSeq || iso(G.rD)!==minhaDataAlvo) return;
+    if(!silent)toast('Erro: '+ex.message,'err');
+  }
+  if(meuNumero===reqRendSeq && !silent)spin('bRefR',false);
 }
 function spin(id,on){document.getElementById(id).classList.toggle('spin',on);}
 
