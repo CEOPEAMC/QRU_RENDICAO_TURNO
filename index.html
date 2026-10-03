@@ -541,7 +541,7 @@ body.mapa-fs-aberto{overflow:hidden;}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-09-30-v3'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-10-03-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -866,9 +866,16 @@ let postosMap=null,postosMarkers=[],userLocMarker=null;
 function initPostosMapa(){
   if(postosMap)return;
   postosMap=L.map('postosMapa').setView([-3.7327,-38.5267],12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  const postosTileLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     attribution:'© OpenStreetMap',maxZoom:19
   }).addTo(postosMap);
+  // Se um "quadradinho" do mapa falhar (instabilidade de rede), tenta uma vez num servidor
+  // alternativo (Esri), só aquele quadradinho — não troca o mapa inteiro, nem repete pra sempre.
+  postosTileLayer.on('tileerror', function(e){
+    if (e.tile.dataset.fallback) return;
+    e.tile.dataset.fallback = '1';
+    e.tile.src = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/'+e.coords.z+'/'+e.coords.y+'/'+e.coords.x;
+  });
   const LocateControl=L.Control.extend({
     options:{position:'topright'},
     onAdd:function(){
@@ -1501,6 +1508,7 @@ function renderRend(){
           <span class="ndcard-local">${r.agente||'—'}</span>
         </div>
         ${r.local?`<div style="font-size:12px;color:var(--text2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.local}</div>`:''}
+        ${r.motivo?`<div style="font-size:12px;color:var(--gold2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.motivo}</div>`:''}
       </div>
       <div class="ndcard-detail">
         <div class="ndcard-detail-inner">
