@@ -274,6 +274,137 @@ body.mapa-fs-aberto{overflow:hidden;}
 #updateBar{display:none;position:fixed;top:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#1e40af,#2563eb);color:#fff;text-align:center;font-size:12px;font-family:'IBM Plex Mono',monospace;padding:7px 16px;letter-spacing:1px;align-items:center;justify-content:center;gap:12px;}
 #updateBar button{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:6px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;padding:4px 12px;cursor:pointer;text-transform:uppercase;}
 #updateBar button:hover{background:rgba(255,255,255,0.35);}
+
+/* ── v2: layout compacto (celular) + ícone de data visível no escuro ── */
+:root{--hdr:50px;}
+.aph{padding:0 10px;height:var(--hdr);}
+.uname{max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.uchip{padding:3px 8px;}
+.btnout{padding:6px 9px;}
+.ntab{padding:8px 2px;font-size:12px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.ntab .ti{display:inline;font-size:16px;margin:0;}
+.tp{padding:10px 12px 24px;}
+.toolbar{flex-direction:row;flex-wrap:wrap;align-items:center;gap:5px;margin-bottom:8px;}
+.toolbar-row1,.toolbar-row2{display:contents;}
+.date-input-wrap{flex:1 1 auto;min-width:0;}
+.date-input-wrap input[type=date]{min-width:0;width:100%;padding:6px 8px;font-size:14px;}
+.bnav{padding:8px 11px;}
+.btoday{padding:8px 10px;}
+.bref{padding:8px 11px;}
+.refresh-info{justify-content:flex-start;margin-bottom:6px;}
+.refresh-info .ri-pill{padding:3px 10px;}
+.frow{margin-bottom:8px;}
+.fchip{padding:4px 11px;font-size:12px;}
+.rend-tabs{margin-bottom:8px;}
+.rend-tab{padding:5px 11px;}
+.rend-status-filters{margin-bottom:8px;}
+.rsf{padding:3px 10px;}
+.search-bar{margin-bottom:8px;padding:6px 10px;}
+input[type="date"]::-webkit-calendar-picker-indicator,input[type="time"]::-webkit-calendar-picker-indicator{filter:invert(1) brightness(1.15);opacity:.9;cursor:pointer;}
+body.light-mode input[type="date"]::-webkit-calendar-picker-indicator,body.light-mode input[type="time"]::-webkit-calendar-picker-indicator{filter:none;opacity:.75;}
+
+.htitle{font-size:10px;letter-spacing:.6px;line-height:1.25;white-space:nowrap;}
+@media(max-width:380px){
+  .htitle{display:none;}
+  .hbrand{gap:6px;}
+  .uname{max-width:84px;font-size:12px;}
+  .toolbar{gap:4px;}
+  .bnav,.btoday,.bref{padding:8px 8px;}
+  .date-input-wrap input[type=date]{font-size:13px;padding:6px 6px;}
+  .ntab{font-size:11px;gap:3px;}
+  .ntab .ti{font-size:14px;}
+}
+
+/* ── v4: botões com aparência de botão (relevo + pressionar) ── */
+.bnav,.bref,.fchip:not(.active),.rend-tab:not([class*="active-"]),.rsf:not(.act){
+  background:linear-gradient(180deg,#22456f,#173456);border:1px solid #4a78ae;color:#eaf1fb;
+  box-shadow:0 2px 0 rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12);
+  transition:transform .08s,box-shadow .08s,filter .15s;
+}
+.fchip.active,.rsf.act,.rend-tab[class*="active-"]{box-shadow:0 2px 0 rgba(0,0,0,.45);font-weight:700;}
+.bnav:hover,.bref:hover,.fchip:hover,.rend-tab:hover,.rsf:hover{filter:brightness(1.15);}
+.bnav:active,.bref:active,.fchip:active,.rend-tab:active,.rsf:active{transform:translateY(2px);box-shadow:none;filter:brightness(.95);}
+/* ── v4: modo claro — textos mais escuros e contraste maior ── */
+body.light-mode{
+  --text:#0f172a;--text2:#334155;--text3:#64748b;
+  --gold:#92400e;--gold2:#78350f;--orange2:#c2410c;--green2:#047857;--red2:#b91c1c;
+  --border:#b6c2d1;--border2:#8294ae;
+}
+body.light-mode .bnav,body.light-mode .bref,body.light-mode .fchip:not(.active),body.light-mode .rend-tab:not([class*="active-"]),body.light-mode .rsf:not(.act){
+  background:linear-gradient(180deg,#ffffff,#dfe7f1);border:1px solid #64748b;color:#0f172a;
+  box-shadow:0 2px 0 #94a3b8,inset 0 1px 0 #ffffff;
+}
+body.light-mode .fchip.active,body.light-mode .rsf.act,body.light-mode .rend-tab[class*="active-"]{box-shadow:0 2px 0 #94a3b8;}
+body.light-mode .bnav:active,body.light-mode .bref:active,body.light-mode .fchip:active,body.light-mode .rend-tab:active,body.light-mode .rsf:active{box-shadow:none;}
+body.light-mode .btnout{border-color:#92400e;}
+
+/* v5-claro: modo claro — escurece cores fixas claras (geradas) */
+
+body.light-mode [style*="color:#60a5fa"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color: #60a5fa"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color:#93c5fd"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color: #93c5fd"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color:#3b82f6"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color: #3b82f6"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1d4ed8!important;}
+body.light-mode [style*="color:#fcd34d"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color: #fcd34d"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color:#fde68a"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color: #fde68a"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color:#fbbf24"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color: #fbbf24"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color:#f59e0b"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color: #f59e0b"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#92400e!important;}
+body.light-mode [style*="color:#34d399"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color: #34d399"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color:#10b981"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color: #10b981"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color:#6ee7b7"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color: #6ee7b7"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#047857!important;}
+body.light-mode [style*="color:#4ade80"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#15803d!important;}
+body.light-mode [style*="color: #4ade80"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#15803d!important;}
+body.light-mode [style*="color:#f87171"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color: #f87171"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color:#ef4444"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color: #ef4444"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color:#fca5a5"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color: #fca5a5"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#b91c1c!important;}
+body.light-mode [style*="color:#a78bfa"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#6d28d9!important;}
+body.light-mode [style*="color: #a78bfa"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#6d28d9!important;}
+body.light-mode [style*="color:#c4b5fd"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#6d28d9!important;}
+body.light-mode [style*="color: #c4b5fd"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#6d28d9!important;}
+body.light-mode [style*="color:#fb923c"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#c2410c!important;}
+body.light-mode [style*="color: #fb923c"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#c2410c!important;}
+body.light-mode [style*="color:#f97316"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#c2410c!important;}
+body.light-mode [style*="color: #f97316"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#c2410c!important;}
+body.light-mode [style*="color:#94a3b8"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color: #94a3b8"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color:#64748b"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color: #64748b"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color:#cbd5e1"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color: #cbd5e1"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#475569!important;}
+body.light-mode [style*="color:#e2e8f0"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode [style*="color: #e2e8f0"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode [style*="color:#f1f5f9"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode [style*="color: #f1f5f9"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode [style*="color:#f8fafc"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode [style*="color: #f8fafc"]:not([style*="background:#0"]):not([style*="background:#1"]){color:#1e293b!important;}
+body.light-mode .hbadge{color:#fff;}
+body.light-mode .bsalvar{background:linear-gradient(135deg,#15803d,#166534);color:#fff;}
+body.light-mode #tabEvt.tab-ativa,body.light-mode #tabRel.tab-ativa,body.light-mode #tabQrv.tab-ativa{color:#1d4ed8!important;border-color:#3b82f6!important;}
+body.light-mode #tabVl.tab-ativa,body.light-mode #tabQrvVl.tab-ativa{color:#c2410c!important;border-color:#ea580c!important;}
+body.light-mode #tabAdmin.tab-ativa{color:#92400e!important;border-color:#b45309!important;}
+body.light-mode #tabServicos.tab-ativa{color:#047857!important;border-color:#059669!important;}
+body.light-mode #tabFatais.tab-ativa{color:#b91c1c!important;border-color:#dc2626!important;}
+body.light-mode #tabOpsEsp.tab-ativa{color:#6d28d9!important;}
+body.light-mode .flabel{color:#475569;}
+.ndjust{display:flex;justify-content:flex-end;margin-top:6px;}
+.ndjust .btn-copiar{padding:4px 10px;font-size:12px;}
+.btn-copiar.copiado{background:rgba(16,185,129,.25);border-color:#10b981;color:#10b981;}
+body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;color:#047857;}
+.ndjust-r{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.ndjust-r .btn-copiar{padding:2px 9px;font-size:11px;letter-spacing:.5px;white-space:nowrap;}
+@media(min-width:601px){.date-input-wrap{flex:0 0 190px;}.refresh-info{flex:0 0 auto;}}
+@media(max-width:380px){.ntab{min-width:0;font-size:10.5px;gap:2px;letter-spacing:0;padding-left:0;padding-right:0;}.ntab .ti{font-size:13px;}}
 </style>
 </head>
 <body>
@@ -376,11 +507,12 @@ body.mapa-fs-aberto{overflow:hidden;}
       <div class="toolbar-row2">
         <button class="bnav btoday" onclick="goToday('rend')">Hoje</button>
         <button class="bref" id="bRefR" onclick="loadRenditions(true)">↻</button>
+        <button class="bnav btoday" onclick="toggleBuscaRend()" id="btnBuscaR">🔍</button>
         <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
       </div>
     </div>
     <div class="refresh-info" id="rendRefreshInfo"></div>
-    <div class="search-bar">
+    <div class="search-bar" id="rendSearchBar" style="display:none;">
       <span>🔍</span>
       <input type="text" id="rendSearch" placeholder="Buscar por nome do agente..." oninput="renderRend()">
     </div>
@@ -401,8 +533,8 @@ body.mapa-fs-aberto{overflow:hidden;}
 
   <!-- POSTOS -->
   <div class="tp" id="pane-postos">
-    <div id="postosMapa" style="height:280px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--surface3);position:sticky;top:58px;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>
-    <div class="toolbar" style="display:flex;flex-direction:row;flex-wrap:nowrap;gap:8px;align-items:center;position:sticky;top:338px;z-index:40;background:var(--navy);padding:8px 4px;">
+    <div id="postosMapa" style="height:280px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--surface3);position:sticky;top:var(--hdr);z-index:50;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>
+    <div class="toolbar" style="display:flex;flex-direction:row;flex-wrap:nowrap;gap:8px;align-items:center;position:sticky;top:calc(var(--hdr) + 292px);z-index:40;background:var(--navy);padding:8px 4px;">
       <input type="text" id="postoBusca" placeholder="Buscar por nome, bairro ou rua..." style="flex:1;box-sizing:border-box;padding:12px;background:var(--surface3);border:1.5px solid var(--accent2);border-radius:8px;color:var(--text);font-size:14px;" oninput="renderPostos()">
       <button onclick="verTodosPostos()" style="padding:12px 16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;white-space:nowrap;cursor:pointer;" title="Ver todos os postos no mapa">🔍 Todos</button>
     </div>
@@ -541,7 +673,7 @@ body.mapa-fs-aberto{overflow:hidden;}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-10-03-v1'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-10-10-v7'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -1055,6 +1187,13 @@ function onRendDateChange(){const val=document.getElementById('rendDateInput').v
 function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
 
+function toggleBuscaRend(){
+  const bar=document.getElementById('rendSearchBar'),inp=document.getElementById('rendSearch'),btn=document.getElementById('btnBuscaR');
+  const abrir=bar.style.display==='none';
+  bar.style.display=abrir?'flex':'none';
+  btn.style.background=abrir?'rgba(37,99,235,0.3)':'';
+  if(abrir)inp.focus();else if(inp.value){inp.value='';renderRend();}
+}
 function toggleBusca(){
   G.searchMode=!G.searchMode;
   document.getElementById('authSearchBlock').style.display=G.searchMode?'block':'none';
@@ -1495,13 +1634,14 @@ function renderRend(){
     // Botão copiar justificativa
     const dataFmt=r.date?fmtBR(String(r.date).substring(0,10)):'';
     const justificativa=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do atendimento (rendição) realizado no local: ${r.local||'—'}, conforme registro no sistema sob o Nº ${r.reg||'—'}.`;
-    const btnCopiar=`<button class="btn-copiar" onclick="event.stopPropagation();copiarJustificativa('${r.id}')" title="Copiar justificativa">📋 Justificativa</button>`;
+    const btnCopiar=status=='cancelada'?'':`<button class="btn-copiar" onclick="event.stopPropagation();copiarJustificativa('${r.id}',this)" title="Copiar justificativa de ponto">📋 Justif. de ponto</button>`;
+    const btnCopiarCard=status==='cancelada'?'':`<button class="btn-copiar" onclick="event.stopPropagation();copiarJustificativa('${r.id}',this)" title="Copiar justificativa de ausência de ponto">📋 Justif. de ponto</button>`;
 
     return`<div class="ndcard ${sl}" onclick="toggleRendRow(this)" data-just="${encodeURIComponent(justificativa)}">
       <div class="ndcard-head">
         <div class="ndcard-line1">
           <span class="ndsb">${stxt}</span>
-          <span class="ndcard-chevron">▼</span>
+          <span class="ndjust-r">${btnCopiarCard}<span class="ndcard-chevron">▼</span></span>
         </div>
         <div class="ndcard-line2">
           ${r.reg?`<span class="ndcard-reg">Nº ${r.reg} ·</span>`:''}
@@ -1522,7 +1662,7 @@ function renderRend(){
           ${btnReativar}
           ${btnExcluirRend}
           ${acoes}
-          <div style="margin-top:10px;">${btnCopiar}</div>
+          ${btnCopiar?`<div style="margin-top:10px;">${btnCopiar}</div>`:''}
         </div>
       </div>
     </div>`;
@@ -1638,7 +1778,13 @@ async function savePass(){
 }
 
 // ── UTILS ──
-function copiarJustificativa(id){
+function justFeedback(btn){
+  if(!btn)return;
+  const o=btn.dataset.orig||btn.innerHTML;btn.dataset.orig=o;
+  btn.innerHTML='✓ Copiado';btn.classList.add('copiado');
+  clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.innerHTML=o;btn.classList.remove('copiado');},2000);
+}
+function copiarJustificativa(id,btn){
   const r=G.rends.find(x=>x.id===id);
   if(!r)return;
   // Normalizar data igual ao renderRend
@@ -1650,14 +1796,14 @@ function copiarJustificativa(id){
   const tipoAtend=String(r.status||'').toLowerCase()==='cancelada'?'atendimento':'atendimento (rendição)';
   const txt=`Solicito justificar a ausência de registro de ponto de entrada/saída no dia ${dataFmt}, em razão do ${tipoAtend} realizado no local: ${r.local||'—'}, conforme registro no sistema de atendimento da CENTRAL - SAC sob o Nº ${r.reg||'—'}.`;
   navigator.clipboard.writeText(txt).then(()=>{
-    toast('Justificativa copiada! ✓','ok');
+    toast('Justificativa copiada! ✓','ok');justFeedback(btn);
   }).catch(()=>{
     // Fallback para dispositivos sem clipboard API
     const el=document.createElement('textarea');
     el.value=txt;el.style.position='fixed';el.style.opacity='0';
     document.body.appendChild(el);el.select();
     document.execCommand('copy');document.body.removeChild(el);
-    toast('Justificativa copiada! ✓','ok');
+    toast('Justificativa copiada! ✓','ok');justFeedback(btn);
   });
 }
 function om(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
