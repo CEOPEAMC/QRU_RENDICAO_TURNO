@@ -405,6 +405,9 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 .ndjust-r .btn-copiar{padding:2px 9px;font-size:11px;letter-spacing:.5px;white-space:nowrap;}
 @media(min-width:601px){.date-input-wrap{flex:0 0 190px;}.refresh-info{flex:0 0 auto;}}
 @media(max-width:380px){.ntab{min-width:0;font-size:10.5px;gap:2px;letter-spacing:0;padding-left:0;padding-right:0;}.ntab .ti{font-size:13px;}}
+.tbox{background:var(--surface2);border-bottom:1px solid var(--border);margin:-10px -12px 8px;padding:8px 12px;}
+.tbox .refresh-info{flex:0 0 100%;order:9;margin:0;}
+@media(min-width:601px){.tbox .refresh-info{flex:0 0 auto;}.tbox .bact{margin-left:0;}}
 </style>
 </head>
 <body>
@@ -458,7 +461,7 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 
   <!-- AUTORIZAÇÕES -->
   <div class="tp active" id="pane-auth">
-    <div class="toolbar">
+    <div class="toolbar tbox">
       <div class="toolbar-row1">
         <button class="bnav" onclick="navDate(-1)">‹</button>
         <div class="date-input-wrap"><input type="date" id="authDateInput" onchange="onAuthDateChange()"></div>
@@ -470,8 +473,8 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
         <button class="bnav btoday" onclick="toggleBusca()" id="btnBusca">🔍</button>
         <button class="bact" id="btnNA" onclick="openAuthModal()" style="display:none;">＋ Novo</button>
       </div>
+      <div class="refresh-info" id="authRefreshInfo"></div>
     </div>
-    <div class="refresh-info" id="authRefreshInfo"></div>
     <div class="auth-search-block" id="authSearchBlock" style="display:none;">
       <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--accent2);text-transform:uppercase;margin-bottom:8px;">Buscar por Local / Via</div>
       <div class="row2">
@@ -498,7 +501,7 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 
   <!-- RENDIÇÕES -->
   <div class="tp" id="pane-rend">
-    <div class="toolbar">
+    <div class="toolbar tbox">
       <div class="toolbar-row1">
         <button class="bnav" onclick="navRD(-1)">‹</button>
         <div class="date-input-wrap"><input type="date" id="rendDateInput" onchange="onRendDateChange()"></div>
@@ -510,8 +513,8 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
         <button class="bnav btoday" onclick="toggleBuscaRend()" id="btnBuscaR">🔍</button>
         <button class="bact gr" id="btnNR" onclick="openRendModal()" style="display:none;">＋ Rendição</button>
       </div>
+      <div class="refresh-info" id="rendRefreshInfo"></div>
     </div>
-    <div class="refresh-info" id="rendRefreshInfo"></div>
     <div class="search-bar" id="rendSearchBar" style="display:none;">
       <span>🔍</span>
       <input type="text" id="rendSearch" placeholder="Buscar por nome do agente..." oninput="renderRend()">
@@ -673,7 +676,7 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-10-10-v7'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-10-10-v9'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
