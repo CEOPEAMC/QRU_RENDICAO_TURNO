@@ -408,6 +408,73 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 .tbox{background:var(--surface2);border-bottom:1px solid var(--border);margin:-10px -12px 8px;padding:8px 12px;}
 .tbox .refresh-info{flex:0 0 100%;order:9;margin:0;}
 @media(min-width:601px){.tbox .refresh-info{flex:0 0 auto;}.tbox .bact{margin-left:0;}}
+
+/* ── Lote A: botões de ação organizados, ícones, travar rolagem ── */
+.ab-row{display:flex;gap:6px;margin-top:10px;}
+.abtn{flex:1;min-width:0;padding:8px 6px;border-radius:8px;border:1px solid;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);transition:transform .08s,box-shadow .08s,filter .15s;}
+.abtn:hover{filter:brightness(1.15);}
+.abtn:active{transform:translateY(2px);box-shadow:none;}
+.abtn:disabled{opacity:.6;cursor:default;}
+.abtn-blue{background:linear-gradient(180deg,rgba(37,99,235,.28),rgba(37,99,235,.14));border-color:rgba(96,165,250,.55);color:#93c5fd;}
+.abtn-green{background:linear-gradient(180deg,rgba(16,185,129,.28),rgba(16,185,129,.14));border-color:rgba(16,185,129,.55);color:#34d399;}
+.abtn-amber{background:linear-gradient(180deg,rgba(245,158,11,.28),rgba(245,158,11,.14));border-color:rgba(245,158,11,.55);color:#fbbf24;}
+.abtn-red{background:linear-gradient(180deg,rgba(239,68,68,.26),rgba(239,68,68,.12));border-color:rgba(239,68,68,.55);color:#f87171;}
+body.light-mode .abtn{box-shadow:0 2px 0 #94a3b8,inset 0 1px 0 #fff;}
+body.light-mode .abtn-blue{background:linear-gradient(180deg,#eff6ff,#dbeafe);border-color:#3b82f6;color:#1e40af;}
+body.light-mode .abtn-green{background:linear-gradient(180deg,#ecfdf5,#d1fae5);border-color:#059669;color:#047857;}
+body.light-mode .abtn-amber{background:linear-gradient(180deg,#fffbeb,#fef3c7);border-color:#b45309;color:#92400e;}
+body.light-mode .abtn-red{background:linear-gradient(180deg,#fef2f2,#fee2e2);border-color:#dc2626;color:#b91c1c;}
+.bsm,.s-bsm,.bcanc,.brend{box-shadow:0 2px 0 rgba(0,0,0,.35);transition:transform .08s,box-shadow .08s,filter .15s;}
+.bsm:active,.s-bsm:active,.bcanc:active,.brend:active{transform:translateY(2px);box-shadow:none;}
+.cov{overscroll-behavior:contain;}
+
+/* ── Lote B: turno do relógio / espera em data passada (Rendições) ── */
+
+/* ── Lote C: relevo nos botões dos formulários, legenda dos Postos ── */
+.pl-btn{padding:12px 12px !important;min-width:44px;background:var(--surface3) !important;border:1px solid var(--border2) !important;color:var(--accent2,#60a5fa) !important;font-size:16px !important;box-shadow:0 2px 0 rgba(0,0,0,.35);}
+.pl-btn:active{transform:translateY(2px);box-shadow:none;}
+.pl-wrap{position:relative;display:contents}
+.pl-panel{display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.45);font-size:12.5px;line-height:1.7;color:var(--text);z-index:60;font-family:'IBM Plex Sans',sans-serif;font-weight:400;letter-spacing:0;text-transform:none;white-space:normal}
+.pl-panel.open{display:block}
+.pl-panel b{color:var(--text)}
+body.light-mode .pl-btn{color:#1e40af !important;box-shadow:0 2px 0 #94a3b8}
+
+.mfoot button,.bcancel2{box-shadow:0 2px 0 rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .08s,box-shadow .08s,filter .15s;}
+.mfoot button:hover{filter:brightness(1.12);}
+.mfoot button:active{transform:translateY(2px);box-shadow:none;}
+#pane-postos .toolbar input{min-width:0}
+#pane-postos .toolbar .pl-btn{padding:12px 10px !important;min-width:40px}
+body.light-mode .mfoot button,body.light-mode .bcancel2{box-shadow:0 2px 0 #94a3b8,inset 0 1px 0 rgba(255,255,255,.4);}
+
+/* ── Lote D: relevo mais visível, legenda de Postos em destaque ── */
+.abtn{box-shadow:0 2px 0 rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -2px 0 rgba(0,0,0,.28) !important;}
+.abtn:active{box-shadow:inset 0 2px 3px rgba(0,0,0,.45) !important;}
+body.light-mode .abtn{box-shadow:0 2px 0 #64748b,inset 0 1px 0 #fff,inset 0 -2px 0 rgba(0,0,0,.08) !important;}
+.pl-wrap .pl-btn{background:linear-gradient(180deg,#ef4444,#b91c1c) !important;border:1px solid #fca5a5 !important;color:#fff !important;padding:9px 16px !important;font-family:'Rajdhani',sans-serif !important;font-weight:700 !important;font-size:13px !important;letter-spacing:1px;text-transform:uppercase;border-radius:8px !important;box-shadow:0 2px 0 #7f1d1d,inset 0 1px 0 rgba(255,255,255,.3) !important;min-width:0 !important;white-space:nowrap;cursor:pointer;}
+.pl-wrap .pl-btn:active{transform:translateY(2px);box-shadow:none !important;}
+.pl-panel{border-left:4px solid #ef4444;}
+.pl-wrap .pl-btn{flex:0 0 auto !important;}
+.pl-wrap+.refresh-info-live{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+.mfoot button,.bcancel2{box-shadow:0 3px 0 rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -3px 0 rgba(0,0,0,.25) !important;}
+.mfoot button:active{box-shadow:inset 0 2px 4px rgba(0,0,0,.5) !important;transform:translateY(2px);}
+body.light-mode .mfoot button,body.light-mode .bcancel2{box-shadow:0 3px 0 #64748b,inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.1) !important;}
+
+/* ── Lote E: legenda dos Postos em janela fixa; tipos de registro com relevo azul ── */
+.pl-panel{position:fixed !important;left:12px !important;right:12px !important;top:50% !important;bottom:auto !important;margin:0 auto !important;max-width:440px;transform:translateY(-50%);z-index:3000 !important;max-height:80vh;overflow-y:auto;box-shadow:0 0 0 100vmax rgba(0,0,0,.6),0 12px 32px rgba(0,0,0,.5) !important;}
+.pl-panel .pl-close{display:block;width:100%;margin-top:12px;padding:10px;border-radius:8px;border:1px solid #fca5a5;background:linear-gradient(180deg,#ef4444,#b91c1c);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 #7f1d1d,inset 0 1px 0 rgba(255,255,255,.3);}
+.pl-panel .pl-close:active{transform:translateY(2px);box-shadow:none;}
+
+.topt{background:linear-gradient(180deg,rgba(37,99,235,.34),rgba(37,99,235,.16)) !important;border:1px solid rgba(96,165,250,.6) !important;box-shadow:0 3px 0 rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -3px 0 rgba(0,0,0,.2);transition:transform .08s,box-shadow .08s,filter .15s !important;}
+.topt .ol{color:#bfdbfe !important;}
+.topt:hover{filter:brightness(1.15);}
+.topt:active{transform:translateY(2px);box-shadow:inset 0 2px 4px rgba(0,0,0,.5);}
+.topt.sel{background:linear-gradient(135deg,#2563eb,#1d4ed8) !important;border-color:#bfdbfe !important;box-shadow:0 3px 0 #1e3a8a,0 0 0 2px rgba(147,197,253,.5),inset 0 1px 0 rgba(255,255,255,.35);}
+.topt.sel .ol{color:#fff !important;}
+body.light-mode .topt{background:linear-gradient(180deg,#eff6ff,#dbeafe) !important;border-color:#3b82f6 !important;box-shadow:0 3px 0 #64748b,inset 0 1px 0 #fff;}
+body.light-mode .topt .ol{color:#1e40af !important;}
+body.light-mode .topt.sel{background:linear-gradient(135deg,#2563eb,#1d4ed8) !important;border-color:#1e3a8a !important;}
+body.light-mode .topt.sel .ol{color:#fff !important;}
 </style>
 </head>
 <body>
@@ -541,6 +608,7 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
       <input type="text" id="postoBusca" placeholder="Buscar por nome, bairro ou rua..." style="flex:1;box-sizing:border-box;padding:12px;background:var(--surface3);border:1.5px solid var(--accent2);border-radius:8px;color:var(--text);font-size:14px;" oninput="renderPostos()">
       <button onclick="verTodosPostos()" style="padding:12px 16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;white-space:nowrap;cursor:pointer;" title="Ver todos os postos no mapa">🔍 Todos</button>
     </div>
+    <div style="position:relative;margin:4px 4px 8px;display:flex;"><span class="pl-wrap"><button type="button" class="pl-btn" onclick="plToggle(this)" title="Como usar" aria-label="Como usar">ⓘ Como usar</button><div class="pl-panel"><b>📍 Pino azul</b> = posto credenciado (toque para ver nome e endereço).<br><b>🔵 Ponto azul</b> = sua posição atual.<br><b>🎯</b> (no mapa) = ir para a minha localização · <b>⛶</b> = tela cheia.<br><b>🔍 Todos</b> = mostra todos os postos no mapa · a busca filtra por nome, bairro ou rua.<br>Na lista: <b>📍 Como Chegar</b> abre a rota · <b>🗺️</b> centraliza no mapa · <b>⚠️</b> reporta problema (fechado, endereço errado…).</div></span></div>
     <div id="postosList" style="padding:0 4px;"></div>
   </div>
 
@@ -676,7 +744,7 @@ body.light-mode .btn-copiar.copiado{background:#d1fae5;border-color:#047857;colo
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-10-10-v9'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-10-14-vE'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -841,6 +909,7 @@ function initApp(){
   if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
   // Sistema agora é 100% sob demanda — não carrega sozinho nem fica atualizando em segundo plano
   if(G.autoRefreshTimer){clearInterval(G.autoRefreshTimer);G.autoRefreshTimer=null;}
+  try{setRendTab(turnoRelogioKey());}catch(ex){}
   renderAuth();renderRend();
 }
 
@@ -1184,10 +1253,10 @@ function switchTab(t){
 // O servidor agora filtra por data — trocar de data sempre recarrega (não dá mais pra só
 // re-filtrar em memória, que agora só tem 1 dia por vez).
 function navDate(d){G.aD=new Date(G.aD);G.aD.setDate(G.aD.getDate()+d);setDI('authDateInput',G.aD);loadRecords();}
-function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);loadRenditions();}
+function navRD(d){G.rD=new Date(G.rD);G.rD.setDate(G.rD.getDate()+d);setDI('rendDateInput',G.rD);rendDataMudou();}
 function onAuthDateChange(){const val=document.getElementById('authDateInput').value;if(val){G.aD=localDate(val);loadRecords();}}
-function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);loadRenditions();}}
-function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);loadRenditions();}}
+function onRendDateChange(){const val=document.getElementById('rendDateInput').value;if(val){G.rD=localDate(val);rendDataMudou();}}
+function goToday(w){if(w==='auth'){G.aD=new Date();setDI('authDateInput',G.aD);loadRecords();}else{G.rD=new Date();setDI('rendDateInput',G.rD);rendIrHoje();}}
 function setFilter(f){G.filter=f;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));renderAuth();}
 
 function toggleBuscaRend(){
@@ -1391,7 +1460,7 @@ function buildAuthList(fl){
   const rows=fl.map(r=>{
     const vigencia=fmtVigencia(r.dates||[]);
     const local=r.local||r.area||r.descricao||'—';
-    const ac=cw?`<div class="ract"><button class="bsm bedit" onclick="event.stopPropagation();editAuth('${r.id}')">Editar</button><button class="bsm bdel" onclick="event.stopPropagation();delAuth('${r.id}')">Excluir</button></div>`:'';
+    const ac=cw?`<div class="ab-row"><button class="abtn abtn-blue" onclick="event.stopPropagation();editAuth('${r.id}')">Editar</button><button class="abtn abtn-red" onclick="event.stopPropagation();delAuth('${r.id}')">Excluir</button></div>`:'';
     // Vence hoje: última data do registro é hoje
     const dates=(r.dates||[]).sort();
     const lastDate=dates[dates.length-1];
@@ -1555,6 +1624,7 @@ async function saveAuth(){
   const dates=G.dates;
   if(!dates.length){toast('Adicione ao menos uma data.','err');return;}
   const rec={id:G.eA||gid(),type:t,reg,dates,createdBy:G.name,createdAt:new Date().toISOString(),...ex};
+  if(G.eA){const _o=(G.records.find(x=>x.id===G.eA)||(G.searchResults||[]).find(x=>x.id===G.eA)||{});if(_o.createdBy)rec.createdBy=_o.createdBy;if(_o.createdAt)rec.createdAt=_o.createdAt;}
   setSav('bSA',true);
   try{await api(G.eA?'updateRecord':'addRecord',rec);await loadRecords();cm('mAuth');toast(G.eA?'Registro atualizado!':'Registro salvo!','ok');}
   catch(ex2){toast('Erro: '+ex2.message,'err');}
@@ -1618,21 +1688,21 @@ function renderRend(){
       agendadaHtml=`<div class="ndinfo-row"><div class="ndinfo-label">${label}</div><div class="ndinfo-value" style="color:var(--green2);font-weight:600;">${r.substituto}</div></div>`;
     }
     const btnAgendar=(status==='pendente'&&cs&&(!r.substituto||!r.substituto.trim()))
-      ?`<button class="brend" style="margin-top:8px;" onclick="event.stopPropagation();openSup('${r.id}')">Agendar Substituto</button>`:'';
+      ?`<div class="ab-row"><button class="abtn abtn-blue" onclick="event.stopPropagation();openSup('${r.id}')">Agendar substituto</button></div>`:'';
 
     const podeConcluir=status==='pendente'&&r.substituto&&r.substituto.trim();
-    const acoes=cw?`<div class="ndact">
-      <button class="bsm bedit" onclick="event.stopPropagation();editRend('${r.id}')">Editar</button>
-      ${status==='pendente'&&podeConcluir?`<button class="brend" onclick="event.stopPropagation();concluirRend('${r.id}')">Concluir</button>`:''}
-      ${status==='pendente'?`<button class="bcanc" onclick="event.stopPropagation();cancelRend('${r.id}')">Cancelar</button>`:''}
+    const acoes=cw?`<div class="ab-row">
+      <button class="abtn abtn-blue" onclick="event.stopPropagation();editRend('${r.id}')">Editar</button>
+      ${status==='pendente'&&podeConcluir?`<button class="abtn abtn-green" onclick="event.stopPropagation();concluirRend('${r.id}')">Concluir</button>`:''}
+      ${status==='pendente'?`<button class="abtn abtn-amber" onclick="event.stopPropagation();cancelRend('${r.id}')">Cancelar</button>`:''}
+      ${status==='cancelada'?`<button class="abtn abtn-blue" onclick="event.stopPropagation();reativarRend('${r.id}')">Reativar</button>`:''}
+      ${(status==='pendente'||status==='cancelada')?`<button class="abtn abtn-red" onclick="event.stopPropagation();delRend('${r.id}')">Excluir</button>`:''}
     </div>`:'';
 
     const motivoCanc=r.motivoCancelamento&&r.motivoCancelamento.trim()
       ?`<div class="ndinfo-row"><div class="ndinfo-label" style="color:var(--red2);">Motivo do Cancelamento</div><div class="ndinfo-value" style="color:var(--red2);">${r.motivoCancelamento}</div></div>`:'';
-    const btnReativar=(cw&&status==='cancelada')
-      ?`<div class="ndact"><button class="brend" onclick="event.stopPropagation();reativarRend('${r.id}')">Reativar</button></div>`:'';
-    const btnExcluirRend=(cw&&(status==='pendente'||status==='cancelada'))
-      ?`<div class="ndact"><button class="bcanc" onclick="event.stopPropagation();delRend('${r.id}')">Excluir</button></div>`:'';
+    const btnReativar='';
+    const btnExcluirRend='';
 
     // Botão copiar justificativa
     const dataFmt=r.date?fmtBR(String(r.date).substring(0,10)):'';
@@ -1702,6 +1772,7 @@ async function saveRend(){
     createdBy:G.name,
     createdAt:new Date().toISOString()
   };
+  if(G.eR){const _r0=(G.rends.find(x=>x.id===G.eR)||{});if(_r0.createdBy)d.createdBy=_r0.createdBy;if(_r0.createdAt)d.createdAt=_r0.createdAt;}
   if(!d.date||!d.turno||!d.agente){toast('Preencha data, turno e agente.','err');return;}
   // Status sempre pendente ao criar ou editar — só Central conclui manualmente
   d.status=G.eR?(G.rends.find(x=>x.id===G.eR)?.status||'pendente'):'pendente';
@@ -1885,6 +1956,86 @@ function aplicarTemaSalvo(){
 }
 aplicarTemaSalvo();
 if(boot()){initApp();}else{document.getElementById('loginScreen').style.display='flex';}
+</script>
+<script>
+/* Trava a rolagem da página enquanto houver janela (card) aberta */
+(function(){
+  var SEL='.cov.open,.mover.open,.bib-painel.open,.bib-import-modal.open,#qrvDetalheModal.open,#qrvStatusModal.open';
+  var prev=false;
+  function upd(){try{var a=!!document.querySelector(SEL);if(a===prev)return;prev=a;document.documentElement.style.overflow=a?'hidden':'';document.body.style.overflow=a?'hidden':'';}catch(e){}}
+  try{new MutationObserver(upd).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});}catch(e){}
+})();
+</script>
+<script>
+/* ── Lote B (Rendições): turno pelo relógio e espera em data passada ── */
+(function(){
+  'use strict';
+  window.turnoRelogioKey=function(){
+    var d=new Date(),t=d.getHours()*60+d.getMinutes();
+    if(t>=1&&t<=270)return 'madrugada';
+    if(t>=271&&t<=690)return 'manha';
+    if(t>=691&&t<=1050)return 'tarde';
+    return 'noite';
+  };
+  window.rendDataMudou=function(){
+    if(iso(G.rD)<iso(new Date())){
+      reqRendSeq++;                        // descarta resposta pendente da data anterior
+      G.rends=[];G.nuncaCarregouRend=true;
+      try{spin('bRefR',false);}catch(e){}
+      var el=document.getElementById('rendRefreshInfo');if(el)el.innerHTML='';
+      renderRend();
+    }else{loadRenditions();}
+  };
+  window.rendIrHoje=function(){
+    setRendTab(turnoRelogioKey());
+    loadRenditions();
+  };
+})();
+</script>
+<script>
+/* ── Lote C ── */
+(function(){
+  'use strict';
+  /* corretor ortográfico só em texto livre (motivo, observação, descrição...); desligado em nomes, VT, agentes, locais */
+  var LIVRE=/(obs|motivo|descr|detalhe|ausen|apoio|dinamica|justif|^srvFEv$|^fRM$|^fObs$)/i;
+  function ajusta(el){
+    try{
+      var tag=el.tagName;
+      if(tag==='TEXTAREA'){el.setAttribute('spellcheck','true');el.setAttribute('lang','pt-BR');return;}
+      if(tag==='INPUT'){
+        var t=(el.getAttribute('type')||'text').toLowerCase();
+        if(t!=='text'&&t!=='search')return;
+        if(LIVRE.test(el.id||'')){el.setAttribute('spellcheck','true');el.setAttribute('lang','pt-BR');}
+        else{el.setAttribute('spellcheck','false');}
+      }
+    }catch(e){}
+  }
+  document.addEventListener('focusin',function(ev){var el=ev.target;if(el&&el.tagName&&(el.tagName==='TEXTAREA'||el.tagName==='INPUT'))ajusta(el);},true);
+  /* legenda do mapa de Postos */
+  window.plToggle=function(btn){
+    var pn=btn.parentNode.querySelector('.pl-panel');if(!pn)return;
+    var abrir=!pn.classList.contains('open');
+    document.querySelectorAll('.pl-panel.open').forEach(function(x){x.classList.remove('open');});
+    if(abrir)pn.classList.add('open');
+  };
+  document.addEventListener('click',function(ev){
+    if(ev.target.closest&&!ev.target.closest('.pl-wrap')){document.querySelectorAll('.pl-panel.open').forEach(function(x){x.classList.remove('open');});}
+  });
+})();
+</script>
+<script>
+/* ── Lote D: Rendições carregam direto ao trocar a data ── */
+window.rendDataMudou=function(){loadRenditions();};
+</script>
+<script>
+/* Lote E: botão "Entendi" na legenda dos Postos */
+(function(){
+  function add(){document.querySelectorAll('.pl-panel').forEach(function(pn){
+    if(pn.querySelector('.pl-close'))return;
+    var b=document.createElement('button');b.type='button';b.className='pl-close';b.textContent='Entendi';
+    b.onclick=function(ev){ev.stopPropagation();pn.classList.remove('open');};pn.appendChild(b);});}
+  add();
+})();
 </script>
 </body>
 </html>
