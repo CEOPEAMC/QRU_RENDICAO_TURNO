@@ -513,6 +513,103 @@ body.light-mode .rc-cat-nm{color:#1e40af;}
 body.light-mode .rc-cat-opt.sel{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-color:#1e3a8a;box-shadow:0 3px 0 #1e3a8a,0 0 0 2px rgba(37,99,235,.35);}
 body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
 </style>
+<style>
+/* ── Aba Admin (vP4) ── */
+.adm-subs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin:0 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.adm-subs::-webkit-scrollbar{display:none;}
+.adm-sub{flex:none;padding:9px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface3);color:var(--text2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;cursor:pointer;white-space:nowrap;}
+.adm-sub.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.adm-badge{display:inline-block;min-width:16px;padding:1px 5px;margin-left:6px;border-radius:9px;background:#ef4444;color:#fff;font-size:10px;font-weight:800;line-height:14px;text-align:center;}
+.adm-sec{display:none;}.adm-sec.active{display:block;}
+.adm-count{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 2px;}
+.adm-link{background:none;border:none;color:var(--accent2);font-size:12px;font-weight:700;cursor:pointer;padding:4px 0;margin-bottom:4px;}
+.adm-novo{border:1px dashed var(--border2);border-radius:10px;padding:10px 12px;}
+.adm-novo>summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--accent2);}
+.adm-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.adm-chip{padding:8px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface3);color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;}
+.adm-chip small{font-weight:500;opacity:.7;}
+.adm-chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pa-row{border:1px solid var(--border2);border-radius:10px;margin-bottom:8px;background:var(--surface3);overflow:hidden;}
+.pa-sum{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;}
+.pa-dot{width:10px;height:10px;border-radius:50%;flex:none;}
+.pa-dot.on{background:#10b981;}.pa-dot.off{background:#64748b;}
+.pa-info{flex:1;min-width:0;}
+.pa-n{font-weight:700;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pa-b{font-size:11px;color:var(--text2);}
+.pa-row.inativo .pa-n{opacity:.6;}
+.pa-chev{font-size:10px;color:var(--text3);transition:transform .2s;}
+.pa-row.open .pa-chev{transform:rotate(180deg);}
+.pa-q{flex:none;padding:5px 9px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;}
+.pa-edit{display:none;padding:2px 12px 12px;border-top:1px solid var(--border2);}
+.pa-row.open .pa-edit{display:block;}
+.pa-edit label{display:block;font-size:10px;font-weight:600;letter-spacing:1.2px;color:var(--text2);text-transform:uppercase;margin:10px 0 4px;}
+.pa-edit input[type=text]{width:100%;box-sizing:border-box;padding:9px 10px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;outline:none;}
+.pa-edit input[type=text]:focus{border-color:var(--accent2);}
+.pa-2{display:flex;gap:8px;}.pa-2>div{flex:1;}
+.pa-btns{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
+.pa-btn{padding:8px 12px;border:none;border-radius:6px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;}
+.pa-chk{display:flex!important;align-items:center;gap:5px;margin:0!important;font-size:12px!important;letter-spacing:0!important;text-transform:none!important;}
+.pa-row.destaque{box-shadow:0 0 0 2px var(--gold);}
+.rp-card{border:1px solid var(--border2);border-left:3px solid #f59e0b;border-radius:10px;padding:12px;margin-bottom:10px;background:var(--surface3);}
+.rp-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:14px;color:var(--text);}
+.rp-tag{display:inline-block;padding:1px 7px;border-radius:9px;background:var(--surface2);border:1px solid var(--border2);font-size:10px;font-weight:700;color:var(--text2);}
+.rp-tag.rp-n{border-color:#f59e0b;color:#f59e0b;}
+.rp-mot{font-size:13px;color:#f59e0b;margin:6px 0 2px;}
+.rp-meta{font-size:12px;color:var(--text2);margin-top:3px;}
+.rp-meta b{color:var(--text);}
+.lpasso{text-align:center;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin:-4px 0 16px;}
+.lsug{margin-top:8px;}
+.lsug-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 14px;border-radius:10px;border:1px solid var(--accent2);background:rgba(37,99,235,.14);color:var(--text);font-weight:700;font-size:14px;cursor:pointer;text-align:left;}
+.lsug-btn small{font-weight:600;font-size:11px;color:var(--accent2);letter-spacing:.5px;text-transform:uppercase;}
+.lhint{font-size:12px;line-height:1.5;color:var(--text2);background:rgba(37,99,235,.10);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;margin:2px 0 14px;}
+.lhint b{color:var(--text);}
+.llem{margin-top:8px;font-size:12px;color:var(--text2);}
+.llem a{color:var(--accent2);font-weight:700;cursor:pointer;text-decoration:underline;margin-left:6px;}
+#tab-adm{position:relative;}
+.cnt{display:inline-block;padding:3px 10px;border-radius:10px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;font-weight:700;}
+.cnt.ok{color:#34d399;border-color:#10b981;}
+.cnt.off{color:var(--text2);}
+body.light-mode .cnt.ok{color:#047857;border-color:#047857;}
+.adm-sync{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;padding:8px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;}
+.adm-sync span{font-size:12px;color:var(--text);font-weight:600;}
+.adm-syncbtn{padding:8px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;cursor:pointer;white-space:nowrap;}
+.adm-syncbtn:disabled{opacity:.8;}
+.adm-spin{display:inline-block;width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:admspin .7s linear infinite;vertical-align:-2px;margin-right:6px;}
+@keyframes admspin{to{transform:rotate(360deg);}}
+.pa-btn.ok{background:#059669;border:1px solid #047857;box-shadow:0 1px 0 rgba(0,0,0,.25);}
+.pa-btn.pa-cancel{background:var(--surface2);border:1px solid var(--border2);color:var(--text);}
+.pa-btn:disabled{opacity:.75;cursor:wait;}
+.adm-pills{display:flex;gap:6px;margin-bottom:12px;}
+.adm-pill{flex:1;padding:9px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface3);color:var(--text2);font-weight:700;font-size:13px;cursor:pointer;}
+.adm-pill.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.rp-card.busy{opacity:.6;pointer-events:none;}
+.rp-proc{display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--accent2);}
+.rp-card.busy .rp-proc{display:block;}
+.rp-card.rp-done{border-left-color:#10b981;}
+.rp-tag.rp-ok{border-color:#10b981;color:#34d399;}
+body.light-mode .rp-tag.rp-ok{color:#047857;border-color:#047857;}
+.ag-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border2);}
+.ag-nome{font-size:13px;color:var(--text);}
+.ag-acts{display:flex;gap:4px;flex:none;}
+.ag-ic{background:none;border:none;cursor:pointer;font-size:15px;padding:4px 7px;color:var(--text2);}
+.ag-del{color:#ef4444;font-size:16px;}
+.ag-edit{background:var(--surface3);}
+.ag-sub{font-size:11px;color:var(--text2);margin-top:2px;display:flex;flex-wrap:wrap;gap:4px 8px;}
+.ag-st{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:.3px;border:1px solid var(--border2);}
+.ag-st.ok{border-color:#10b981;color:#34d399;}.ag-st.no{border-color:#f59e0b;color:#fbbf24;}.ag-st.bad{border-color:#ef4444;color:#f87171;}
+body.light-mode .ag-st.ok{color:#047857;border-color:#047857;}body.light-mode .ag-st.no{color:#b45309;border-color:#b45309;}body.light-mode .ag-st.bad{color:#b91c1c;border-color:#b91c1c;}
+.ag-edit{flex-wrap:wrap;}.ag-edit .ag-inp{flex:1 1 140px;}
+.ag-inp{flex:1;min-width:0;padding:8px 10px;background:var(--navy2);border:1px solid var(--accent2);border-radius:8px;color:var(--text);font-size:13px;outline:none;}
+.ac-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border2);}
+.ac-l{min-width:0;display:flex;flex-direction:column;gap:4px;align-items:flex-start;}
+.ac-nome{font-size:14px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
+.ac-dt{text-align:right;flex:none;}
+.ac-h{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;color:var(--text);line-height:1.1;}
+.ac-h small{font-size:11px;font-weight:500;color:var(--text2);}
+.ac-d{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text2);margin-top:2px;}
+#tab-adm .adm-badge{position:absolute;top:3px;right:6px;margin:0;}
+@media(max-width:480px){.navtabs .ntab{flex-direction:column;font-size:10px;letter-spacing:0;gap:1px;padding:6px 1px;min-width:0;}.navtabs .ntab .ti{font-size:18px;}}
+</style>
 </head>
 <body>
 
@@ -530,19 +627,35 @@ body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
       <div class="ldiv"></div>
     </div>
     <div class="lsub">Acesso ao Sistema</div>
+    <div class="lpasso" id="loginPasso">Escolha seu perfil</div>
     <div class="fg"><label>Perfil de Acesso</label>
       <select id="loginRole"><option value="">Selecione seu perfil...</option><option value="admin">Administrador</option><option value="agente">Agente de Trânsito</option></select>
     </div>
-    <div class="fg"><label>Senha de Acesso</label>
+    <div class="fg" id="lpassGroup" style="display:none;"><label id="lpassLabel">Senha de Acesso</label>
       <div style="position:relative;">
         <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" style="width:100%;box-sizing:border-box;padding-right:40px;">
         <button type="button" onclick="togglePass('loginPass',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--text2);padding:4px;" title="Mostrar/ocultar senha">👁</button>
       </div>
     </div>
-    <div class="fg" id="lnameGroup" style="display:none;"><label>Identificação — Nome de Guerra</label><input type="text" id="loginName" placeholder="Digite seu nome..." autocomplete="off"></div>
-    <button class="btnlogin" id="btnLogin" onclick="doLogin()">Entrar no Sistema</button>
+    <div class="fg" id="lnameGroup" style="display:none;"><label id="lnameLabel">Identificação — Nome de Guerra</label><input type="text" id="loginName" placeholder="Digite seu nome..." autocomplete="off" autocapitalize="characters" spellcheck="false"><div id="loginLembrar" class="llem" style="display:none;"></div></div>
+    <div id="loginHint" class="lhint" style="display:none;"></div>
+    <button class="btnlogin" id="btnLogin" onclick="doLogin()" style="display:none;">Continuar</button>
     <div class="lerr" id="loginErr">Senha incorreta.</div>
-    <div class="lver">AMC/GEOFI/CEOPE · v4.0 · 2026</div>
+    <div class="lver" id="loginVer">AMC/GEOFI/CEOPE</div>
+  </div>
+</div>
+
+<!-- CRIAR PIN (1º acesso do agente) -->
+<div class="mover" id="mPin" style="z-index:1200;align-items:center;">
+  <div class="rcc-box" style="border-radius:16px;margin:16px;max-width:380px;">
+    <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;">Crie seu PIN pessoal</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:12px;" id="pinOla"></div>
+    <div class="fg"><label>PIN (6 números)</label><div style="position:relative;"><input type="password" id="pinNovo" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="••••••" oninput="this.value=this.value.replace(/\D/g,'');if(this.value.length===6)document.getElementById('pinNovo2').focus();" style="width:100%;box-sizing:border-box;letter-spacing:6px;text-align:center;font-size:20px;padding-right:44px;"><button type="button" onclick="togglePass('pinNovo',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2);padding:4px;" title="Mostrar/ocultar PIN">👁</button></div></div>
+    <div class="fg"><label>Repita o PIN</label><div style="position:relative;"><input type="password" id="pinNovo2" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="••••••" oninput="this.value=this.value.replace(/\D/g,'');" onkeydown="if(event.key==='Enter')pinSalvar();" style="width:100%;box-sizing:border-box;letter-spacing:6px;text-align:center;font-size:20px;padding-right:44px;"><button type="button" onclick="togglePass('pinNovo2',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2);padding:4px;" title="Mostrar/ocultar PIN">👁</button></div></div>
+    <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">Daqui para frente você entra com <b>matrícula + este PIN</b>. Não use sequências (123456) nem repetidos (111111). O PIN é uma senha pessoal; se esquecer, procure o administrador.</div>
+    <div class="lerr" id="pinErr" style="display:none;"></div>
+    <button class="btnlogin" id="btnPin" onclick="pinSalvar()">Salvar PIN e entrar</button>
+    <button class="adm-link" style="width:100%;margin-top:8px;" onclick="pinCancelar()">Cancelar</button>
   </div>
 </div>
 
@@ -552,6 +665,7 @@ body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
     <div class="hbrand"><div class="hbadge">AMC</div><div class="htitle">CEOPE<br>Central Operações</div></div>
     <div class="hright">
       <div class="uchip"><span class="uname" id="hName">—</span><span class="urole" id="hRole">—</span></div>
+      <button id="btnTrocarPerfil" onclick="trocarPerfil()" title="Trocar perfil" style="display:none;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px;color:var(--text);">⇄</button>
       <button id="btnTheme" onclick="toggleTheme()" style="background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:15px;">🌙</button>
       <button class="btnout" onclick="doLogout()">Sair</button>
     </div>
@@ -560,7 +674,7 @@ body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
     <div class="ntab active" onclick="switchTab('auth')" id="tab-auth"><span class="ti">📋</span>Autorizações</div>
     <div class="ntab" onclick="switchTab('rend')" id="tab-rend"><span class="ti">🔄</span>Rendições</div>
     <div class="ntab" onclick="switchTab('postos')" id="tab-postos"><span class="ti">⛽</span>Postos</div>
-    <div class="ntab" onclick="switchTab('adm')" id="tab-adm" style="display:none;"><span class="ti">⚙️</span>Admin</div>
+    <div class="ntab" onclick="switchTab('adm')" id="tab-adm" style="display:none;"><span class="ti">⚙️</span>Admin<span class="adm-badge" id="admBadge" style="display:none;"></span></div>
   </div>
 
   <!-- AUTORIZAÇÕES -->
@@ -645,64 +759,147 @@ body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
       <input type="text" id="postoBusca" placeholder="Buscar por nome, bairro ou rua..." style="flex:1;box-sizing:border-box;padding:12px;background:var(--surface3);border:1.5px solid var(--accent2);border-radius:8px;color:var(--text);font-size:14px;" oninput="renderPostos()">
       <button onclick="verTodosPostos()" style="padding:12px 16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border:none;border-radius:8px;color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;white-space:nowrap;cursor:pointer;" title="Ver todos os postos no mapa">🔍 Todos</button>
     </div>
+    <div class="refresh-info" id="postosRefreshInfo" style="margin:2px 4px 6px;"></div>
     <div style="position:relative;margin:4px 4px 8px;display:flex;"><span class="pl-wrap"><button type="button" class="pl-btn" onclick="plToggle(this)" title="Como usar" aria-label="Como usar">ⓘ Como usar</button><div class="pl-panel"><b>📍 Pino azul</b> = posto credenciado (toque para ver nome e endereço).<br><b>🔵 Ponto azul</b> = sua posição atual.<br><b>🎯</b> (no mapa) = ir para a minha localização · <b>⛶</b> = tela cheia.<br><b>🔍 Todos</b> = mostra todos os postos no mapa · a busca filtra por nome, bairro ou rua.<br>Na lista: <b>📍 Como Chegar</b> abre a rota · <b>🗺️</b> centraliza no mapa · <b>⚠️</b> reporta problema (fechado, endereço errado…).</div></span></div>
     <div id="postosList" style="padding:0 4px;"></div>
   </div>
 
   <!-- ADMIN -->
   <div class="tp" id="pane-adm">
-    <div class="stitle">URL do Google Apps Script</div>
-    <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:8px;">Cole a URL para conectar à planilha Google.</div>
-      <input type="url" class="aurl" id="scriptUrl" placeholder="https://script.google.com/macros/s/...">
-      <button class="bsurl" onclick="saveUrl()">💾 Salvar URL</button>
-    </div>
-    <div class="stitle" style="margin-top:20px;">Senhas de Acesso</div>
-    <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Senhas salvas na planilha — valem em todos os dispositivos.</div>
-      <div class="mf"><label>Perfil</label>
-        <select id="fPR"><option value="admin">Administrador</option><option value="central">Central</option><option value="supervisor">Supervisor</option><option value="agente">Agente</option></select>
-      </div>
-      <div class="mfrow">
-        <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..." style="text-transform:none;" autocomplete="new-password"></div>
-        <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..." style="text-transform:none;" autocomplete="new-password"></div>
-      </div>
-      <button class="bsurl" id="bSavePass" onclick="savePass()">🔑 Alterar Senha</button>
-    </div>
-    <div class="stitle" style="margin-top:20px;">Senhas Cadastradas</div>
-    <div id="passList"></div>
-    <div class="stitle" style="margin-top:20px;">Agentes Cadastrados (login)</div>
-    <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Nomes de guerra aceitos no login do perfil Agente. Só quem estiver nessa lista consegue entrar.</div>
-      <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <input type="text" id="fNovoAgente" class="aurl" placeholder="Nome do novo agente..." style="text-transform:uppercase;flex:1;" autocomplete="off">
-        <button class="bsurl" id="bAddAgente" onclick="addAgenteAdmin()" style="white-space:nowrap;">➕ Adicionar</button>
-      </div>
-      <div id="agentesList" style="max-height:280px;overflow-y:auto;"></div>
+    <div class="adm-sync"><span id="admSyncInfo">Atualizado às —</span><button class="adm-syncbtn" id="admSyncBtn" onclick="admSync()">↻ Sincronizar</button></div>
+    <div class="adm-subs" id="admSubs">
+      <button class="adm-sub active" data-sec="agentes" onclick="admTab('agentes')">👥 Agentes</button>
+      <button class="adm-sub" data-sec="postos" onclick="admTab('postos')">⛽ Postos</button>
+      <button class="adm-sub" data-sec="reportes" onclick="admTab('reportes')">🚩 Reportes<span class="adm-badge" id="admBadgeSub" style="display:none;"></span></button>
+      <button class="adm-sub" data-sec="acesso" onclick="admTab('acesso')">🔑 Acesso</button>
+      <button class="adm-sub" data-sec="log" onclick="admTab('log')">📜 Acessos</button>
     </div>
 
-    <div class="stitle" style="margin-top:20px;">Postos de Combustível Credenciados</div>
-    <div class="adcard">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Lista usada na aba "Postos" pelos agentes. Desmarcar "Ativo" tira o posto da busca deles.</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-        <input type="text" id="fNovoPostoNome" class="aurl" placeholder="Nome do posto..." style="flex:2;min-width:140px;">
-        <input type="text" id="fNovoPostoEnd" class="aurl" placeholder="Endereço..." style="flex:2;min-width:140px;">
-        <input type="text" id="fNovoPostoBairro" class="aurl" placeholder="Bairro..." style="flex:1;min-width:100px;">
-        <input type="text" id="fNovoPostoLat" class="aurl" placeholder="Latitude" style="flex:1;min-width:90px;">
-        <input type="text" id="fNovoPostoLng" class="aurl" placeholder="Longitude" style="flex:1;min-width:90px;">
-        <button class="bsurl" id="bAddPosto" onclick="addPostoAdmin()" style="white-space:nowrap;">➕ Adicionar Posto</button>
+    <div class="adm-sec active" data-sec="agentes">
+      <div class="adcard">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Agentes entram com <b>matrícula + PIN pessoal</b>. O PIN é criado pelo próprio agente no 1º acesso; aqui você cadastra a matrícula e, se ele esquecer, redefine o PIN.</div>
+        <div id="agAviso" style="display:none;font-size:12px;color:#fbbf24;border:1px solid #f59e0b;border-radius:8px;padding:8px 10px;margin-bottom:10px;">⚠ O script ainda não foi atualizado para a versão com matrícula/PIN. A lista mostra só os nomes.</div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+          <input type="text" id="fNovoAgente" class="aurl" placeholder="Nome do novo agente..." style="text-transform:uppercase;flex:2 1 150px;margin-top:0;" autocomplete="off">
+          <input type="text" id="fNovaMat" class="aurl" placeholder="Matrícula" inputmode="numeric" style="flex:1 1 90px;margin-top:0;" autocomplete="off">
+          <button class="bsurl" id="bAddAgente" onclick="addAgenteAdmin()" style="white-space:nowrap;margin-top:0;">➕ Adicionar</button>
+        </div>
+        <button class="adm-link" onclick="agLoteToggle()">📋 Colar lista (matrícula;nome) de uma vez</button>
+        <div id="agLoteBox" style="display:none;margin:8px 0 12px;">
+          <textarea id="fAgLote" class="aurl" rows="5" placeholder="Uma linha por agente: matrícula;nome   (ou cole as 2 colunas do Excel).&#10;Só nome também vale (sem matrícula)." style="text-transform:uppercase;resize:vertical;margin-top:0;"></textarea>
+          <button class="bsurl" id="bAgLote" onclick="addAgentesLote()">➕ Adicionar lista</button>
+          <div id="agLoteRes" style="font-size:12px;color:var(--text2);margin-top:8px;"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;"><input type="text" id="agFiltro" class="aurl" placeholder="🔎 Filtrar por nome ou matrícula..." oninput="renderAgentesListAdmin()" autocomplete="off" style="text-transform:uppercase;flex:2 1 160px;">
+          <select id="agFiltroSt" class="aurl" onchange="renderAgentesListAdmin()" style="flex:1 1 120px;margin-top:0;"><option value="">Todos</option><option value="semmat">Sem matrícula</option><option value="sempin">Sem PIN</option><option value="compin">Com PIN</option><option value="bloq">Bloqueados</option></select></div>
+        <button class="adm-link" id="agBloqNome" onclick="agToggleBloqNome()" style="display:none;margin-top:6px;"></button>
+        <div class="adm-count" id="agCount"></div>
+        <div id="agentesList" style="max-height:340px;overflow-y:auto;"></div>
       </div>
-      <div id="postosAdminList" style="max-height:400px;overflow-y:auto;"></div>
     </div>
 
-    <div class="stitle" style="margin-top:20px;">Reportes de Problemas (Postos)</div>
-    <div class="adcard">
-      <div id="reportesList" style="max-height:280px;overflow-y:auto;"></div>
+    <div class="adm-sec" data-sec="postos">
+      <div class="adcard">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:4px;">Lista usada na aba "Postos" pelos agentes. Posto inativo sai da busca deles.</div>
+        <div id="postosAdmInfo" style="font-size:11px;color:var(--accent2);margin-bottom:10px;"></div>
+        <details class="adm-novo" id="paNovoBox">
+          <summary>➕ Cadastrar novo posto</summary>
+          <div style="padding-top:6px;">
+            <input type="text" id="fNovoPostoNome" class="aurl" placeholder="Nome do posto...">
+            <input type="text" id="fNovoPostoEnd" class="aurl" placeholder="Endereço...">
+            <input type="text" id="fNovoPostoBairro" class="aurl" placeholder="Bairro...">
+            <input type="text" id="fNovoPostoLink" class="aurl" placeholder="📍 Colar link do Google Maps ou coordenadas (preenche lat/long)" onpaste="var i=this;setTimeout(function(){coordsNovo(i)},0)" onchange="coordsNovo(this)">
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="fNovoPostoLat" class="aurl" placeholder="Latitude" inputmode="decimal">
+              <input type="text" id="fNovoPostoLng" class="aurl" placeholder="Longitude" inputmode="decimal">
+            </div>
+            <button class="bsurl" id="bAddPosto" onclick="addPostoAdmin()" style="white-space:nowrap;">➕ Adicionar Posto</button>
+          </div>
+        </details>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <input type="text" id="paFiltro" class="aurl" placeholder="🔎 Filtrar por nome, bairro ou rua..." oninput="renderPostosAdminList()" autocomplete="off" style="flex:1;margin-top:0;">
+          <select id="paStatus" class="aurl" onchange="renderPostosAdminList()" style="width:auto;margin-top:0;"><option value="todos">Todos</option><option value="ativos">Ativos</option><option value="inativos">Inativos</option></select>
+        </div>
+        <div class="adm-count" id="paCount"></div>
+        <div id="postosAdminList" style="max-height:560px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <div class="adm-sec" data-sec="reportes">
+      <div class="adcard">
+        <div class="adm-pills" id="repPills">
+          <button class="adm-pill active" data-v="pend" onclick="repVista('pend')">🚩 Pendentes <span id="repPendN"></span></button>
+          <button class="adm-pill" data-v="hist" onclick="repVista('hist')">📚 Histórico</button>
+        </div>
+        <div id="repPend">
+          <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Problemas informados pelos agentes. Resolva direto daqui: desative, edite ou exclua o posto.</div>
+          <div id="reportesList"></div>
+        </div>
+        <div id="repHist" style="display:none;">
+          <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Reportes já resolvidos: quem reportou, quem resolveu e o que foi feito.</div>
+          <input type="text" id="repHistFiltro" class="aurl" placeholder="🔎 Filtrar por posto, motivo ou pessoa..." oninput="renderHistoricoReportes()" autocomplete="off" style="margin-top:0;">
+          <div class="adm-count" id="repHistResumo"></div>
+          <div id="repHistList" style="max-height:560px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="adm-sec" data-sec="acesso">
+      <div class="stitle" style="margin-top:4px;">Senhas de Acesso</div>
+      <div class="adcard">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Senhas salvas na planilha — valem em todos os dispositivos.</div>
+        <div class="mf"><label>Perfil</label>
+          <div class="adm-chips" id="fPRChips">
+            <button type="button" class="adm-chip active" data-r="admin" onclick="prSel('admin')">Administrador</button>
+            <button type="button" class="adm-chip" data-r="agente" onclick="prSel('agente')">Agente</button>
+            <button type="button" class="adm-chip" data-r="central" onclick="prSel('central')">Central <small>(inativo)</small></button>
+            <button type="button" class="adm-chip" data-r="supervisor" onclick="prSel('supervisor')">Supervisor <small>(inativo)</small></button>
+          </div>
+          <select id="fPR" style="display:none;"><option value="admin">Administrador</option><option value="central">Central</option><option value="supervisor">Supervisor</option><option value="agente">Agente</option></select>
+        </div>
+        <div class="mf"><label>Sua senha atual de administrador</label><input type="password" id="fPA" placeholder="Confirme que é você..." style="text-transform:none;" autocomplete="current-password"></div>
+        <div class="mfrow">
+          <div class="mf"><label>Nova Senha</label><input type="password" id="fPN" placeholder="Nova senha..." style="text-transform:none;" autocomplete="new-password"></div>
+          <div class="mf"><label>Confirmar</label><input type="password" id="fPC" placeholder="Repita..." style="text-transform:none;" autocomplete="new-password"></div>
+        </div>
+        <button class="bsurl" id="bSavePass" onclick="savePass()">🔑 Alterar Senha</button>
+      </div>
+      <div class="stitle" style="margin-top:20px;">Senhas Cadastradas</div>
+      <div id="passList"></div>
+      <details class="adm-novo" style="margin-top:16px;">
+        <summary>🔧 Avançado: URL do Google Apps Script</summary>
+        <div style="padding-top:6px;">
+          <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:4px;">Cole a URL para conectar à planilha Google. Só mude se o script for republicado com outra URL.</div>
+          <input type="url" class="aurl" id="scriptUrl" placeholder="https://script.google.com/macros/s/...">
+          <button class="bsurl" onclick="saveUrl()">💾 Salvar URL</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="adm-sec" data-sec="log">
+      <div class="adcard">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Quem entrou no sistema e quando (últimos acessos).</div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="acFiltro" class="aurl" placeholder="🔎 Filtrar por nome..." oninput="renderAcessosAdmin()" autocomplete="off" style="flex:1;margin-top:0;text-transform:uppercase;">
+          <select id="acPerfil" class="aurl" onchange="renderAcessosAdmin()" style="width:auto;margin-top:0;"><option value="">Todos</option><option value="admin">Admin</option><option value="agente">Agente</option><option value="central">Central</option><option value="supervisor">Supervisor</option></select>
+          <button class="bsurl" onclick="loadAcessosAdmin()" style="margin-top:0;" title="Atualizar">↻</button>
+        </div>
+        <div class="adm-count" id="acResumo"></div>
+        <div id="acessosList" style="max-height:480px;overflow-y:auto;"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- MODAL AUTORIZAÇÃO -->
+<div id="telaPerfilSel" style="display:none;position:fixed;inset:0;z-index:900;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+  <div style="width:100%;max-width:360px;">
+    <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-align:center;margin-bottom:4px;">Selecione o Perfil</div>
+    <div id="perfilSelNome" style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:18px;"></div>
+    <div id="perfilSelBtns" style="display:flex;flex-direction:column;gap:10px;"></div>
+    <button onclick="fecharPerfilSel()" style="width:100%;margin-top:16px;padding:12px;background:transparent;border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-weight:700;font-size:14px;cursor:pointer;">Voltar</button>
+  </div>
+</div>
 <div class="mover" id="mAuth">
   <div class="modal">
     <div class="mhdr"><div class="mtitle" id="mAuthTit">Novo Registro</div><button class="mclose" onclick="cm('mAuth')">✕</button></div>
@@ -781,7 +978,7 @@ body.light-mode .rc-cat-opt.sel .rc-cat-nm{color:#fff;}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-10-15-vF'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-11-24-vP11'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -810,7 +1007,7 @@ function boot(){
   try{const u=localStorage.getItem(LS.url);if(u)G.url=u;}catch(ex){}
   try{
     const sess=localStorage.getItem(LS.session);
-    if(sess){const s=JSON.parse(sess);if(s.role&&s.name){G.role=s.role;G.name=s.name;return true;}}
+    if(sess){const s=JSON.parse(sess);if(s.role&&s.name){G.role=s.role;G.name=s.name;G.matricula=s.matricula||'';G.adminReal=(s.adminReal===true||s.role==='admin');return true;}}
   }catch(ex){}
   return false;
 }
@@ -825,7 +1022,8 @@ document.getElementById('loginRole').addEventListener('change',function(){
   // Nome só aparece depois que a senha for validada — reinicia o fluxo se trocar de perfil
   document.getElementById('lnameGroup').style.display='none';
   G.senhaValidada=false;
-  const btn=document.getElementById('btnLogin');if(btn)btn.textContent='Entrar no Sistema';
+  loginReset();
+  if(document.getElementById('loginRole').value==='agente')loginModoAgente();
 });
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
@@ -841,83 +1039,159 @@ async function doLogin(){
   const err=document.getElementById('loginErr');
   const btn=document.getElementById('btnLogin');
   if(!role){err.textContent='Selecione um perfil.';err.style.display='block';return;}
+  if(role==='agente'){return loginAgente();}
 
   // ── FASE 1: validar senha primeiro (nome ainda não é exibido nem carregado) ──
   if(!G.senhaValidada){
     btn.textContent='Verificando...';btn.disabled=true;
     await loadPasswords();
     btn.disabled=false;
-    if(pass!==G.pw[role]){err.textContent='Senha incorreta.';err.style.display='block';btn.textContent='Entrar no Sistema';return;}
+    if(pass!==G.pw[role]){err.textContent='Senha incorreta.';err.style.display='block';btn.textContent='Continuar';return;}
     err.style.display='none';
     G.senhaValidada=true;
     document.getElementById('lnameGroup').style.display='block';
-    if(role==='agente'){
-      btn.textContent='Carregando agentes...';btn.disabled=true;
-      try{
-        const r=await api('getAgentes',{});
-        G.agentesConhecidos=(r.data||[]).map(n=>n.toUpperCase());
-        ativarAutocompleteNome();
-      }catch(ex){}
-      btn.disabled=false;
-    }
-    btn.textContent='Confirmar';
-    document.getElementById('loginName').focus();
+    document.getElementById('loginPasso').textContent='Passo 2 de 2 · Identificação';
+    // o nome NÃO é validado com lista no aparelho: a conferência é feita no servidor (passo 2)
+    const ni=document.getElementById('loginName'),lem=document.getElementById('loginLembrar');
+    let lembrado='';try{lembrado=localStorage.getItem('amc_ultimo_nome_'+role)||'';}catch(ex){}
+    ni.value=lembrado;
+    if(lembrado){
+      lem.innerHTML='Último acesso neste aparelho.<a onclick="loginNaoSouEu()">Não sou eu</a>';lem.style.display='block';
+    }else{lem.style.display='none';}
+    btn.textContent='Entrar';
+    ni.focus();if(lembrado)ni.select();
     return;
   }
 
   // ── FASE 2: validar/confirmar o nome e efetivar o login ──
   const name=document.getElementById('loginName').value.trim().toUpperCase();
-  if(role==='agente'){
-    if(!name){err.textContent='Informe seu nome de guerra.';err.style.display='block';return;}
-    if(!G.agentesConhecidos.includes(name)){
-      err.textContent='Nome não reconhecido na lista de agentes. Verifique com o administrador.';err.style.display='block';return;
-    }
-  }
-  err.style.display='none';G.role=role;G.name=name?name:RL[role];
-  try{localStorage.setItem(LS.session,JSON.stringify({role:G.role,name:G.name}));}catch(ex){}
+  concluirLogin(role,name?name:RL[role],'',name);
+}
+
+// Efetiva o login (comum a admin e agente)
+function concluirLogin(role,nome,matricula,lembrar){
+  document.getElementById('loginErr').style.display='none';
+  G.role=role;G.name=nome;G.matricula=matricula||'';
+  G.adminReal=(role==='admin'); // só quem entrou com a senha de administrador pode trocar de perfil
+  try{if(lembrar)localStorage.setItem('amc_ultimo_nome_'+role,lembrar);}catch(ex){}
+  try{localStorage.setItem(LS.session,JSON.stringify({role:G.role,name:G.name,adminReal:G.adminReal,matricula:G.matricula}));}catch(ex){}
   // Registrar acesso (não bloqueia o login se falhar)
   const agora=new Date();
   const dataHoraBR=agora.toLocaleString('pt-BR',{timeZone:'America/Fortaleza',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  api('logAcesso',{dataHora:dataHoraBR,nome:G.name,perfil:G.role}).catch(()=>{});
+  api('logAcesso',{dataHora:dataHoraBR,nome:G.name,perfil:G.role,matricula:G.matricula}).catch(()=>{});
   G.senhaValidada=false;
   initApp();
 }
 
-function ativarAutocompleteNome(){
-  const input=document.getElementById('loginName');
-  if(input.dataset.autocompleteAttached)return;
-  input.dataset.autocompleteAttached='1';
-  input.addEventListener('input',function(){
-    this.value=this.value.toUpperCase();
-    mostrarSugestoesNome(this);
-  });
-  input.addEventListener('blur',function(){setTimeout(()=>{if(this._sugEl){this._sugEl.remove();this._sugEl=null;}},200);});
+// ── Login do AGENTE: matrícula + PIN (1º acesso: senha geral → cria o PIN) ──
+function loginModoAgente(){
+  document.getElementById('lnameGroup').style.display='block';
+  const pg=document.getElementById('lpassGroup'),ng=document.getElementById('lnameGroup');
+  pg.parentNode.insertBefore(ng,pg); // matrícula primeiro, depois o PIN
+  document.getElementById('lnameLabel').textContent='Matrícula';
+  document.getElementById('lpassLabel').textContent='PIN';
+  const ni=document.getElementById('loginName');
+  ni.placeholder='Sua matrícula';ni.setAttribute('inputmode','text');
+  document.getElementById('loginPass').placeholder='Seu PIN de 6 números';
+  document.getElementById('loginPasso').textContent='Identifique-se';
+  document.getElementById('btnLogin').textContent='Entrar';
+  const h=document.getElementById('loginHint');
+  G.hintFull='<b>Primeiro acesso?</b> No campo PIN, digite a <b>senha geral</b>. Em seguida você cria o seu PIN pessoal.<br>Com algum problema para entrar, procure o <b>administrador</b>.';
+  G.hintEsq='<b>Esqueceu o PIN?</b> Procure o <b>administrador</b>: só ele consegue redefinir.';
+  let lembrado='';try{lembrado=localStorage.getItem('amc_ultimo_nome_agente')||'';}catch(ex){}
+  G.lembrado=/^\d+$/.test(lembrado)?lembrado:''; // só matrícula (quem já tem PIN)
+  h.innerHTML=G.lembrado?G.hintEsq:G.hintFull;
+  h.style.display='block';
+  ni.value=lembrado;
+  const lem=document.getElementById('loginLembrar');
+  if(lembrado){lem.innerHTML='Último acesso neste aparelho.<a onclick="loginNaoSouEu()">Não sou eu</a>';lem.style.display='block';}
+  else lem.style.display='none';
+  document.getElementById('loginName').focus();
+}
+async function loginAgenteLegado(id,seg){
+  // script ainda não atualizado: confere como antes (senha geral + nome na lista)
+  await loadPasswords();
+  if(seg!==G.pw.agente)return {ok:false,msg:'Dados não reconhecidos.'};
+  try{
+    const l=await api('getAgentes',{});
+    const lista=(l.data||[]).map(function(n){return String(n).toUpperCase();});
+    return lista.indexOf(id)>=0?{ok:true,nome:id,matricula:''}:{ok:false,msg:'Dados não reconhecidos.'};
+  }catch(ex){return {ok:false,msg:'Não foi possível verificar agora. Confira a internet e tente de novo.'};}
+}
+async function loginAgente(){
+  const err=document.getElementById('loginErr'),btn=document.getElementById('btnLogin');
+  const id=document.getElementById('loginName').value.trim().toUpperCase();
+  const seg=document.getElementById('loginPass').value;
+  if(!id||!seg){err.textContent='Informe a matrícula e o PIN.';err.style.display='block';return;}
+  btn.textContent='Verificando...';btn.disabled=true;
+  let r;
+  try{r=await api('entrarAgente',{id:id,segredo:seg});}
+  catch(ex){
+    if(/desconhecida/i.test(ex.message))r=await loginAgenteLegado(id,seg);
+    else r={ok:false,msg:'Não foi possível verificar agora. Confira a internet e tente de novo.'};
+  }
+  btn.disabled=false;btn.textContent='Entrar';
+  if(r&&r.bloqueado){err.textContent='Muitas tentativas erradas. Aguarde '+(r.minutos||15)+' min e tente de novo, ou peça ao administrador.';err.style.display='block';return;}
+  if(!r||!r.ok){let m=(r&&r.msg)||'Dados não reconhecidos.';if(/PIN/.test(m))m+=' Esqueceu o PIN? Procure o administrador.';err.textContent=m;err.style.display='block';return;}
+  if(r.criarPin){
+    G.pinTmp={id:r.matricula,senha:seg,nome:r.nome,matricula:r.matricula};
+    pinAbrir();return;
+  }
+  concluirLogin('agente',r.nome,r.matricula,r.matricula||id);
+}
+function pinAbrir(){
+  document.getElementById('pinOla').textContent='Olá, '+G.pinTmp.nome+'! Escolha 6 números que só você saiba.';
+  ['pinNovo','pinNovo2'].forEach(function(i){document.getElementById(i).value='';});
+  document.getElementById('pinErr').style.display='none';
+  om('mPin');setTimeout(function(){document.getElementById('pinNovo').focus();},50);
+}
+function pinCancelar(){G.pinTmp=null;cm('mPin');document.getElementById('loginPass').value='';}
+async function pinSalvar(){
+  const e=document.getElementById('pinErr'),b=document.getElementById('btnPin');
+  const p1=document.getElementById('pinNovo').value.trim(),p2=document.getElementById('pinNovo2').value.trim();
+  const erro=function(m){e.textContent=m;e.style.display='block';};
+  if(!/^\d{6}$/.test(p1)){erro('O PIN deve ter exatamente 6 números.');return;}
+  if(p1!==p2){erro('Os dois PINs não são iguais.');return;}
+  if(!G.pinTmp){erro('Sessão expirada. Tente entrar de novo.');return;}
+  b.disabled=true;b.textContent='Salvando...';
+  try{
+    const r=await api('criarPin',{id:G.pinTmp.id,senha:G.pinTmp.senha,pin:p1});
+    b.disabled=false;b.textContent='Salvar PIN e entrar';
+    if(!r||!r.ok){erro((r&&r.msg)||'Não foi possível salvar o PIN.');return;}
+    const t=G.pinTmp;G.pinTmp=null;cm('mPin');document.getElementById('loginPass').value='';
+    concluirLogin('agente',t.nome,t.matricula,t.matricula);
+  }catch(ex){b.disabled=false;b.textContent='Salvar PIN e entrar';erro('Não foi possível salvar agora. Confira a internet e tente de novo.');}
 }
 
-function mostrarSugestoesNome(input){
-  if(input._sugEl){input._sugEl.remove();input._sugEl=null;}
-  const cur=input.value.trim();
-  if(!cur)return;
-  const filtrados=G.agentesConhecidos.filter(a=>a.startsWith(cur)).slice(0,8);
-  if(!filtrados.length)return;
-  const sug=document.createElement('div');
-  sug.className='suggestions';
-  sug.innerHTML='<ul>'+filtrados.map(a=>`<li>${a}</li>`).join('')+'</ul>';
-  const wrap=input.parentElement;
-  wrap.style.position='relative';
-  wrap.appendChild(sug);
-  input._sugEl=sug;
-  sug.querySelectorAll('li').forEach(li=>{
-    li.addEventListener('mousedown',function(e){
-      e.preventDefault();
-      input.value=this.textContent.trim();
-      sug.remove();input._sugEl=null;
-    });
-  });
+
+
+// ── Tela de login: sugestão do próprio nome (só quando sobra UM nome possível) ──
+function loginReset(){
+  const role=(document.getElementById('loginRole')||{}).value||'';
+  const b=document.getElementById('btnLogin');if(b){b.textContent='Continuar';b.style.display=role?'':'none';}
+  const pgv=document.getElementById('lpassGroup');if(pgv)pgv.style.display=role?'':'none';
+  const p=document.getElementById('loginPasso');if(p)p.textContent=role==='admin'?'Passo 1 de 2 · Senha do administrador':(role?'Identifique-se':'Escolha seu perfil');
+  ['loginHint','loginLembrar'].forEach(function(i){const e=document.getElementById(i);if(e){e.style.display='none';e.innerHTML='';}});
+  const pg0=document.getElementById('lpassGroup'),ng0=document.getElementById('lnameGroup');
+  if(pg0&&ng0)pg0.parentNode.insertBefore(ng0,pg0.nextSibling); // admin: senha primeiro, nome depois
+  const a=document.getElementById('lnameLabel');if(a)a.textContent='Seu nome';
+  const b2=document.getElementById('lpassLabel');if(b2)b2.textContent=role==='admin'?'Senha do administrador':'Senha de Acesso';
+  const n=document.getElementById('loginName');if(n){n.placeholder='Digite seu nome...';}
+  const pp=document.getElementById('loginPass');if(pp)pp.placeholder='••••••••';
 }
+function loginNaoSouEu(){
+  const ni=document.getElementById('loginName');ni.value='';ni.focus();
+  const l=document.getElementById('loginLembrar');l.style.display='none';
+  try{localStorage.removeItem('amc_ultimo_nome_'+document.getElementById('loginRole').value);}catch(ex){}
+  if(document.getElementById('loginRole').value==='agente')document.getElementById('loginPass').focus();
+}
+document.getElementById('loginName').addEventListener('input',function(){const e=this;if(document.getElementById('loginRole').value==='agente'){const l=document.getElementById('loginLembrar');if(l)l.style.display='none';if(G.lembrado){const h=document.getElementById('loginHint');if(h)h.innerHTML=(e.value.trim()===G.lembrado)?G.hintEsq:G.hintFull;}}e.value=e.value.toUpperCase();});
+document.getElementById('loginName').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('loginVer').textContent='AMC/GEOFI/CEOPE · '+APP_VERSION;
 
 function doLogout(){
-  G.role=null;G.name='';G.senhaValidada=false;G.agentesConhecidos=[];
+  G.role=null;G.name='';G.matricula='';G.adminReal=false;G.senhaValidada=false;G.agentesConhecidos=[];
+  try{document.getElementById('telaPerfilSel').style.display='none';}catch(ex){}
   try{localStorage.removeItem(LS.session);}catch(ex){}
   document.getElementById('app').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
@@ -926,31 +1200,439 @@ function doLogout(){
   document.getElementById('loginName').value='';
   document.getElementById('loginRole').value='';
   document.getElementById('lnameGroup').style.display='none';
-  document.getElementById('btnLogin').textContent='Entrar no Sistema';
+  loginReset();
 }
 
-// ── APP INIT ──
-function initApp(){
-  checkForUpdate(); // verificar nova versão ao logar
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('app').style.display='flex';
-  document.getElementById('hName').textContent=G.name;
-  document.getElementById('hRole').textContent=RL[G.role];
-  document.getElementById('hRole').className='urole '+RC[G.role];
-  const cw=['admin','central'].includes(G.role);
-  document.getElementById('btnNA').style.display=cw?'flex':'none';
-  document.getElementById('btnNR').style.display=cw?'flex':'none';
-  document.getElementById('tab-adm').style.display=G.role==='admin'?'flex':'none';
-  G.aD=new Date();G.rD=new Date();
-  setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
-  if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
-  // Sistema agora é 100% sob demanda — não carrega sozinho nem fica atualizando em segundo plano
-  if(G.autoRefreshTimer){clearInterval(G.autoRefreshTimer);G.autoRefreshTimer=null;}
-  try{setRendTab(turnoRelogioKey());}catch(ex){}
-  renderAuth();renderRend();
+// ── TROCA DE PERFIL (somente administrador) ──
+function fecharPerfilSel(){document.getElementById('telaPerfilSel').style.display='none';}
+function trocarPerfil(){
+  if(G.adminReal!==true)return; // trava: só o administrador troca
+  document.getElementById('perfilSelNome').textContent=G.name;
+  const ops=['admin','agente']; // só os perfis ativos no login hoje
+  document.getElementById('perfilSelBtns').innerHTML=ops.map(function(p){
+    const at=(p===G.role);
+    return '<button onclick="confirmarTrocaPerfil(\''+p+'\')" style="padding:14px;border-radius:10px;border:1px solid '+(at?'var(--accent)':'var(--border2)')+';background:var(--surface2);color:var(--text);font-family:\'Rajdhani\',sans-serif;font-weight:700;font-size:16px;cursor:pointer;">'+RL[p]+(at?' <span style="font-size:11px;color:var(--accent);">(ATUAL)</span>':'')+'</button>';
+  }).join('');
+  document.getElementById('telaPerfilSel').style.display='flex';
+}
+function confirmarTrocaPerfil(p){
+  if(G.adminReal!==true)return;
+  if(p===G.role){fecharPerfilSel();return;}
+  const aberto=document.querySelector('.mover.open');
+  if(aberto){
+    fecharPerfilSel();
+    conf('Trocar perfil','Há uma janela aberta com alterações que podem não ter sido salvas. Trocar de perfil mesmo assim?',function(){aplicarPerfil(p);},'red');
+    return;
+  }
+  aplicarPerfil(p);
+}
+function aplicarPerfil(p){
+  if(G.adminReal!==true||!RL[p])return;
+  document.querySelectorAll('.mover.open').forEach(function(m){m.classList.remove('open');});
+  document.body.style.overflow='';
+  fecharPerfilSel();
+  G.role=p;
+  try{localStorage.setItem(LS.session,JSON.stringify({role:G.role,name:G.name,adminReal:true,matricula:G.matricula||''}));}catch(ex){}
+  if(p!=='admin'&&document.getElementById('tab-adm').classList.contains('active'))switchTab('auth');
+  initApp();
+  toast('Perfil: '+RL[p],'ok');
 }
 
-let postosAdminCache=[];
+// ══ ADMIN: sub-abas, agentes, postos, reportes, acessos ══
+function escH(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escJ(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function fmtAtualizadoEm(isoStr){
+  if(!isoStr)return '';const d=new Date(isoStr);if(isNaN(d.getTime()))return '';
+  const tz={timeZone:'America/Fortaleza'};
+  return d.toLocaleDateString('pt-BR',Object.assign({day:'2-digit',month:'2-digit',year:'numeric'},tz))+' às '+d.toLocaleTimeString('pt-BR',Object.assign({hour:'2-digit',minute:'2-digit'},tz));
+}
+function admTab(k){
+  G.admSec=k;
+  document.querySelectorAll('#pane-adm .adm-sec').forEach(function(s){s.classList.toggle('active',s.getAttribute('data-sec')===k);});
+  document.querySelectorAll('#admSubs .adm-sub').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-sec')===k);});
+  if(k==='log'&&!G.acessosCarregados)loadAcessosAdmin();
+}
+function admBadge(n){
+  ['admBadge','admBadgeSub'].forEach(function(id){
+    const b=document.getElementById(id);if(!b)return;
+    if(n>0){b.textContent=n;b.style.display='inline-block';}else{b.style.display='none';}
+  });
+}
+async function admBadgeInit(){
+  if(G.role!=='admin')return;
+  try{const r=await api('getReportesPostos',{});admBadge((r.data||[]).length);}catch(ex){}
+}
+
+// ── coordenadas: aceita link do Google Maps ou "lat, lng" ──
+function parseCoords(str){
+  str=String(str||'').trim();if(!str)return null;
+  if(/goo\.gl|maps\.app/i.test(str))return {curto:true};
+  const ok=function(a,b){a=parseFloat(a);b=parseFloat(b);return (isFinite(a)&&isFinite(b)&&Math.abs(a)<=90&&Math.abs(b)<=180)?{lat:a,lng:b}:null;};
+  let m;
+  if((m=str.match(/@(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)/)))return ok(m[1],m[2]);
+  if((m=str.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/)))return ok(m[1],m[2]);
+  if((m=str.match(/[?&](?:q|ll|query|destination)=(-?\d+(?:\.\d+)?)(?:,|%2C)\s*(-?\d+(?:\.\d+)?)/i)))return ok(m[1],m[2]);
+  if((m=str.match(/(-?\d{1,3}\.\d+)\s*[,;\s]\s*(-?\d{1,3}\.\d+)/)))return ok(m[1],m[2]);
+  if((m=str.match(/(-?\d{1,3},\d+)\s*[;\s]\s*(-?\d{1,3},\d+)/)))return ok(m[1].replace(',','.'),m[2].replace(',','.'));
+  return null;
+}
+function coordsAuto(inp,latEl,lngEl){
+  if(!inp||!String(inp.value||'').trim())return;
+  const r=parseCoords(inp.value);
+  if(!r){toast('Não encontrei coordenadas nesse texto.','err');return;}
+  if(r.curto){toast('Link curto não dá para ler. No Maps, toque no ponto e copie as coordenadas, ou cole o link completo.','err');return;}
+  latEl.value=r.lat;lngEl.value=r.lng;inp.value='';
+  toast('Coordenadas preenchidas ✓','ok');
+}
+function coordsNovo(inp){coordsAuto(inp,document.getElementById('fNovoPostoLat'),document.getElementById('fNovoPostoLng'));}
+function coordsLinha(inp){const row=inp.closest('.pa-row');if(row)coordsAuto(inp,row.querySelector('.pa-lat'),row.querySelector('.pa-lng'));}
+function numCoord(s){return parseFloat(String(s==null?'':s).trim().replace(',','.'));}
+function validaCoords(lat,lng){
+  if(!isFinite(lat)||!isFinite(lng))return 'Latitude e longitude precisam ser números.';
+  if(Math.abs(lat)>90||Math.abs(lng)>180)return 'Coordenadas inválidas.';
+  if(Math.abs(lat)>=38&&Math.abs(lng)<=5)return 'Latitude e longitude parecem estar trocadas.';
+  if(lat<-4.2||lat>-3.4||lng<-39.0||lng>-38.0)toast('⚠ Esse ponto fica fora de Fortaleza. Confira as coordenadas.','err');
+  return '';
+}
+function urlMaps(lat,lng){return 'https://www.google.com/maps?q='+encodeURIComponent(lat+','+lng);}
+
+// ── AGENTES ──
+function agLoteToggle(){
+  const b=document.getElementById('agLoteBox');if(!b)return;
+  b.style.display=b.style.display==='none'?'block':'none';
+  if(b.style.display==='block')document.getElementById('fAgLote').focus();
+}
+
+// ── POSTOS (admin) ──
+G.paAberto={};
+function infoPostosAdm(){
+  const el=document.getElementById('postosAdmInfo');if(!el)return;
+  const q=fmtAtualizadoEm(G.postosAtualizadoEm);
+  el.textContent=q?('Lista alterada pela última vez em '+q+'.'):'';
+}
+function postoMudou(){G.postosCarregados=false;G.postosEm=0;G.postosAtualizadoEm=new Date().toISOString();infoPostosAdm();}
+function renderPostosAdminList(){
+  const el=document.getElementById('postosAdminList');
+  if(!el)return;
+  const todos=postosAdminCache||[];
+  const f=((document.getElementById('paFiltro')||{}).value||'').trim().toUpperCase();
+  const st=(document.getElementById('paStatus')||{}).value||'todos';
+  const lista=todos.filter(function(p){
+    if(st==='ativos'&&!p.ativo)return false;
+    if(st==='inativos'&&p.ativo)return false;
+    return !f||(p.nome+' '+p.bairro+' '+p.endereco).toUpperCase().indexOf(f)>=0;
+  });
+  const at=todos.filter(function(p){return p.ativo;}).length;
+  const c=document.getElementById('paCount');
+  if(c)c.innerHTML='<span class="cnt">'+todos.length+' postos</span><span class="cnt ok">'+at+' ativos</span><span class="cnt off">'+(todos.length-at)+' inativos</span>'+((f||st!=='todos')?'<span class="cnt">mostrando '+lista.length+'</span>':'');
+  if(!todos.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum posto cadastrado.</div>';return;}
+  if(!lista.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum posto encontrado.</div>';return;}
+  el.innerHTML=lista.map(function(p){
+    const id=escJ(p.id),aberto=!!G.paAberto[p.id];
+    return '<div class="posto-admin-row pa-row'+(aberto?' open':'')+(p.ativo?'':' inativo')+'" data-id="'+escH(p.id)+'">'
+     +'<div class="pa-sum" onclick="paToggle(\''+id+'\')"><span class="pa-dot '+(p.ativo?'on':'off')+'"></span>'
+     +'<div class="pa-info"><div class="pa-n">'+escH(p.nome)+'</div><div class="pa-b">'+escH(p.bairro||'—')+(p.ativo?'':' · INATIVO')+'</div></div>'
+     +'<button class="pa-q" onclick="event.stopPropagation();paAtivarRapido(\''+id+'\',this)">'+(p.ativo?'Desativar':'Ativar')+'</button>'
+     +'<span class="pa-chev">▼</span></div>'
+     +'<div class="pa-edit">'
+     +'<label>Nome</label><input type="text" class="pa-nome" value="'+escH(p.nome)+'">'
+     +'<label>Endereço</label><input type="text" class="pa-end" value="'+escH(p.endereco)+'">'
+     +'<label>Bairro</label><input type="text" class="pa-bairro" value="'+escH(p.bairro)+'">'
+     +'<label>Colar link do Maps ou coordenadas (opcional)</label><input type="text" class="pa-link" placeholder="Cole aqui e a latitude/longitude se preenchem" onpaste="var i=this;setTimeout(function(){coordsLinha(i)},0)" onchange="coordsLinha(this)">'
+     +'<div class="pa-2"><div><label>Latitude</label><input type="text" class="pa-lat" inputmode="decimal" value="'+escH(p.latitude)+'"></div><div><label>Longitude</label><input type="text" class="pa-lng" inputmode="decimal" value="'+escH(p.longitude)+'"></div></div>'
+     +'<div class="pa-btns"><label class="pa-chk"><input type="checkbox" class="pa-ativo" '+(p.ativo?'checked':'')+'> Ativo</label>'
+     +'<button class="pa-btn pa-save" style="background:var(--accent);" onclick="salvarPostoAdmin(\''+id+'\')">Salvar</button>'
+     +'<button class="pa-btn" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text);" onclick="paVerMapa(\''+id+'\')">🗺️ Ver no mapa</button>'
+     +'<button class="pa-btn" style="background:#ef4444;" onclick="excluirPostoAdmin(\''+id+'\',\''+escJ(p.nome)+'\')">Excluir</button></div>'
+     +'</div></div>';
+  }).join('');
+}
+function paToggle(id){
+  G.paAberto[id]=!G.paAberto[id];
+  const row=document.querySelector('.pa-row[data-id="'+id+'"]');
+  if(row)row.classList.toggle('open',!!G.paAberto[id]);
+}
+function paVerMapa(id){
+  const row=document.querySelector('.pa-row[data-id="'+id+'"]');if(!row)return;
+  const lat=numCoord(row.querySelector('.pa-lat').value),lng=numCoord(row.querySelector('.pa-lng').value);
+  if(!isFinite(lat)||!isFinite(lng)){toast('Sem coordenadas válidas.','err');return;}
+  window.open(urlMaps(lat,lng),'_blank');
+}
+async function paSetAtivo(id,ativo){
+  await api('updatePosto',{id:id,ativo:ativo});
+  const p=postosAdminCache.find(function(x){return x.id===id;});if(p)p.ativo=ativo;
+  postoMudou();renderPostosAdminList();
+}
+async function addPostoAdmin(){
+  const nome=document.getElementById('fNovoPostoNome').value.trim();
+  const endereco=document.getElementById('fNovoPostoEnd').value.trim();
+  const bairro=document.getElementById('fNovoPostoBairro').value.trim();
+  const lat=numCoord(document.getElementById('fNovoPostoLat').value);
+  const lng=numCoord(document.getElementById('fNovoPostoLng').value);
+  if(!nome){toast('Informe o nome do posto.','err');return;}
+  const erro=validaCoords(lat,lng);if(erro){toast(erro,'err');return;}
+  const btn=document.getElementById('bAddPosto');
+  btn.disabled=true;btn.textContent='Adicionando...';
+  try{
+    await api('addPosto',{nome:nome,endereco:endereco,bairro:bairro,latitude:lat,longitude:lng});
+    ['fNovoPostoNome','fNovoPostoEnd','fNovoPostoBairro','fNovoPostoLink','fNovoPostoLat','fNovoPostoLng'].forEach(function(i){const x=document.getElementById(i);if(x)x.value='';});
+    toast('Posto adicionado! ✓','ok');
+    postoMudou();
+    await loadPostosAdmin();
+  }catch(ex){toast('Erro: '+ex.message,'err');}
+  btn.disabled=false;btn.textContent='➕ Adicionar Posto';
+}
+function excluirPostoAdmin(id,nome){
+  conf('Excluir Posto','⚠ Confirma excluir "'+nome+'" definitivamente da lista? (Para só tirar da busca dos agentes, use "Desativar".)',async function(){
+    try{await api('deletePosto',{id:id});toast('Posto excluído.','ok');postoMudou();await loadPostosAdmin();}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  },'red');
+}
+
+// ── REPORTES ──
+function rpPosto(rp){
+  const L=postosAdminCache||[];
+  let p=rp.postoId?L.find(function(x){return x.id===rp.postoId;}):null;
+  if(!p&&rp.postoNome){const n=String(rp.postoNome).trim().toUpperCase();p=L.find(function(x){return String(x.nome).trim().toUpperCase()===n;})||null;}
+  return p||null;
+}
+function rpDoMesmoPosto(rp){
+  const p=rpPosto(rp);
+  return (G.reportesAdm||[]).filter(function(x){
+    if(p){const q=rpPosto(x);return q&&q.id===p.id;}
+    return x.id===rp.id;
+  });
+}
+function rpAchar(id){return (G.reportesAdm||[]).find(function(x){return x.id===id;});}
+function rpVer(id){
+  const rp=rpAchar(id),p=rp&&rpPosto(rp);if(!p)return;
+  const lat=numCoord(p.latitude),lng=numCoord(p.longitude);
+  if(!isFinite(lat)||!isFinite(lng)){toast('Posto sem coordenadas válidas.','err');return;}
+  window.open(urlMaps(lat,lng),'_blank');
+}
+function rpEditar(id){
+  const rp=rpAchar(id),p=rp&&rpPosto(rp);if(!p)return;
+  admTab('postos');
+  const f=document.getElementById('paFiltro'),s=document.getElementById('paStatus');if(f)f.value='';if(s)s.value='todos';
+  G.paAberto={};G.paAberto[p.id]=true;renderPostosAdminList();
+  const row=document.querySelector('.pa-row[data-id="'+p.id+'"]');
+  if(row){row.scrollIntoView({block:'center'});row.classList.add('destaque');setTimeout(function(){row.classList.remove('destaque');},2500);}
+}
+
+// ── PAINEL DE ACESSOS ──
+
+// ── SENHAS ──
+function renderPassList(){
+  document.getElementById('passList').innerHTML=['admin','central','supervisor','agente'].map(function(r){
+    const ativo=(r==='admin'||r==='agente');
+    return '<div class="adcard" style="display:flex;align-items:center;justify-content:space-between;">'
+      +'<div><div style="font-weight:600;font-size:14px;">'+RL[r]+(ativo?'':' <span class="rp-tag">inativo no login</span>')+'</div>'
+      +'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--text3);">•••••••• senha definida</div></div>'
+      +'<div class="urole '+RC[r]+'">'+r.toUpperCase()+'</div></div>';
+  }).join('');
+}
+function prSel(r){
+  document.getElementById('fPR').value=r;
+  document.querySelectorAll('#fPRChips .adm-chip').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-r')===r);});
+}
+async function savePass(){
+  const r=document.getElementById('fPR').value,np=document.getElementById('fPN').value,cp=document.getElementById('fPC').value,pa=document.getElementById('fPA').value;
+  if(!pa){toast('Digite sua senha atual de administrador.','err');return;}
+  if(!np){toast('Informe a nova senha.','err');return;}
+  if(np!==cp){toast('Senhas não coincidem.','err');return;}
+  if(np.length<4){toast('Mínimo 4 caracteres.','err');return;}
+  const btn=document.getElementById('bSavePass');
+  if(btn){btn.disabled=true;btn.textContent='Verificando...';}
+  await loadPasswords();
+  if(pa!==G.pw.admin){
+    toast('Senha atual de administrador incorreta.','err');
+    if(btn){btn.disabled=false;btn.textContent='🔑 Alterar Senha';}
+    return;
+  }
+  G.pw[r]=np;renderPassList();
+  document.getElementById('fPN').value='';document.getElementById('fPC').value='';document.getElementById('fPA').value='';
+  if(btn)btn.textContent='Salvando...';
+  try{await api('savePasswords',G.pw);toast('Senha de '+RL[r]+' alterada e sincronizada!','ok');}
+  catch(ex){toast('Senha salva localmente (verifique URL do script).','err');}
+  if(btn){btn.disabled=false;btn.textContent='🔑 Alterar Senha';}
+}
+
+// ── POSTOS (aba dos agentes): data da lista + atualização ──
+function atualizaInfoPostos(){
+  const el=document.getElementById('postosRefreshInfo');if(!el)return;
+  const q=fmtAtualizadoEm(G.postosAtualizadoEm);
+  const h=G.postosEm?new Date(G.postosEm).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
+  el.innerHTML='<span class="ri-pill" onclick="carregarPostos(true)"><span class="ri-time">'+(q?'Lista alterada em '+q+' · ':'')+'Consultada às '+h+'</span><span class="ri-action">↻ Atualizar</span></span>';
+}
+async function carregarPostos(manual){
+  const el=document.getElementById('postosList');
+  initPostosMapa();
+  const velho=!G.postosEm||(Date.now()-G.postosEm>300000); // recarrega sozinho após 5 min
+  if(!G.postosCarregados||manual===true||velho){
+    if(!G.postosCarregados)el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);">Carregando postos...</div>';
+    try{
+      const r=await api('getPostos',{});
+      G.postos=(r.data||[]).filter(function(p){return p.ativo;});
+      G.postosCarregados=true;G.postosEm=Date.now();G.postosAtualizadoEm=r.atualizadoEm||'';
+      if(manual===true)toast('Lista de postos atualizada ✓','ok');
+    }catch(ex){
+      if(!G.postosCarregados){
+        el.innerHTML='<div style="text-align:center;padding:20px;color:#ef4444;">Erro ao carregar postos. Puxe pra atualizar e tente de novo.</div>';
+        return;
+      }
+      if(manual===true)toast('Erro ao atualizar: '+ex.message,'err');
+    }
+  }
+  atualizaInfoPostos();
+  renderPostos();
+}
+
+// ══ ADMIN (vP5): sincronizar, histórico de reportes, editar agente, estados de "processando" ══
+function fmtDH(s){
+  s=String(s||'');if(!s)return '';
+  if(/^\d{2}\/\d{2}\/\d{4}/.test(s))return s;
+  const d=new Date(s);
+  if(isNaN(d.getTime())||!/\d{4}/.test(s))return s;
+  const tz={timeZone:'America/Fortaleza'};
+  return d.toLocaleDateString('pt-BR',Object.assign({day:'2-digit',month:'2-digit',year:'numeric'},tz))+' '+d.toLocaleTimeString('pt-BR',Object.assign({hour:'2-digit',minute:'2-digit',second:'2-digit'},tz));
+}
+function admBusyBtn(btn,on,txt){
+  if(!btn)return;
+  if(on){if(!btn.dataset.orig)btn.dataset.orig=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="adm-spin"></span>'+(txt||'Aguarde...');}
+  else{btn.disabled=false;if(btn.dataset.orig){btn.innerHTML=btn.dataset.orig;delete btn.dataset.orig;}}
+}
+function admMarcaSync(){
+  G.admSyncEm=Date.now();
+  const el=document.getElementById('admSyncInfo');
+  if(el)el.textContent='Atualizado às '+new Date(G.admSyncEm).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+async function admSync(){
+  const b=document.getElementById('admSyncBtn');admBusyBtn(b,true,'Sincronizando...');
+  try{
+    await Promise.all([loadAgentesAdmin(),loadPostosAdmin(),G.acessosCarregados?loadAcessosAdmin():null,G.repHistOk?loadHistoricoReportes():null]);
+    toast('Admin sincronizado ✓','ok');
+  }catch(ex){toast('Erro ao sincronizar: '+ex.message,'err');}
+  admBusyBtn(b,false);
+}
+
+// ── AGENTES (com edição de nome) ──
+G.agEdit='';G.agDados=[];
+
+async function loadAgentesAdmin(){
+  const el=document.getElementById('agentesList');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+  try{
+    let r;G.agSemScript=false;
+    try{r=await api('listarAgentesAdm',{});G.agBloqNome=!!r.bloqueioNome;}
+    catch(e1){
+      if(!/desconhecida/i.test(e1.message))throw e1;
+      G.agSemScript=true;
+      const l=await api('getAgentes',{});
+      r={data:(l.data||[]).map(function(n){return {nome:String(n).toUpperCase(),matricula:'',temPin:false,pinCriadoEm:'',bloqueado:false,duplicada:false};})};
+    }
+    G.agDados=r.data||[];
+    G.agentesConhecidos=G.agDados.map(function(a){return a.nome.toUpperCase();});
+    const av=document.getElementById('agAviso');if(av)av.style.display=G.agSemScript?'block':'none';
+    const bn=document.getElementById('agBloqNome');
+    if(bn){bn.style.display=G.agSemScript?'none':'inline-block';bn.textContent=G.agBloqNome?'🔓 Liberar de novo a entrada só por nome (quem não tem matrícula)':'🔒 Bloquear a entrada só por nome (exigir matrícula de todos)';}
+    renderAgentesListAdmin();admMarcaSync();
+  }catch(ex){
+    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+escH(ex.message)+'</div>';
+  }
+}
+async function agToggleBloqNome(){
+  const novo=!G.agBloqNome;
+  const aviso=novo?'Quem ainda NÃO tem matrícula cadastrada deixará de conseguir entrar (só por nome). Confirme se todos os agentes já têm matrícula.':'Quem não tem matrícula voltará a poder entrar pelo nome + senha geral.';
+  conf(novo?'Bloquear entrada só por nome':'Liberar entrada só por nome',aviso,async function(){
+    try{await api('setBloqueioNome',{valor:novo});toast(novo?'Entrada só por nome bloqueada.':'Entrada só por nome liberada.','ok');await loadAgentesAdmin();}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
+function renderAgentesListAdmin(){
+  const el=document.getElementById('agentesList');if(!el)return;
+  const todos=G.agDados||[];
+  const f=((document.getElementById('agFiltro')||{}).value||'').trim().toUpperCase();
+  const st=(document.getElementById('agFiltroSt')||{}).value||'';
+  const lista=todos.filter(function(a){
+    if(f&&a.nome.toUpperCase().indexOf(f)<0&&String(a.matricula).indexOf(f)<0)return false;
+    if(st==='semmat')return !a.matricula;
+    if(st==='sempin')return !!a.matricula&&!a.temPin;
+    if(st==='compin')return !!a.temPin;
+    if(st==='bloq')return a.bloqueado;
+    return true;
+  });
+  const c=document.getElementById('agCount');
+  const comMat=todos.filter(function(a){return a.matricula;}).length,comPin=todos.filter(function(a){return a.temPin;}).length;
+  if(c)c.innerHTML='<span class="cnt">'+(lista.length<todos.length?lista.length+' de ':'')+todos.length+' agentes</span>'+(G.agSemScript?'':'<span class="cnt">'+comMat+' com matrícula</span><span class="cnt ok">'+comPin+' com PIN</span>');
+  if(!todos.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum agente cadastrado.</div>';return;}
+  if(!lista.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum agente encontrado.</div>';return;}
+  el.innerHTML=lista.map(function(a){
+    const n=a.nome;
+    if(n===G.agEdit){
+      return '<div class="ag-row ag-edit"><input type="text" id="agEditInp" class="ag-inp" value="'+escH(n)+'" data-old="'+escH(n)+'" autocomplete="off" style="text-transform:uppercase;" placeholder="Nome" onkeydown="if(event.key===\'Enter\'){agSalvar();}else if(event.key===\'Escape\'){agCancelar();}">'
+        +(G.agSemScript?'':'<input type="text" id="agEditMat" class="ag-inp" value="'+escH(a.matricula)+'" data-old="'+escH(a.matricula)+'" inputmode="numeric" autocomplete="off" placeholder="Matrícula" style="flex:0 1 110px;" onkeydown="if(event.key===\'Enter\'){agSalvar();}else if(event.key===\'Escape\'){agCancelar();}">')
+        +'<button class="pa-btn ok" id="agEditOk" onclick="agSalvar()">✓ Salvar</button><button class="pa-btn pa-cancel" onclick="agCancelar()">Cancelar</button></div>';
+    }
+    let sub='';
+    if(!G.agSemScript){
+      sub='<div class="ag-sub">'+(a.matricula?'<span>Mat. '+escH(a.matricula)+'</span>':'<span class="ag-st no">sem matrícula</span>')
+        +(a.matricula?(a.temPin?'<span class="ag-st ok">PIN criado'+(a.pinCriadoEm?' · '+escH(String(a.pinCriadoEm).slice(0,10)):'')+'</span>':'<span class="ag-st no">sem PIN</span>'):'')
+        +(a.bloqueado?'<span class="ag-st bad">🔒 bloqueado</span>':'')+(a.duplicada?'<span class="ag-st bad">⚠ matrícula repetida</span>':'')+'</div>';
+    }
+    return '<div class="ag-row"><span><span class="ag-nome">'+escH(n)+'</span>'+sub+'</span>'
+      +'<span class="ag-acts"><button class="ag-ic" onclick="agEditar(\''+escJ(n)+'\')" title="Editar nome e matrícula">✏️</button>'
+      +((a.temPin||a.bloqueado)?'<button class="ag-ic" onclick="agRedefinirPin(\''+escJ(n)+'\')" title="Redefinir PIN">🔑</button>':'')
+      +'<button class="ag-ic ag-del" onclick="removeAgenteAdmin(\''+escJ(n)+'\')" title="Remover">✕</button></span></div>';
+  }).join('');
+}
+function agEditar(n){
+  G.agEdit=n;renderAgentesListAdmin();
+  const i=document.getElementById('agEditInp');if(i){i.focus();i.select();}
+}
+function agCancelar(){G.agEdit='';renderAgentesListAdmin();}
+function agRedefinirPin(n){
+  conf('Redefinir PIN','O PIN de "'+n+'" será apagado e ele fica sem bloqueio. No próximo acesso ele entra com a senha geral e cria um PIN novo. Continuar?',async function(){
+    try{await api('redefinirPin',{nome:n});toast('PIN redefinido ✓','ok');await loadAgentesAdmin();}
+    catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
+function agSalvar(){
+  const inp=document.getElementById('agEditInp');if(!inp)return;
+  const mi=document.getElementById('agEditMat');
+  const velho=inp.dataset.old,novo=inp.value.trim().toUpperCase();
+  const matV=mi?mi.dataset.old:'',matN=mi?mi.value.replace(/\D/g,''):'';
+  if(!novo){toast('Digite o nome.','err');return;}
+  if(mi&&matN&&!/^\d{3,12}$/.test(matN)){toast('Matrícula: somente números (3 a 12 dígitos).','err');return;}
+  const mudaNome=novo!==velho,mudaMat=mi&&matN!==matV;
+  if(!mudaNome&&!mudaMat){agCancelar();return;}
+  if(mudaNome&&(G.agentesConhecidos||[]).indexOf(novo)>=0){toast('Já existe um agente com esse nome.','err');return;}
+  let msg='';
+  if(mudaNome)msg+='"'+velho+'" passará a se chamar "'+novo+'" (mantém matrícula e PIN). Os registros já feitos com o nome antigo NÃO são alterados. ';
+  if(mudaMat)msg+='A matrícula muda para "'+(matN||'(vazia)')+'" e o PIN dele será apagado: ele cria outro no próximo acesso. ';
+  conf('Salvar alterações',msg+'Continuar?',async function(){
+    try{
+      if(mudaNome){
+        try{await api('renomearAgente',{de:velho,para:novo});}
+        catch(e0){
+          if(!/desconhecida/i.test(e0.message))throw e0;
+          // script antigo: renomeia adicionando o novo e removendo o antigo
+          await api('addAgente',{nome:novo});
+          try{await api('removeAgente',{nome:velho});}
+          catch(ex2){toast('O nome novo foi adicionado, mas não consegui remover "'+velho+'". Remova manualmente.','err');G.agEdit='';await loadAgentesAdmin();return;}
+        }
+      }
+      if(mudaMat){
+        try{await api('definirMatricula',{nome:novo,matricula:matN});}
+        catch(ex2){toast('Nome salvo, mas a matrícula não: '+ex2.message,'err');G.agEdit='';await loadAgentesAdmin();return;}
+      }
+      G.agEdit='';toast('Agente atualizado ✓','ok');await loadAgentesAdmin();
+    }catch(ex){toast('Erro: '+ex.message,'err');}
+  });
+}
+
+
+// ── POSTOS ──
 async function loadPostosAdmin(){
   const el=document.getElementById('postosAdminList');
   if(!el)return;
@@ -958,143 +1640,229 @@ async function loadPostosAdmin(){
   try{
     const r=await api('getPostos',{});
     postosAdminCache=r.data||[];
-    renderPostosAdminList();
-    loadReportesAdmin();
+    if(r.atualizadoEm)G.postosAtualizadoEm=r.atualizadoEm;
+    renderPostosAdminList();infoPostosAdm();admMarcaSync();
   }catch(ex){
-    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+ex.message+'</div>';
+    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+escH(ex.message)+'</div>';
   }
+  await loadReportesAdmin();
 }
-
-function renderPostosAdminList(){
-  const el=document.getElementById('postosAdminList');
-  if(!el)return;
-  if(!postosAdminCache.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum posto cadastrado.</div>';return;}
-  el.innerHTML=postosAdminCache.map(p=>{
-    const nomeEsc=(p.nome||'').replace(/'/g,"\\'");
-    return `<div class="posto-admin-row" data-id="${p.id}" style="border-bottom:1px solid var(--border2);padding:10px 0;">
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
-        <input class="finput pa-nome" value="${(p.nome||'').replace(/"/g,'&quot;')}" style="flex:2;min-width:120px;font-size:12px;padding:6px;">
-        <input class="finput pa-end" value="${(p.endereco||'').replace(/"/g,'&quot;')}" style="flex:2;min-width:120px;font-size:12px;padding:6px;">
-        <input class="finput pa-bairro" value="${(p.bairro||'').replace(/"/g,'&quot;')}" style="flex:1;min-width:90px;font-size:12px;padding:6px;">
-        <input class="finput pa-lat" value="${p.latitude||''}" style="width:90px;font-size:12px;padding:6px;" placeholder="Lat">
-        <input class="finput pa-lng" value="${p.longitude||''}" style="width:90px;font-size:12px;padding:6px;" placeholder="Lng">
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);">
-          <input type="checkbox" class="pa-ativo" ${p.ativo?'checked':''}> Ativo
-        </label>
-        <button onclick="salvarPostoAdmin('${p.id}')" style="padding:5px 10px;background:var(--accent);border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Salvar</button>
-        <button onclick="excluirPostoAdmin('${p.id}','${nomeEsc}')" style="padding:5px 10px;background:#ef4444;border:none;border-radius:6px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Excluir</button>
-      </div>
-    </div>`;
-  }).join('');
+function paAtivarRapido(id,btn){
+  const p=postosAdminCache.find(function(x){return x.id===id;});if(!p)return;
+  if(!p.ativo){
+    admBusyBtn(btn,true,'Ativando...');
+    paSetAtivo(id,true).then(function(){toast('Posto ativado ✓','ok');}).catch(function(ex){admBusyBtn(btn,false);toast('Erro: '+ex.message,'err');});
+    return;
+  }
+  conf('Desativar posto','"'+p.nome+'" deixa de aparecer na busca dos agentes (você pode ativar de novo quando quiser). Continuar?',async function(){
+    try{await paSetAtivo(id,false);toast('Posto desativado.','ok');}catch(ex){toast('Erro: '+ex.message,'err');}
+  },'red');
 }
-
-async function addPostoAdmin(){
-  const nome=document.getElementById('fNovoPostoNome').value.trim();
-  const endereco=document.getElementById('fNovoPostoEnd').value.trim();
-  const bairro=document.getElementById('fNovoPostoBairro').value.trim();
-  const lat=document.getElementById('fNovoPostoLat').value.trim();
-  const lng=document.getElementById('fNovoPostoLng').value.trim();
-  if(!nome||!lat||!lng){toast('Preencha ao menos nome, latitude e longitude.','err');return;}
-  const btn=document.getElementById('bAddPosto');
-  btn.disabled=true;btn.textContent='Adicionando...';
-  try{
-    await api('addPosto',{nome,endereco,bairro,latitude:parseFloat(lat),longitude:parseFloat(lng)});
-    ['fNovoPostoNome','fNovoPostoEnd','fNovoPostoBairro','fNovoPostoLat','fNovoPostoLng'].forEach(id=>document.getElementById(id).value='');
-    toast('Posto adicionado! ✓','ok');
-    await loadPostosAdmin();
-  }catch(ex){toast('Erro: '+ex.message,'err');}
-  btn.disabled=false;btn.textContent='➕ Adicionar Posto';
-}
-
 async function salvarPostoAdmin(id){
-  const row=document.querySelector('.posto-admin-row[data-id="'+id+'"]');
+  const row=document.querySelector('.pa-row[data-id="'+id+'"]');
   if(!row)return;
   const nome=row.querySelector('.pa-nome').value.trim();
   const endereco=row.querySelector('.pa-end').value.trim();
   const bairro=row.querySelector('.pa-bairro').value.trim();
-  const lat=parseFloat(row.querySelector('.pa-lat').value);
-  const lng=parseFloat(row.querySelector('.pa-lng').value);
+  const lat=numCoord(row.querySelector('.pa-lat').value);
+  const lng=numCoord(row.querySelector('.pa-lng').value);
   const ativo=row.querySelector('.pa-ativo').checked;
+  if(!nome){toast('O nome não pode ficar vazio.','err');return;}
+  const erro=validaCoords(lat,lng);if(erro){toast(erro,'err');return;}
+  const sb=row.querySelector('.pa-save');admBusyBtn(sb,true,'Salvando...');
   try{
-    await api('updatePosto',{id,nome,endereco,bairro,latitude:lat,longitude:lng,ativo});
+    await api('updatePosto',{id:id,nome:nome,endereco:endereco,bairro:bairro,latitude:lat,longitude:lng,ativo:ativo});
+    const p=postosAdminCache.find(function(x){return x.id===id;});
+    if(p){p.nome=nome;p.endereco=endereco;p.bairro=bairro;p.latitude=lat;p.longitude=lng;p.ativo=ativo;}
+    G.paAberto[id]=false;postoMudou();renderPostosAdminList();
     toast('Posto atualizado! ✓','ok');
-  }catch(ex){toast('Erro: '+ex.message,'err');}
+    const pend=(G.reportesAdm||[]).filter(function(rp){const q=rpPosto(rp);return q&&q.id===id;});
+    if(pend.length){
+      conf('Resolver reportes','Você ajustou "'+nome+'". Marcar '+(pend.length>1?'os '+pend.length+' reportes deste posto':'o reporte deste posto')+' como resolvido?',async function(){
+        try{await rpResolverTodos(pend[0],'POSTO EDITADO');toast('Reporte resolvido ✓','ok');await loadReportesAdmin();}
+        catch(ex){toast('Erro: '+ex.message,'err');}
+      });
+    }
+  }catch(ex){admBusyBtn(sb,false);toast('Erro: '+ex.message,'err');}
 }
 
-function excluirPostoAdmin(id,nome){
-  conf('Excluir Posto','⚠ Confirma excluir "'+nome+'" definitivamente da lista?',async()=>{
-    try{await api('deletePosto',{id});toast('Posto excluído.','ok');await loadPostosAdmin();}
-    catch(ex){toast('Erro: '+ex.message,'err');}
-  });
+// ── REPORTES (pendentes + histórico) ──
+G.repVista='pend';
+function repVista(v){
+  G.repVista=v;
+  document.querySelectorAll('#repPills .adm-pill').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-v')===v);});
+  document.getElementById('repPend').style.display=v==='pend'?'block':'none';
+  document.getElementById('repHist').style.display=v==='hist'?'block':'none';
+  if(v==='hist'&&!G.repHistOk)loadHistoricoReportes();
 }
-
 async function loadReportesAdmin(){
   const el=document.getElementById('reportesList');
   if(!el)return;
-  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;"><span class="adm-spin"></span>Carregando...</div>';
   try{
     const r=await api('getReportesPostos',{});
-    const reportes=r.data||[];
-    if(!reportes.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum reporte pendente.</div>';return;}
-    el.innerHTML=reportes.map(rp=>`
-      <div style="border-bottom:1px solid var(--border2);padding:10px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-        <div>
-          <div style="font-weight:700;font-size:13px;color:var(--text);">${rp.postoNome}</div>
-          <div style="font-size:12px;color:#f59e0b;margin:2px 0;">${rp.motivo}</div>
-          <div style="font-size:11px;color:var(--text3);">${rp.reportadoPor} · ${rp.dataHora}</div>
-        </div>
-        <button onclick="resolverReporteAdmin('${rp.id}')" style="padding:6px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);font-size:11px;cursor:pointer;white-space:nowrap;">✓ Resolvido</button>
-      </div>
-    `).join('');
-  }catch(ex){el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro: '+ex.message+'</div>';}
+    G.reportesAdm=r.data||[];
+    admBadge(G.reportesAdm.length);
+    const n=document.getElementById('repPendN');if(n)n.textContent=G.reportesAdm.length?'('+G.reportesAdm.length+')':'';
+    renderReportesAdmin();admMarcaSync();
+  }catch(ex){el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro: '+escH(ex.message)+'</div>';}
 }
-
+function renderReportesAdmin(){
+  const el=document.getElementById('reportesList');if(!el)return;
+  const L=G.reportesAdm||[];
+  if(!L.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum reporte pendente. 👍</div>';return;}
+  el.innerHTML=L.map(function(rp){
+    const p=rpPosto(rp),n=rpDoMesmoPosto(rp).length,rid=escJ(rp.id);
+    let acts;
+    if(p){
+      acts='<button class="pa-btn" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text);" onclick="rpVer(\''+rid+'\')">🗺️ Ver</button>'
+        +'<button class="pa-btn" style="background:var(--accent);" onclick="rpEditar(\''+rid+'\')">✏️ Editar posto</button>'
+        +(p.ativo?'<button class="pa-btn" style="background:#d97706;" onclick="rpDesativar(\''+rid+'\')">⏸ Desativar posto</button>'
+                 :'<button class="pa-btn" style="background:#0d9488;" onclick="rpReativar(\''+rid+'\')">▶ Reativar posto</button>')
+        +'<button class="pa-btn" style="background:#ef4444;" onclick="rpExcluir(\''+rid+'\')">🗑 Excluir posto</button>';
+    }else{
+      acts='<span style="font-size:11px;color:var(--text2);">Posto não está mais na lista.</span>';
+    }
+    return '<div class="rp-card" data-id="'+escH(rp.id)+'"><div class="rp-top"><b>'+escH(rp.postoNome)+'</b>'
+      +(p&&!p.ativo?'<span class="rp-tag">INATIVO</span>':'')+(n>1?'<span class="rp-tag rp-n">'+n+' reportes deste posto</span>':'')+'</div>'
+      +'<div class="rp-mot">'+escH(rp.motivo)+'</div>'
+      +'<div class="rp-meta">👤 Reportado por <b>'+escH(rp.reportadoPor||'—')+'</b> em '+escH(fmtDH(rp.dataHora))+'</div>'
+      +'<div class="pa-btns">'+acts+'<button class="pa-btn ok" onclick="resolverReporteAdmin(\''+rid+'\')">✓ Resolvido</button></div>'
+      +'<div class="rp-proc"><span class="adm-spin"></span>Processando...</div></div>';
+  }).join('');
+}
+function rpBusy(id,on){
+  const c=document.querySelector('.rp-card[data-id="'+id+'"]');if(c)c.classList.toggle('busy',!!on);
+}
+async function rpResolverTodos(rp,acao){
+  const L=rpDoMesmoPosto(rp);
+  for(let i=0;i<L.length;i++){try{await api('resolverReporte',{id:L[i].id,resolvidoPor:G.name,acao:acao});}catch(ex){}}
+  G.repHistOk=false;
+}
+function rpDesativar(id){
+  const rp=rpAchar(id),p=rp&&rpPosto(rp);if(!p)return;const n=rpDoMesmoPosto(rp).length;
+  conf('Desativar posto','"'+p.nome+'" sai da busca dos agentes e '+(n>1?'os '+n+' reportes deste posto serão dados como resolvidos':'este reporte será dado como resolvido')+'. Continuar?',async function(){
+    rpBusy(id,true);
+    try{await paSetAtivo(p.id,false);await rpResolverTodos(rp,'POSTO DESATIVADO');toast('Posto desativado e reporte resolvido ✓','ok');await loadReportesAdmin();}
+    catch(ex){rpBusy(id,false);toast('Erro: '+ex.message,'err');}
+  },'red');
+}
+function rpReativar(id){
+  const rp=rpAchar(id),p=rp&&rpPosto(rp);if(!p)return;
+  conf('Reativar posto','"'+p.nome+'" volta para a busca dos agentes e este reporte será dado como resolvido. Continuar?',async function(){
+    rpBusy(id,true);
+    try{await paSetAtivo(p.id,true);await api('resolverReporte',{id:id,resolvidoPor:G.name,acao:'POSTO REATIVADO'});G.repHistOk=false;toast('Posto reativado e reporte resolvido ✓','ok');await loadReportesAdmin();}
+    catch(ex){rpBusy(id,false);toast('Erro: '+ex.message,'err');}
+  },'red');
+}
+function rpExcluir(id){
+  const rp=rpAchar(id),p=rp&&rpPosto(rp);if(!p)return;const n=rpDoMesmoPosto(rp).length;
+  conf('Excluir posto','⚠ "'+p.nome+'" será excluído definitivamente da lista'+(n>1?' e os '+n+' reportes dele serão dados como resolvidos':' e este reporte será dado como resolvido')+'. Continuar?',async function(){
+    rpBusy(id,true);
+    try{await api('deletePosto',{id:p.id});await rpResolverTodos(rp,'POSTO EXCLUÍDO');postoMudou();toast('Posto excluído e reporte resolvido ✓','ok');await loadPostosAdmin();}
+    catch(ex){rpBusy(id,false);toast('Erro: '+ex.message,'err');}
+  },'red');
+}
 async function resolverReporteAdmin(id){
-  try{await api('resolverReporte',{id});toast('Reporte marcado como resolvido.','ok');await loadReportesAdmin();}
-  catch(ex){toast('Erro: '+ex.message,'err');}
+  rpBusy(id,true);
+  try{await api('resolverReporte',{id:id,resolvidoPor:G.name,acao:'RESOLVIDO'});G.repHistOk=false;toast('Reporte marcado como resolvido.','ok');await loadReportesAdmin();}
+  catch(ex){rpBusy(id,false);toast('Erro: '+ex.message,'err');}
 }
-
-async function loadAgentesAdmin(){
-  const el=document.getElementById('agentesList');
-  if(!el)return;
-  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Carregando...</div>';
+async function loadHistoricoReportes(){
+  const el=document.getElementById('repHistList');if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;"><span class="adm-spin"></span>Carregando...</div>';
   try{
-    const r=await api('getAgentes',{});
-    G.agentesConhecidos=(r.data||[]).map(n=>n.toUpperCase());
-    renderAgentesListAdmin();
+    const r=await api('listarHistoricoReportes',{limite:300});
+    G.repHist=r.data||[];G.repHistOk=true;renderHistoricoReportes();admMarcaSync();
   }catch(ex){
-    el.innerHTML='<div style="color:#ef4444;font-size:12px;padding:10px;">Erro ao carregar: '+ex.message+'</div>';
+    el.innerHTML=/desconhecida/i.test(ex.message)
+      ?'<div style="color:#f59e0b;font-size:12px;padding:10px;line-height:1.5;">O histórico precisa do script do Google atualizado (arquivo <b>script_QRU_RENDICAO_TURNO_vP5.txt</b>). O resto do sistema funciona normalmente sem isso.</div>'
+      :'<div style="color:#ef4444;font-size:12px;padding:10px;">Erro: '+escH(ex.message)+'</div>';
   }
 }
-
-function renderAgentesListAdmin(){
-  const el=document.getElementById('agentesList');
-  if(!el)return;
-  if(!G.agentesConhecidos.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum agente cadastrado.</div>';return;}
-  el.innerHTML=G.agentesConhecidos.map(n=>
-    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--border2);">`
-    +`<span style="font-size:13px;color:var(--text);">${n}</span>`
-    +`<button onclick="removeAgenteAdmin('${n.replace(/'/g,"\\'")}')" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;padding:4px;" title="Remover">✕</button>`
-    +`</div>`
-  ).join('');
+function renderHistoricoReportes(){
+  const el=document.getElementById('repHistList');if(!el)return;
+  const todos=G.repHist||[];
+  const f=((document.getElementById('repHistFiltro')||{}).value||'').trim().toUpperCase();
+  const lista=todos.filter(function(x){return !f||(x.postoNome+' '+x.motivo+' '+x.reportadoPor+' '+x.resolvidoPor).toUpperCase().indexOf(f)>=0;});
+  const c=document.getElementById('repHistResumo');
+  if(c)c.innerHTML='<span class="cnt">'+todos.length+' resolvido(s)</span>'+(f?'<span class="cnt">mostrando '+lista.length+'</span>':'');
+  if(!lista.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum reporte no histórico.</div>';return;}
+  el.innerHTML=lista.map(function(x){
+    return '<div class="rp-card rp-done"><div class="rp-top"><b>'+escH(x.postoNome)+'</b><span class="rp-tag rp-ok">'+escH(x.acao||'RESOLVIDO')+'</span></div>'
+      +'<div class="rp-mot">'+escH(x.motivo)+'</div>'
+      +'<div class="rp-meta">👤 Reportado por <b>'+escH(x.reportadoPor||'—')+'</b> em '+escH(fmtDH(x.dataHora))+'</div>'
+      +'<div class="rp-meta">✅ Resolvido por <b>'+escH(x.resolvidoPor||'—')+'</b> em '+escH(fmtDH(x.resolvidoEm))+'</div></div>';
+  }).join('');
 }
 
-async function addAgenteAdmin(){
-  const inp=document.getElementById('fNovoAgente');
-  const nome=inp.value.trim().toUpperCase();
-  if(!nome){toast('Digite o nome do agente.','err');return;}
-  const btn=document.getElementById('bAddAgente');
-  btn.disabled=true;btn.textContent='Adicionando...';
+// ── ACESSOS ──
+async function loadAcessosAdmin(){
+  const el=document.getElementById('acessosList');if(!el)return;
+  el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;"><span class="adm-spin"></span>Carregando...</div>';
   try{
-    await api('addAgente',{nome});
-    inp.value='';
-    toast('Agente adicionado! ✓','ok');
-    await loadAgentesAdmin();
-  }catch(ex){toast('Erro: '+ex.message,'err');}
-  btn.disabled=false;btn.textContent='➕ Adicionar';
+    const r=await api('listarAcessos',{limite:400});
+    G.acessos=r.data||[];G.acessosCarregados=true;renderAcessosAdmin();admMarcaSync();
+  }catch(ex){
+    el.innerHTML=/desconhecida/i.test(ex.message)
+      ?'<div style="color:#f59e0b;font-size:12px;padding:10px;line-height:1.5;">Esta tela precisa do script do Google atualizado (arquivo <b>script_QRU_RENDICAO_TURNO_vP5.txt</b>). O resto do sistema funciona normalmente sem isso.</div>'
+      :'<div style="color:#ef4444;font-size:12px;padding:10px;">Erro: '+escH(ex.message)+'</div>';
+  }
 }
+function renderAcessosAdmin(){
+  const el=document.getElementById('acessosList');if(!el)return;
+  const todos=G.acessos||[];
+  const f=((document.getElementById('acFiltro')||{}).value||'').trim().toUpperCase();
+  const pf=(document.getElementById('acPerfil')||{}).value||'';
+  const lista=todos.filter(function(a){return (!pf||a.perfil===pf)&&(!f||String(a.nome).toUpperCase().indexOf(f)>=0);});
+  const hoje=new Date().toLocaleDateString('pt-BR',{timeZone:'America/Fortaleza',day:'2-digit',month:'2-digit',year:'numeric'});
+  const deHoje=todos.filter(function(a){return fmtDH(a.dataHora).indexOf(hoje)===0;});
+  const pessoas=new Set(deHoje.map(function(a){return a.nome;})).size;
+  const r=document.getElementById('acResumo');
+  if(r)r.innerHTML='<span class="cnt ok">Hoje: '+deHoje.length+' acesso(s) · '+pessoas+' pessoa(s)</span><span class="cnt">últimos '+todos.length+' registros</span>';
+  if(!lista.length){el.innerHTML='<div style="color:var(--text2);font-size:12px;padding:10px;">Nenhum acesso encontrado.</div>';return;}
+  el.innerHTML=lista.slice(0,150).map(function(a){
+    const dh=fmtDH(a.dataHora),m=dh.match(/^(\d{2}\/\d{2}\/\d{4})\s+(\d{2}:\d{2})(:\d{2})?/);
+    const data=m?m[1]:dh,hora=m?m[2]:'',seg=(m&&m[3])||'';
+    const p=RC[a.perfil]?a.perfil:'';
+    return '<div class="ac-row"><div class="ac-l"><div class="ac-nome">'+escH(a.nome)+(a.matricula?' <small style="color:var(--text2);font-weight:600;">· '+escH(a.matricula)+'</small>':'')+'</div><div class="urole '+(p?RC[p]:'')+'">'+escH((a.perfil||'').toUpperCase())+'</div></div>'
+      +'<div class="ac-dt"><div class="ac-h">'+escH(hora)+'<small>'+escH(seg)+'</small></div><div class="ac-d">'+escH(data)+'</div></div></div>';
+  }).join('')+(lista.length>150?'<div style="font-size:12px;color:var(--text2);padding:8px;">Mostrando 150 de '+lista.length+'. Use o filtro para refinar.</div>':'');
+}
+
+// ── APP INIT ──
+function initApp(){
+  checkForUpdate(); // verificar nova versão ao logar
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('hName').textContent=G.name+(G.matricula?' · '+G.matricula:'');
+  document.getElementById('hRole').textContent=RL[G.role];
+  document.getElementById('hRole').className='urole '+RC[G.role];
+  const cw=['admin','central'].includes(G.role);
+  document.getElementById('btnNA').style.display=cw?'flex':'none';
+  document.getElementById('btnNR').style.display=cw?'flex':'none';
+  document.getElementById('tab-adm').style.display=G.role==='admin'?'flex':'none';
+  document.getElementById('btnTrocarPerfil').style.display=(G.adminReal===true)?'':'none';
+  G.aD=new Date();G.rD=new Date();
+  setDI('authDateInput',G.aD);setDI('rendDateInput',G.rD);
+  if(G.role==='admin'){document.getElementById('scriptUrl').value=G.url;renderPassList();}
+  // Sistema agora é 100% sob demanda — não carrega sozinho nem fica atualizando em segundo plano
+  if(G.autoRefreshTimer){clearInterval(G.autoRefreshTimer);G.autoRefreshTimer=null;}
+  try{setRendTab(turnoRelogioKey());}catch(ex){}
+  renderAuth();renderRend();
+  try{admBadgeInit();}catch(ex){}
+}
+
+let postosAdminCache=[];
+
+
+
+
+
+
+
+
+
 
 function removeAgenteAdmin(nome){
   conf('Remover Agente','Confirma remover "'+nome+'" da lista? Ele não conseguirá mais logar até ser adicionado de novo.',async()=>{
@@ -1102,6 +1870,73 @@ function removeAgenteAdmin(nome){
     catch(ex){toast('Erro: '+ex.message,'err');}
   });
 }
+async function addAgenteAdmin(){
+  const inp=document.getElementById('fNovoAgente'),mi=document.getElementById('fNovaMat');
+  const nome=inp.value.trim().toUpperCase(),mat=(mi?mi.value:'').replace(/\D/g,'');
+  if(!nome){toast('Digite o nome do agente.','err');return;}
+  if(mat&&!/^\d{3,12}$/.test(mat)){toast('Matrícula: somente números (3 a 12 dígitos).','err');return;}
+  const btn=document.getElementById('bAddAgente');
+  btn.disabled=true;btn.textContent='Adicionando...';
+  try{
+    await api('addAgente',mat&&!G.agSemScript?{nome:nome,matricula:mat}:{nome:nome});
+    inp.value='';if(mi)mi.value='';
+    toast('Agente adicionado! ✓','ok');
+    await loadAgentesAdmin();
+  }catch(ex){toast('Erro: '+ex.message,'err');}
+  btn.disabled=false;btn.textContent='➕ Adicionar';
+}
+// Lista colada: "matrícula;nome" (ou 2 colunas do Excel, em qualquer ordem) ou só o nome
+function parseListaAgentes(txt){
+  const out=[],vistos={};
+  String(txt||'').split(/\r?\n/).forEach(function(linha){
+    const p=linha.split(/[\t;]/).map(function(x){return x.trim();}).filter(function(x){return x!=='';});
+    if(!p.length)return;
+    const add=function(nome,mat){
+      nome=nome.trim().toUpperCase();
+      if(!nome||/^(MATRICULA|MATRÍCULA|NOME)$/.test(nome))return;
+      if(vistos[nome])return;vistos[nome]=1;
+      out.push({nome:nome,matricula:mat||''});
+    };
+    const d0=/^\d+$/.test(p[0]),d1=p.length>1&&/^\d+$/.test(p[1]);
+    if(d0&&p.length>1)add(p.slice(1).join(' '),p[0]);
+    else if(d1)add(p[0],p[1]);
+    else p.forEach(function(x){x.split(',').forEach(function(y){add(y,'');});}); // só nomes: separados por ; , ou tab
+  });
+  return out;
+}
+async function addAgentesLote(){
+  const ta=document.getElementById('fAgLote'),res=document.getElementById('agLoteRes'),btn=document.getElementById('bAgLote');
+  const itens=parseListaAgentes(ta.value);
+  if(!itens.length){toast('Cole ao menos uma linha.','err');return;}
+  if(itens.length>700){toast('Máximo de 700 linhas por vez.','err');return;}
+  const comMat=itens.filter(function(i){return i.matricula;}),semMat=itens.filter(function(i){return !i.matricula;});
+  const ja=new Set(G.agentesConhecidos||[]);
+  const soNomes=semMat.filter(function(i){return !ja.has(i.nome);});
+  btn.disabled=true;let txt=[],erros=[];
+  try{
+    if(comMat.length){
+      if(G.agSemScript){erros.push('matrículas: atualize o script para importar');}
+      else{
+        btn.textContent='Importando matrículas...';
+        const r=await api('importarMatriculas',{linhas:comMat});
+        txt.push('✓ '+(r.atualizados||0)+' matrícula(s) gravada(s)'+(r.novos?' · '+r.novos+' agente(s) novo(s)':'')+(r.iguais?' · '+r.iguais+' já estavam iguais':''));
+        (r.erros||[]).forEach(function(e){erros.push(e);});
+      }
+    }
+    for(let i=0;i<soNomes.length;i++){
+      btn.textContent='Adicionando '+(i+1)+'/'+soNomes.length+'...';
+      try{await api('addAgente',{nome:soNomes[i].nome});}catch(ex){erros.push(soNomes[i].nome+': '+ex.message);}
+    }
+    if(soNomes.length)txt.push('✓ '+soNomes.length+' nome(s) sem matrícula');
+    if(semMat.length>soNomes.length)txt.push((semMat.length-soNomes.length)+' nome(s) já existiam');
+  }catch(ex){erros.push(ex.message);}
+  btn.disabled=false;btn.textContent='➕ Adicionar lista';
+  res.innerHTML=txt.join(' · ')+(erros.length?'<div style="color:#ef4444;margin-top:6px;">'+erros.length+' problema(s):<br>'+erros.slice(0,30).map(escH).join('<br>')+(erros.length>30?'<br>…':'')+'</div>':'');
+  if(!erros.length)ta.value='';
+  toast(erros.length?'Concluído com avisos.':'Lista processada ✓',erros.length?'err':'ok');
+  await loadAgentesAdmin();
+}
+
 let postosMap=null,postosMarkers=[],userLocMarker=null;
 
 function initPostosMapa(){
@@ -1222,22 +2057,6 @@ function verTodosPostos(){
   renderPostos();
 }
 
-async function carregarPostos(){
-  const el=document.getElementById('postosList');
-  initPostosMapa();
-  if(!G.postosCarregados){
-    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);">Carregando postos...</div>';
-    try{
-      const r=await api('getPostos',{});
-      G.postos=(r.data||[]).filter(p=>p.ativo);
-      G.postosCarregados=true;
-    }catch(ex){
-      el.innerHTML='<div style="text-align:center;padding:20px;color:#ef4444;">Erro ao carregar postos. Puxe pra atualizar e tente de novo.</div>';
-      return;
-    }
-  }
-  renderPostos();
-}
 
 function renderPostos(){
   const el=document.getElementById('postosList');
@@ -1868,27 +2687,6 @@ function saveUrl(){
   G.url=u;localStorage.setItem(LS.url,u);
   toast('URL salva!','ok');loadRecords();loadRenditions();
 }
-function renderPassList(){
-  document.getElementById('passList').innerHTML=['admin','central','supervisor','agente'].map(r=>`
-    <div class="adcard" style="display:flex;align-items:center;justify-content:space-between;">
-      <div><div style="font-weight:600;font-size:14px;">${RL[r]}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);">${'•'.repeat((G.pw[r]||'').length)} (${(G.pw[r]||'').length} chars)</div></div>
-      <div class="urole ${RC[r]}">${r.toUpperCase()}</div>
-    </div>`).join('');
-}
-async function savePass(){
-  const r=document.getElementById('fPR').value,np=document.getElementById('fPN').value,cp=document.getElementById('fPC').value;
-  if(!np){toast('Informe a nova senha.','err');return;}
-  if(np!==cp){toast('Senhas não coincidem.','err');return;}
-  if(np.length<4){toast('Mínimo 4 caracteres.','err');return;}
-  G.pw[r]=np;renderPassList();
-  document.getElementById('fPN').value='';document.getElementById('fPC').value='';
-  const btn=document.getElementById('bSavePass');
-  if(btn){btn.disabled=true;btn.textContent='Salvando...';}
-  try{await api('savePasswords',G.pw);toast('Senha de '+RL[r]+' alterada e sincronizada!','ok');}
-  catch(ex){toast('Senha salva localmente (verifique URL do script).','err');}
-  if(btn){btn.disabled=false;btn.textContent='🔑 Alterar Senha';}
-}
 
 // ── UTILS ──
 function justFeedback(btn){
@@ -2227,6 +3025,165 @@ window.rendDataMudou=function(){loadRenditions();};
 
   /* botão da barra: agora serve para os três tipos */
   var nb=$('btnNR');if(nb)nb.textContent='＋ Novo';
+  montaModal();
+})();
+</script>
+<style>
+/* ── Copiar rendições de outro dia (igual ao sistema principal) ── */
+.rcc-lnk{width:100%;margin:0;padding:10px;background:rgba(59,130,246,.12);border:1px dashed rgba(59,130,246,.55);border-radius:8px;color:#60a5fa;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;}
+body.light-mode .rcc-lnk{color:#1d4ed8;background:#dbeafe;}
+.rcc-wrap{padding:14px 16px 0;}
+.rcc-ban{display:none;margin:14px 16px 0;padding:9px 10px;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.5);border-radius:8px;font-size:12px;color:var(--text);}
+.rcc-ban b{color:#f59e0b;}
+body.light-mode .rcc-ban b{color:#9a3412;}
+.rcc-ban .rcc-bt{display:flex;gap:6px;margin-top:7px;}
+.rcc-ban button{flex:1;padding:7px;border-radius:6px;border:1px solid var(--border2);background:var(--surface3);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;cursor:pointer;}
+#rcCopiaMod .rcc-box{background:var(--surface2);border:1px solid var(--border2);border-radius:16px 16px 0 0;padding:18px 16px 22px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;}
+#rcCopiaMod .rcc-it{display:flex;gap:10px;align-items:flex-start;padding:10px;margin-bottom:6px;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;cursor:pointer;}
+#rcCopiaMod .rcc-it input{margin-top:3px;width:18px;height:18px;flex:none;}
+#rcCopiaMod .rcc-l{font-weight:700;font-size:13px;color:var(--text);}
+#rcCopiaMod .rcc-m{font-size:12px;color:var(--text2);margin-top:2px;}
+#rcCopiaMod .rcc-t{font-size:10px;color:#f59e0b;font-weight:700;letter-spacing:.5px;margin-top:3px;}
+#rcCopiaMod .rcc-row{display:flex;gap:8px;margin-bottom:10px;align-items:flex-end;}
+#rcCopiaMod .rcc-row>.mf{flex:1;margin-bottom:0;}
+#rcCopiaMod .rcc-b{padding:12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface3);color:var(--text2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;cursor:pointer;}
+#rcCopiaMod .rcc-b.ok{background:linear-gradient(135deg,#10b981,#059669);border:none;color:#fff;letter-spacing:1px;text-transform:uppercase;}
+#rcCopiaMod .rcc-b:disabled{opacity:.5;}
+</style>
+<div class="mover" id="rcCopiaMod" style="z-index:900;">
+  <div class="rcc-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--text);">Copiar de outro dia</div>
+      <button onclick="rcCopiaFechar()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Traz só <b>local/posto</b> e <b>motivo</b>. Número do registro e agente ficam em branco para você preencher.</div>
+    <div class="rcc-row">
+      <div class="mf"><label>Copiar do dia</label><input type="date" id="rccData"></div>
+      <div class="mf"><label>Turno</label><select id="rccTurno"><option value="madrugada">Madrugada</option><option value="manha">Manhã</option><option value="tarde">Tarde</option><option value="noite">Noite</option></select></div>
+      <button class="rcc-b" id="rccBuscar" onclick="rcCopiaBuscar()" style="flex:none;">Buscar</button>
+    </div>
+    <div id="rccLista"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="rcc-b" onclick="rcCopiaFechar()" style="flex:1;">Cancelar</button>
+      <button class="rcc-b ok" id="rccGo" onclick="rcCopiaIniciar()" style="flex:2;" disabled>Copiar selecionados</button>
+    </div>
+  </div>
+</div>
+<script>
+/* ── Copiar rendições de outro dia (um registro por vez, usando o salvamento normal) — só Administrador/Central ── */
+(function(){
+  'use strict';
+  var RC={ativo:false,fila:[],n:0,total:0,feitos:0,turno:'',salvando:false,interno:false,achados:[]};
+  var $=function(i){return document.getElementById(i);};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function podeCopiar(){return G.role==='admin'||G.role==='central';}
+  function isoMais(i,n){var p=i.split('-');var d=new Date(+p[0],+p[1]-1,+p[2]+n,12);return iso(d);}
+  function normData(r){var d=String(r.date||'').trim();if(d.indexOf('/')>=0)d=d.split('/').reverse().join('-');else if(d.length>10){try{d=iso(new Date(d));}catch(e){}}return d.substring(0,10);}
+  function chaveLM(r){return (String(r.local||'')+'|'+String(r.motivo||'')).trim().toUpperCase();}
+
+  function montaModal(){
+    var box=$('mRend'); if(!box||$('rccLnk'))return;
+    var inner=box.firstElementChild; if(!inner)return;
+    var wrap=document.createElement('div');wrap.className='rcc-wrap';wrap.id='rccWrap';
+    var lnk=document.createElement('button');lnk.type='button';lnk.id='rccLnk';lnk.className='rcc-lnk';lnk.textContent='📋 Copiar de outro dia';lnk.onclick=rcCopiaAbrir;
+    wrap.appendChild(lnk);
+    var ban=document.createElement('div');ban.id='rccBan';ban.className='rcc-ban';
+    ban.innerHTML='<div id="rccBanTxt"></div><div class="rcc-bt"><button type="button" onclick="rcCopiaPular()">Pular este</button><button type="button" onclick="rcCopiaParar()">Parar</button></div>';
+    inner.insertBefore(ban,inner.firstElementChild);
+    inner.insertBefore(wrap,inner.firstElementChild);
+  }
+  function atualizaModal(editando){
+    var w=$('rccWrap'),b=$('rccBan'); if(!w||!b)return;
+    w.style.display=(!editando&&!RC.ativo&&podeCopiar())?'':'none';
+    b.style.display=RC.ativo?'block':'none';
+    if(RC.ativo)$('rccBanTxt').innerHTML='Copiando <b>'+RC.n+' de '+RC.total+'</b> — preencha o número e o agente e salve.';
+  }
+  function parar(){RC.ativo=false;RC.fila=[];RC.n=0;RC.total=0;RC.feitos=0;atualizaModal(false);}
+
+  window.rcCopiaAbrir=function(){
+    if(!podeCopiar())return;
+    var destino=iso(G.rD);
+    $('rccData').value=isoMais(destino,-1);
+    $('rccTurno').value=G.rendTab||'manha';
+    $('rccLista').innerHTML='';$('rccGo').disabled=true;
+    om('rcCopiaMod');
+    rcCopiaBuscar();
+  };
+  window.rcCopiaFechar=function(){cm('rcCopiaMod');document.body.style.overflow=$('mRend').classList.contains('open')?'hidden':'';};
+  window.rcCopiaBuscar=async function(){
+    var data=$('rccData').value,turno=$('rccTurno').value,lista=$('rccLista'),btn=$('rccBuscar');
+    if(!data){toast('Escolha o dia.','err');return;}
+    btn.disabled=true;$('rccGo').disabled=true;
+    lista.innerHTML='<div style="padding:16px;text-align:center;color:var(--text2);font-size:13px;">Buscando…</div>';
+    try{
+      var r=await api('getRenditions',{data:data});
+      var todos=(r&&r.data)||[];
+      var achados=todos.filter(function(x){return String(x.turno||'').toLowerCase()===turno;});
+      // o que já existe no dia/turno de destino (evita copiar duas vezes)
+      var destData=iso(G.rD),jaTem={};
+      (G.rends||[]).forEach(function(x){if(normData(x)===destData&&String(x.turno||'').toLowerCase()===turno)jaTem[chaveLM(x)]=1;});
+      RC.achados=achados.map(function(x){return {local:x.local||'',motivo:x.motivo||'',categoria:x.categoria||'rendicao',cancel:/cancel/i.test(String(x.status||'')),ja:!!jaTem[chaveLM(x)]};});
+      if(!RC.achados.length){lista.innerHTML='<div style="padding:16px;text-align:center;color:var(--text2);font-size:13px;">Nenhum registro nesse dia e turno.</div>';btn.disabled=false;return;}
+      lista.innerHTML=RC.achados.map(function(x,i){
+        var marcado=(!x.cancel&&!x.ja)?' checked':'';
+        return '<label class="rcc-it"><input type="checkbox" data-i="'+i+'"'+marcado+' onchange="rcCopiaConta()"><div><div class="rcc-l">'+esc(x.local||'(sem local)')+'</div><div class="rcc-m">'+esc(x.motivo||'(sem motivo)')+'</div>'+(x.ja?'<div class="rcc-t">JÁ EXISTE NO DIA ATUAL</div>':'')+(x.cancel?'<div class="rcc-t">CANCELADO NAQUELE DIA</div>':'')+'</div></label>';
+      }).join('');
+      rcCopiaConta();
+    }catch(ex){lista.innerHTML='<div style="padding:16px;text-align:center;color:#ef4444;font-size:13px;">Erro ao buscar: '+esc(ex.message)+'</div>';}
+    btn.disabled=false;
+  };
+  window.rcCopiaConta=function(){
+    var n=$('rccLista').querySelectorAll('input[type=checkbox]:checked').length;
+    var g=$('rccGo');g.disabled=n===0;g.textContent=n?('Copiar '+n+(n===1?' selecionado':' selecionados')):'Copiar selecionados';
+  };
+  window.rcCopiaIniciar=function(){
+    if(!podeCopiar())return;
+    var sel=[];$('rccLista').querySelectorAll('input[type=checkbox]:checked').forEach(function(c){sel.push(RC.achados[+c.getAttribute('data-i')]);});
+    if(!sel.length)return;
+    RC.fila=sel.slice();RC.total=sel.length;RC.n=0;RC.feitos=0;RC.turno=$('rccTurno').value;RC.ativo=true;
+    cm('rcCopiaMod');
+    RC.interno=true;try{cm('mRend');}catch(e){}finally{RC.interno=false;}
+    prox();
+  };
+  function prox(){
+    if(!RC.fila.length){var t=RC.feitos;parar();toast(t?('Cópia concluída: '+t+(t===1?' registro salvo':' registros salvos')+' ✓'):'Nenhum registro foi copiado.',t?'ok':'');return;}
+    var it=RC.fila.shift();RC.n++;
+    RC.interno=true;
+    try{openRendModal();}finally{RC.interno=false;}
+    var set=function(id,v){var e=$(id);if(e)e.value=v;};
+    set('fRReg','');set('fRA','');set('fRS','');
+    set('fRL',String(it.local||'').toUpperCase());set('fRM',String(it.motivo||'').toUpperCase());
+    set('fRD',iso(G.rD));set('fRT',RC.turno);
+    if(window.rcSetCat)rcSetCat(it.categoria);
+    atualizaModal(false);
+  }
+  window.rcCopiaPular=function(){RC.interno=true;try{cm('mRend');}finally{RC.interno=false;}prox();};
+  window.rcCopiaParar=function(){parar();cm('mRend');};
+
+  // salvar: se deu certo e há fila, abre o próximo
+  var _save=window.saveRend;
+  window.saveRend=async function(){
+    RC.salvando=true;
+    try{ return await _save.apply(this,arguments); }
+    finally{
+      RC.salvando=false;
+      if(RC.ativo&&!$('mRend').classList.contains('open')){RC.feitos++;setTimeout(prox,350);}
+    }
+  };
+  // fechar o modal por fora (✕ / Cancelar) encerra a fila
+  var _cm=window.cm;
+  window.cm=function(id){
+    if(id==='mRend'&&RC.ativo&&!RC.salvando&&!RC.interno)parar();
+    return _cm.apply(this,arguments);
+  };
+  // abrir qualquer outro registro/novo fora da fila encerra a fila e mostra o botão de copiar
+  var _open=window.openRendModal;
+  window.openRendModal=function(id){
+    if(!RC.interno&&RC.ativo)parar();
+    var r=_open.apply(this,arguments);
+    atualizaModal(!!id);
+    return r;
+  };
   montaModal();
 })();
 </script>
