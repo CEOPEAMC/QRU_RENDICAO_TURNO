@@ -978,7 +978,7 @@ body.light-mode .ag-st.ok{color:#047857;border-color:#047857;}body.light-mode .a
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-11-24-vP11'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
+const APP_VERSION='2026-11-24-vP12'; // ← atualize esta string a cada deploy para forçar logout de sessões antigas
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw0I7gsKYrSE4dKAOzl-LQyrywIXhOX20fRc4sMMzO6lIEH_7pCUMDJFfEAyXsELoYCnQ/exec';
 const LS={url:'amc_url',session:'amc_session'};
 // Limpar sessão ao detectar nova versão do sistema — força re-login em todos os usuários (só quando houve atualização real)
@@ -2001,26 +2001,40 @@ function toggleMapaTelaCheia(forcar){
 window.addEventListener('popstate',function(){if(mapaTelaCheia)toggleMapaTelaCheia(false);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mapaTelaCheia)toggleMapaTelaCheia(false);});
 
+let locBuscando=false;
 function tentarLocalizarUsuario(centralizarEAvisar){
   if(!navigator.geolocation){
-    if(centralizarEAvisar)toast('Seu navegador não suporta localização.','err');
+    if(centralizarEAvisar)toast('Seu aparelho não suporta localização.','err');
     return;
   }
-  navigator.geolocation.getCurrentPosition(function(pos){
+  if(locBuscando)return;
+  locBuscando=true;
+  function ok(pos){
+    locBuscando=false;
+    if(!postosMap)return;
     const ll=[pos.coords.latitude,pos.coords.longitude];
     if(userLocMarker) postosMap.removeLayer(userLocMarker);
     userLocMarker=L.circleMarker(ll,{radius:8,color:'#2563eb',fillColor:'#60a5fa',fillOpacity:0.9,weight:2}).addTo(postosMap);
     userLocMarker.bindPopup('Você está aqui');
     if(centralizarEAvisar){postosMap.setView(ll,15);userLocMarker.openPopup();}
-  },function(err){
-    if(centralizarEAvisar){
-      if(err.code===1){
-        toast('Localização negada. Habilite nas configurações do site.','err');
-      }else{
-        toast('Não foi possível obter sua localização agora.','err');
-      }
+  }
+  function falha(err){
+    locBuscando=false;
+    if(!centralizarEAvisar)return;
+    if(err&&err.code===1){
+      toast('Localização negada. Libere a permissão de localização do app/navegador.','err');
+    }else if(err&&err.code===3){
+      toast('Demorou para achar sua posição. Vá para um local aberto, confira o GPS e tente de novo.','err');
+    }else{
+      toast('Não foi possível obter sua localização. Confira se o GPS está ligado e tente de novo.','err');
     }
-  },{timeout:8000});
+  }
+  // 1ª tentativa: rápida (rede/Wi-Fi ou posição recente de até 2 min)
+  navigator.geolocation.getCurrentPosition(ok,function(err){
+    if(err&&err.code===1){falha(err);return;}
+    // 2ª tentativa: GPS preciso, com mais tempo
+    navigator.geolocation.getCurrentPosition(ok,falha,{enableHighAccuracy:true,timeout:20000,maximumAge:0});
+  },{enableHighAccuracy:false,timeout:6000,maximumAge:120000});
 }
 
 function plotarPostosNoMapa(lista){
